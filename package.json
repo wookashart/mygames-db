@@ -1,0 +1,27 @@
+{
+  "name": "mygames-db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.tsx",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wookashart/mygames-db"
+  },
+  "keywords": [],
+  "author": "Łukasz Krawczyk",
+  "license": "ISC",
+  "dependencies": {
+    "next": "^11.1.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.24",
+    "typescript": "^4.4.3"
+  }
+}
