@@ -6,7 +6,7 @@ import Page from '../src/components/layout/Page';
 class Index extends Component {
   render() {
     return (
-      <Page seo={{ title: 'Strona główna', description: '' }}>
+      <Page seo={{ title: 'Strona główna', description: '' }} pageType="homepage">
         <div>Homepage</div>
       </Page>
     );
