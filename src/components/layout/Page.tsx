@@ -27,11 +27,13 @@ class Page extends Component<PageProps> {
     const theme = createTheme({
       typography: {
         h1: {
-          fontSize: '3rem',
+          fontSize: '1rem',
         },
       },
       palette: {
         type: 'dark',
+        primary: colors.blue,
+        secondary: colors.indigo,
       },
     });
 

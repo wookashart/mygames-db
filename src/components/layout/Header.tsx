@@ -41,7 +41,7 @@ const Header = ({ pageType }: HeaderProps) => {
           <Container maxWidth="xl">
             <Toolbar
               sx={{
-                padding: 0,
+                padding: '0 !important',
               }}
             >
               <Box sx={{ flexGrow: 1 }}>
