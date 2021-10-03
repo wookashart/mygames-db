@@ -18,7 +18,8 @@ const PageHeader = ({ title }: PageHeaderProps) => {
       sx={{
         textTransform: 'uppercase',
       }}
-      my={3}
+      mt={1}
+      mb={3}
     >
       {title}
     </Typography>

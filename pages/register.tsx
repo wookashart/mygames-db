@@ -11,6 +11,7 @@ import ImageCropper from '../src/components/common/form/ImageCropper';
 import RegisterMandatorySection from '../src/components/pages/register/RegisterMandatorySection';
 import RegisterOptionalSection from '../src/components/pages/register/RegisterOptionalSection';
 import Notification from '../src/components/common/Notification';
+import Breadcrumbs from '../src/components/common/Breadcrumbs';
 
 // === Helpers === //
 import dateFormat from 'dateformat';
@@ -192,6 +193,12 @@ const Register = () => {
   return (
     <Page seo={{ title: 'Rejestracja', description: '' }} pageType="register">
       <>
+        <Breadcrumbs
+          options={[
+            { current: false, label: 'Strona główna', href: '/' },
+            { current: true, label: 'Rejestracja', href: '/register' },
+          ]}
+        />
         <Container maxWidth="xl">
           <PageHeader title="Rejestracja" />
         </Container>
