@@ -4,15 +4,13 @@ import React, { useState } from 'react';
 // === Components === //
 import { Box, colors, Container, Grid, Paper, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { TextField } from '@material-ui/core';
 import SendIcon from '@mui/icons-material/Send';
 import Page from '../src/components/layout/Page';
 import PageHeader from '../src/components/common/PageHeader';
-import DividerText from '../src/components/common/DividerText';
-import DatePicker from '../src/components/common/form/DatePicker';
-import Radio from '../src/components/common/form/Radio';
 import ImageCropper from '../src/components/common/form/ImageCropper';
-import { useFormik } from 'formik';
+import RegisterMandatorySection from '../src/components/pages/register/RegisterMandatorySection';
+import RegisterOptionalSection from '../src/components/pages/register/RegisterOptionalSection';
+import Notification from '../src/components/common/Notification';
 
 // === Helpers === //
 import dateFormat from 'dateformat';
@@ -21,7 +19,9 @@ import * as utils from '../src/utils';
 import * as yup from 'yup';
 
 // === Types === //
+import { FormikProps, useFormik } from 'formik';
 import { CroppedAreaData } from '../src/types/images';
+import { NotificationType, RegisterInitialValuesData } from '../src/types/forms';
 
 const validationSchema = yup.object({
   name: yup.string().required('Musisz podać nazwę użytkownika!'),
@@ -34,6 +34,11 @@ const validationSchema = yup.object({
 });
 
 const Register = () => {
+  const [notification, handleNotification] = React.useState({
+    open: false,
+    message: '',
+    type: 'success' as NotificationType,
+  });
   const [buttonLoading, toggleButtonLoading] = useState(false);
   const [imageSrc, setImageSrc]: Array<any> = useState('');
   const [zoom, handleChangeZoom] = useState(1);
@@ -93,7 +98,17 @@ const Register = () => {
                     error: true,
                     message: json.errorMessage,
                   });
+                  handleNotification({
+                    open: true,
+                    message: `Nie udało się zarejestrować użytkownika!`,
+                    type: 'error',
+                  });
                 } else {
+                  handleNotification({
+                    open: true,
+                    message: `Poprawnie zarejestrowano użytkownika ${values.name}!`,
+                    type: 'success',
+                  });
                   resetForm();
                   setImageSrc('');
                   handleChangeZoom(1);
@@ -126,13 +141,22 @@ const Register = () => {
           .then((response) => response.json())
           .then((json) => {
             toggleButtonLoading(false);
-
             if (json.emailDuplicated || json.nameDuplicated) {
               setFormError({
                 error: true,
                 message: json.errorMessage,
               });
+              handleNotification({
+                open: true,
+                message: `Nie udało się zarejestrować użytkownika!`,
+                type: 'error',
+              });
             } else {
+              handleNotification({
+                open: true,
+                message: `Poprawnie zarejestrowano użytkownika ${values.name}!`,
+                type: 'success',
+              });
               resetForm();
               setImageSrc('');
               handleChangeZoom(1);
@@ -175,127 +199,12 @@ const Register = () => {
           <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>
             <Box p={3}>
               <form onSubmit={formik.handleSubmit}>
-                <DividerText text="Pola obowiązkowe" />
-                <Grid container>
-                  <Grid item xs={12} md={6} pr={{ md: 1 }} mb={2}>
-                    <TextField
-                      fullWidth
-                      id="name"
-                      name="name"
-                      label="Nazwa"
-                      value={formik.values.name}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={formik.touched.name && Boolean(formik.errors.name)}
-                      helperText={formik.touched.name && formik.errors.name}
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6} pl={{ md: 1 }} mb={2}>
-                    <TextField
-                      fullWidth
-                      id="email"
-                      name="email"
-                      label="Email"
-                      value={formik.values.email}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={formik.touched.email && Boolean(formik.errors.email)}
-                      helperText={formik.touched.email && formik.errors.email}
-                      variant="filled"
-                    />
-                  </Grid>
-                </Grid>
-
-                <Grid container>
-                  <Grid item xs={12} md={6} pr={{ md: 1 }} mb={2}>
-                    <TextField
-                      fullWidth
-                      id="password"
-                      name="password"
-                      label="Hasło"
-                      type="password"
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={formik.touched.password && Boolean(formik.errors.password)}
-                      helperText={formik.touched.password && formik.errors.password}
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6} pl={{ md: 1 }} mb={2}>
-                    <TextField
-                      fullWidth
-                      id="password2"
-                      name="password2"
-                      label="Powtórz hasło"
-                      type="password"
-                      value={formik.values.password2}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      error={formik.touched.password2 && Boolean(formik.errors.password2)}
-                      helperText={formik.touched.password2 && formik.errors.password2}
-                      variant="filled"
-                    />
-                  </Grid>
-                </Grid>
-
-                <DividerText text="Pola nieobowiązkowe" />
-                <Grid container>
-                  <Grid item xs={12} md={12} pr={{ md: 1 }} mb={2}>
-                    <Radio
-                      label="Płeć"
-                      name="gender"
-                      options={[
-                        { value: 0, label: 'Nie chcę podawać' },
-                        { value: 1, label: 'Mężczyzna' },
-                        { value: 2, label: 'Kobieta' },
-                        { value: 3, label: 'Inna' },
-                      ]}
-                      value={formik.values.gender}
-                      handleChange={(value: number) =>
-                        formik.setFieldValue('gender', Number(value))
-                      }
-                    />
-                  </Grid>
-                </Grid>
-
-                <Grid container>
-                  <Grid item xs={12} md={6} pr={{ md: 1 }} mb={2}>
-                    <TextField
-                      fullWidth
-                      id="town"
-                      name="town"
-                      label="Miejscowość"
-                      value={formik.values.town}
-                      onChange={formik.handleChange}
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6} pr={{ md: 1 }} mb={2}>
-                    <DatePicker
-                      value={formik.values.birthday}
-                      label="Data urodzenia"
-                      handleChange={(value: Date | null) => formik.setFieldValue('birthday', value)}
-                    />
-                  </Grid>
-                </Grid>
-
-                <Grid container>
-                  <Grid item xs={12} md={12} pr={{ md: 1 }} mb={2}>
-                    <TextField
-                      fullWidth
-                      id="description"
-                      name="description"
-                      label="Opis"
-                      multiline
-                      rows={2}
-                      variant="filled"
-                      value={formik.values.description}
-                      onChange={formik.handleChange}
-                    />
-                  </Grid>
-                </Grid>
+                <RegisterMandatorySection
+                  formik={formik as FormikProps<RegisterInitialValuesData>}
+                />
+                <RegisterOptionalSection
+                  formik={formik as FormikProps<RegisterInitialValuesData>}
+                />
 
                 <Grid container>
                   <Grid item xs={12} md={12} pr={{ md: 1 }} mb={2}>
@@ -335,6 +244,18 @@ const Register = () => {
               </form>
             </Box>
           </Paper>
+          <Notification
+            open={notification.open}
+            message={notification.message}
+            type={notification.type}
+            handleClose={() =>
+              handleNotification({
+                open: false,
+                message: '',
+                type: 'success',
+              })
+            }
+          />
         </Container>
       </>
     </Page>
