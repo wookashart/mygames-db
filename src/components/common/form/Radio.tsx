@@ -4,6 +4,9 @@ import React from 'react';
 // === Components === //
 import { FormLabel, FormControlLabel, Radio, RadioGroup, colors } from '@mui/material';
 
+// === Styles === //
+import { customColors } from '../../../styles/variables';
+
 interface RadioProps {
   label: string;
   name: string;
@@ -29,7 +32,7 @@ const CustomRadio = ({ label, name, value, options, handleChange }: RadioProps) 
             control={<Radio />}
             label={opt.label}
             sx={{
-              color: 'rgba(255, 255, 255, 0.7)',
+              color: customColors.textLight,
               svg: {
                 color: colors.blue[600],
               },

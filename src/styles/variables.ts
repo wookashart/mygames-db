@@ -1,4 +1,3 @@
-export const colors = {
-  primary: '#1976d2',
-  menuBackground: '#0A1929',
+export const customColors = {
+  textLight: 'rgba(255, 255, 255, 0.7)',
 };

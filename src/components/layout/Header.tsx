@@ -11,6 +11,7 @@ import {
   IconButton,
   List,
   ListItem,
+  Skeleton,
   Toolbar,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -24,12 +25,24 @@ import { useMediaQuery, useTheme } from '@material-ui/core';
 
 // === Types === //
 import { NavigationLinkData } from '../../types/layout';
+import { UserData } from '../../types/users';
+import UserNavigation from './UserNavigation';
 
 interface HeaderProps {
   pageType: string;
+  userLoading: boolean;
+  user: UserData | null;
+  handleOpenLoginModal: Function;
+  handleLogout: Function;
 }
 
-const Header = ({ pageType }: HeaderProps) => {
+const Header = ({
+  pageType,
+  userLoading,
+  user,
+  handleOpenLoginModal,
+  handleLogout,
+}: HeaderProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [menuOpen, toggleMenuOpen] = useState(false);
@@ -105,14 +118,28 @@ const Header = ({ pageType }: HeaderProps) => {
                 )}
               </Box>
 
-              <Button color="inherit">Logowanie</Button>
-              <Link href="/register">
-                <a className="navigation-link">
-                  <Button color="inherit" disabled={pageType === 'register' ? true : false}>
-                    Rejestracja
-                  </Button>
-                </a>
-              </Link>
+              {userLoading ? (
+                <Skeleton variant="rectangular" width={200} height={20} />
+              ) : (
+                <>
+                  {user ? (
+                    <UserNavigation user={user} handleLogout={handleLogout} />
+                  ) : (
+                    <>
+                      <Button color="inherit" onClick={() => handleOpenLoginModal()}>
+                        Logowanie
+                      </Button>
+                      <Link href="/register">
+                        <a className="navigation-link">
+                          <Button color="inherit" disabled={pageType === 'register' ? true : false}>
+                            Rejestracja
+                          </Button>
+                        </a>
+                      </Link>
+                    </>
+                  )}
+                </>
+              )}
             </Toolbar>
           </Container>
         </AppBar>

@@ -5,6 +5,9 @@ import { Breadcrumbs, colors, Container, Divider, Typography } from '@mui/materi
 import HomeIcon from '@mui/icons-material/Home';
 import Link from 'next/link';
 
+// === Styles === //
+import { customColors } from '../../styles/variables';
+
 interface CustomBreadcrumbsProps {
   options: BreadcrumbsOptionsData[];
 }
@@ -19,7 +22,7 @@ const CustomBreadcrumbs = ({ options }: CustomBreadcrumbsProps) => {
   return (
     <>
       <Container maxWidth="xl" sx={{ marginTop: 1 }}>
-        <Breadcrumbs aria-label="breadcrumb" separator="›" color="rgba(255, 255, 255, 0.7)">
+        <Breadcrumbs aria-label="breadcrumb" separator="›" color={customColors.textLight}>
           {options.map((item, index) => {
             if (item.current) {
               return (
@@ -54,7 +57,7 @@ const CustomBreadcrumbs = ({ options }: CustomBreadcrumbsProps) => {
       </Container>
       <style jsx>{`
         .breadcrumbs-link {
-          color: rgba(255, 255, 255, 0.7);
+          color: ${customColors.textLight};
           text-decoration: none;
           display: flex;
           align-items: center;

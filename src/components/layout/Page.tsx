@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 // === Components === //
 import SEO from './SEO';
 import Header from './Header';
+import Login from './Login';
 
 // === Styles === //
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
@@ -10,6 +11,7 @@ import { colors } from '@mui/material';
 
 // === Types === //
 import { SeoData } from '../../types/layout';
+import { UserData } from '../../types/users';
 
 interface PageProps {
   children: React.ReactChild;
@@ -19,9 +21,61 @@ interface PageProps {
 
 class Page extends Component<PageProps> {
   state = {
-    loading: false,
     user: null,
+    userLoading: false,
+    loginOpened: false,
   };
+
+  componentDidMount() {
+    this.handleCheckUserSession();
+  }
+
+  handleCheckUserSession = () => {
+    this.setState({ userLoading: true }, () => {
+      fetch(`/api/me`, {
+        headers: {
+          'Content-type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          if (json && !json.error && json.user) {
+            this.setUserData(json.user);
+          }
+          this.toggleUserLoading(false);
+        })
+        .catch((error) => {
+          this.toggleUserLoading(false);
+          console.error(error);
+        });
+    });
+  };
+
+  handleLogout = () => {
+    this.setState({ userLoading: true }, () => {
+      fetch(`/api/logout`, {
+        headers: {
+          'Content-type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+      })
+        .then((response) => response.json())
+        .then(() => {
+          this.toggleUserLoading(false);
+          this.setUserData(null);
+        })
+        .catch((error) => {
+          this.toggleUserLoading(false);
+          console.error(error);
+        });
+    });
+  };
+
+  toggleUserLoading = (value: boolean) => this.setState({ userLoading: value });
+  setUserData = (value: UserData | null) => this.setState({ user: value });
 
   render() {
     const theme = createTheme({
@@ -42,8 +96,21 @@ class Page extends Component<PageProps> {
         <SEO seo={this.props.seo} />
 
         <ThemeProvider theme={theme}>
-          <Header pageType={this.props.pageType} />
+          <Header
+            pageType={this.props.pageType}
+            userLoading={this.state.userLoading}
+            user={this.state.user}
+            handleOpenLoginModal={() => this.setState({ loginOpened: true })}
+            handleLogout={this.handleLogout}
+          />
           {this.props.children}
+
+          <Login
+            open={this.state.loginOpened}
+            handleClose={() => this.setState({ loginOpened: false })}
+            handleSetUser={this.setUserData}
+            toggleUserLoading={this.toggleUserLoading}
+          />
         </ThemeProvider>
         <style jsx global>{`
           * {
