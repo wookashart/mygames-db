@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import SEO from './SEO';
 import Header from './Header';
 import Login from './Login';
+import ErrorPage from 'next/error';
 
 // === Styles === //
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
@@ -22,7 +23,7 @@ interface PageProps {
 class Page extends Component<PageProps> {
   state = {
     user: null,
-    userLoading: false,
+    userLoading: true,
     loginOpened: false,
   };
 
@@ -78,6 +79,7 @@ class Page extends Component<PageProps> {
   setUserData = (value: UserData | null) => this.setState({ user: value });
 
   render() {
+    const pagesBlockedForLoggedUser: string[] = ['register'];
     const theme = createTheme({
       typography: {
         h1: {
@@ -93,26 +95,47 @@ class Page extends Component<PageProps> {
 
     return (
       <>
-        <SEO seo={this.props.seo} />
+        {this.state.userLoading ? (
+          <ThemeProvider theme={theme}>
+            <Header
+              pageType="placeholder"
+              userLoading={this.state.userLoading}
+              user={this.state.user}
+              handleOpenLoginModal={() => this.setState({ loginOpened: true })}
+              handleLogout={this.handleLogout}
+            />
+          </ThemeProvider>
+        ) : (
+          <>
+            {this.state.user &&
+            pagesBlockedForLoggedUser.find((item) => item === this.props.pageType) ? (
+              <ErrorPage statusCode={404} />
+            ) : (
+              <>
+                <SEO seo={this.props.seo} />
+                <ThemeProvider theme={theme}>
+                  <Header
+                    pageType={this.props.pageType}
+                    userLoading={this.state.userLoading}
+                    user={this.state.user}
+                    handleOpenLoginModal={() => this.setState({ loginOpened: true })}
+                    handleLogout={this.handleLogout}
+                  />
+                  {this.props.children}
 
-        <ThemeProvider theme={theme}>
-          <Header
-            pageType={this.props.pageType}
-            userLoading={this.state.userLoading}
-            user={this.state.user}
-            handleOpenLoginModal={() => this.setState({ loginOpened: true })}
-            handleLogout={this.handleLogout}
-          />
-          {this.props.children}
+                  <Login
+                    pageType={this.props.pageType}
+                    open={this.state.loginOpened}
+                    handleClose={() => this.setState({ loginOpened: false })}
+                    handleSetUser={this.setUserData}
+                    toggleUserLoading={this.toggleUserLoading}
+                  />
+                </ThemeProvider>
+              </>
+            )}
+          </>
+        )}
 
-          <Login
-            pageType={this.props.pageType}
-            open={this.state.loginOpened}
-            handleClose={() => this.setState({ loginOpened: false })}
-            handleSetUser={this.setUserData}
-            toggleUserLoading={this.toggleUserLoading}
-          />
-        </ThemeProvider>
         <style jsx global>{`
           * {
             box-sizing: border-box;
