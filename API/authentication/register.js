@@ -51,7 +51,9 @@ module.exports = (req, res) => {
       response.error = err;
       res.json(response);
     } else {
-      const imageName = image ? `${slugify(name, slugifuOptions)}-${timestamp}` : null;
+      const imageName = image
+        ? `${slugify(name, slugifuOptions)}-${timestamp}.${image.split(';')[0].split('/')[1]}`
+        : null;
 
       connection.query(`
         INSERT INTO users
@@ -84,7 +86,7 @@ module.exports = (req, res) => {
   
           const base64Image = image.split(';base64,').pop();
           fs.writeFile(
-            `./public/img/users/${imageName}.jpg`,
+            `./public/img/users/${imageName}`,
             base64Image,
             {encoding: 'base64'},
             (err) => {

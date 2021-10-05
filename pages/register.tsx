@@ -204,7 +204,7 @@ const Register = () => {
         </Container>
         <Container maxWidth="md">
           <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>
-            <Box p={3}>
+            <Box px={3} pb={3} pt={1}>
               <form onSubmit={formik.handleSubmit}>
                 <RegisterMandatorySection
                   formik={formik as FormikProps<RegisterInitialValuesData>}

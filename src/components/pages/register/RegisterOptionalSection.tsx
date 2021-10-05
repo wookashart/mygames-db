@@ -5,6 +5,7 @@ import { Grid, TextField } from '@mui/material';
 import DividerText from '../../common/DividerText';
 import Radio from '../../common/form/Radio';
 import DatePicker from '../../common/form/DatePicker';
+import Wysiwig from '../../common/form/Wysiwig';
 
 // === Types === //
 import { FormikProps } from 'formik';
@@ -49,7 +50,7 @@ const RegisterOptionalSection = ({ formik }: RegisterOptionalSectionProps) => {
         </Grid>
         <Grid item xs={12} md={6} pr={{ md: 1 }} mb={2}>
           <DatePicker
-            value={formik.values.birthday}
+            value={formik.values.birthday as Date | null}
             label="Data urodzenia"
             handleChange={(value: Date | null) => formik.setFieldValue('birthday', value)}
           />
@@ -58,16 +59,10 @@ const RegisterOptionalSection = ({ formik }: RegisterOptionalSectionProps) => {
 
       <Grid container>
         <Grid item xs={12} md={12} pr={{ md: 1 }} mb={2}>
-          <TextField
-            fullWidth
-            id="description"
-            name="description"
+          <Wysiwig
             label="Opis"
-            multiline
-            rows={2}
-            variant="filled"
             value={formik.values.description}
-            onChange={formik.handleChange}
+            onChange={(value: string) => formik.setFieldValue('description', value)}
           />
         </Grid>
       </Grid>

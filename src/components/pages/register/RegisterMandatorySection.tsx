@@ -16,7 +16,7 @@ const RegisterMandatorySection = ({ formik }: RegisterMandatorySectionProps) => 
   return (
     <>
       <DividerText text="Pola obowiązkowe" />
-      <Grid container>
+      <Grid container mt={2}>
         <Grid item xs={12} md={6} pr={{ md: 1 }} mb={2}>
           <TextField
             fullWidth

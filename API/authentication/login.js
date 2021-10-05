@@ -5,6 +5,7 @@ module.exports = (req, res) => {
   const name = req.body.name;
   const password = req.body.password;
   let userData = {};
+  let errorMessage = null;
 
   queryPromise(`
     SELECT *
@@ -31,10 +32,12 @@ module.exports = (req, res) => {
       req.session.logged = true;
     } else {
       userData = null;
+      errorMessage = 'Niepoprawny login lub hasło! Sprawdź czy dobrze zostały wpisane i spróbuj ponownie.';
     }
 
     res.json({
       user: userData,
+      errorMessage,
       error: err,
     });
   });
