@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Router from 'next/router';
 
 // === Components === //
 import { colors, Typography } from '@mui/material';
@@ -15,6 +16,7 @@ import * as yup from 'yup';
 import { useFormik } from 'formik';
 
 interface LoginProps {
+  pageType: string;
   open: boolean;
   handleClose: Function;
   handleSetUser: Function;
@@ -26,7 +28,8 @@ const validationSchema = yup.object({
   password: yup.string().required('Musisz podać hasło!'),
 });
 
-const Login = ({ open, handleClose, handleSetUser, toggleUserLoading }: LoginProps) => {
+const Login = ({ pageType, open, handleClose, handleSetUser, toggleUserLoading }: LoginProps) => {
+  const pagesToRedirect: string[] = ['register'];
   const [buttonLoading, toggleButtonLoading] = useState(false);
   const [formError, setFormError] = useState({ error: false, message: '' });
 
@@ -62,6 +65,9 @@ const Login = ({ open, handleClose, handleSetUser, toggleUserLoading }: LoginPro
             });
             handleSetUser(json.user);
             handleClose();
+            if (pagesToRedirect.find((item) => item === pageType)) {
+              Router.push('/');
+            }
           } else {
             setFormError({
               error: true,

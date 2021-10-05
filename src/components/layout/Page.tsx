@@ -106,6 +106,7 @@ class Page extends Component<PageProps> {
           {this.props.children}
 
           <Login
+            pageType={this.props.pageType}
             open={this.state.loginOpened}
             handleClose={() => this.setState({ loginOpened: false })}
             handleSetUser={this.setUserData}
