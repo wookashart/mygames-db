@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 // === Components === //
+import Link from 'next/link';
 import {
   AppBar,
   Box,
@@ -15,7 +16,8 @@ import {
   Toolbar,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import Link from 'next/link';
+import UserNavigation from './UserNavigation';
+import AdminNavigation from './AdminNavigation';
 
 // === Config === //
 import { navigation } from '../../config/navigation';
@@ -26,7 +28,6 @@ import { useMediaQuery, useTheme } from '@material-ui/core';
 // === Types === //
 import { NavigationLinkData } from '../../types/layout';
 import { UserData } from '../../types/users';
-import UserNavigation from './UserNavigation';
 
 interface HeaderProps {
   pageType: string;
@@ -123,7 +124,10 @@ const Header = ({
               ) : (
                 <>
                   {user ? (
-                    <UserNavigation user={user} handleLogout={handleLogout} />
+                    <>
+                      <UserNavigation user={user} handleLogout={handleLogout} />
+                      {user.type === 1 && <AdminNavigation />}
+                    </>
                   ) : (
                     <>
                       <Button color="inherit" onClick={() => handleOpenLoginModal()}>

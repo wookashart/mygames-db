@@ -2,31 +2,22 @@ import React, { useState } from 'react';
 
 // === Components === //
 import { Box } from '@mui/system';
+import { Button, colors, Divider, ListItemIcon, Menu, MenuItem, Typography } from '@mui/material';
+import {
+  AdminPanelSettings,
+  Article,
+  Extension,
+  Help,
+  People,
+  QueryStats,
+  SportsEsports,
+} from '@mui/icons-material';
+import Link from 'next/link';
 
 // === Styles === //
 import { customColors } from '../../styles/variables';
 
-// === Types === //
-import { UserData } from '../../types/users';
-import {
-  Avatar,
-  Button,
-  colors,
-  Divider,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-  Typography,
-} from '@mui/material';
-import { AccountCircle, Logout, Settings } from '@mui/icons-material';
-import Link from 'next/link';
-
-interface UserNavigationProps {
-  user: UserData;
-  handleLogout: Function;
-}
-
-const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
+const AdminNavigation = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -39,15 +30,10 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
   return (
     <>
       <Box>
-        <Button onClick={handleClick} color="inherit" size="small">
-          {user.avatar && user.avatar !== '' ? (
-            <Avatar sx={{ width: 32, height: 32 }} src={`/img/users/${user.avatar}`} />
-          ) : (
-            <Avatar sx={{ width: 32, height: 32 }} />
-          )}
-
+        <Button onClick={handleClick} color="inherit" size="small" sx={{ ml: 1 }}>
+          <AdminPanelSettings />
           <Typography variant="overline" component="p" color="white" ml={1}>
-            {user.name}
+            Admin
           </Typography>
         </Button>
 
@@ -87,7 +73,7 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
           <Link href="/">
-            <a className="userNavigation-link">
+            <a className="adminNavigation-link">
               <MenuItem
                 sx={{
                   ':hover': {
@@ -96,9 +82,9 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
                 }}
               >
                 <ListItemIcon>
-                  <AccountCircle fontSize="small" sx={{ color: customColors.textLight }} />
+                  <QueryStats fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
-                Profil
+                Statystyki
               </MenuItem>
             </a>
           </Link>
@@ -111,67 +97,7 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
             }}
           />
           <Link href="/">
-            <a className="userNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
-                Moja kolekcja
-              </MenuItem>
-            </a>
-          </Link>
-          <Link href="/">
-            <a className="userNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
-                Ukończone
-              </MenuItem>
-            </a>
-          </Link>
-          <Link href="/">
-            <a className="userNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
-                Porzucone
-              </MenuItem>
-            </a>
-          </Link>
-          <Link href="/">
-            <a className="userNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
-                Pominięte
-              </MenuItem>
-            </a>
-          </Link>
-
-          <Divider
-            sx={{
-              marginTop: 1,
-              marginBottom: 1,
-              borderColor: colors.grey[700],
-            }}
-          />
-          <Link href="/">
-            <a className="userNavigation-link">
+            <a className="adminNavigation-link">
               <MenuItem
                 sx={{
                   ':hover': {
@@ -180,30 +106,80 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
                 }}
               >
                 <ListItemIcon>
-                  <Settings fontSize="small" sx={{ color: customColors.textLight }} />
+                  <SportsEsports fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
-                Edytuj profil
+                Dodaj grę
               </MenuItem>
             </a>
           </Link>
-          <MenuItem
-            sx={{
-              color: customColors.textLight,
-              ':hover': {
-                backgroundColor: colors.grey[600],
-              },
-            }}
-            onClick={() => handleLogout()}
-          >
-            <ListItemIcon>
-              <Logout fontSize="small" sx={{ color: customColors.textLight }} />
-            </ListItemIcon>
-            Wyloguj się
-          </MenuItem>
+          <Link href="/">
+            <a className="adminNavigation-link">
+              <MenuItem
+                sx={{
+                  ':hover': {
+                    backgroundColor: colors.grey[600],
+                  },
+                }}
+              >
+                <ListItemIcon>
+                  <Extension fontSize="small" sx={{ color: customColors.textLight }} />
+                </ListItemIcon>
+                Dodaj DLC
+              </MenuItem>
+            </a>
+          </Link>
+          <Link href="/">
+            <a className="adminNavigation-link">
+              <MenuItem
+                sx={{
+                  ':hover': {
+                    backgroundColor: colors.grey[600],
+                  },
+                }}
+              >
+                <ListItemIcon>
+                  <Article fontSize="small" sx={{ color: customColors.textLight }} />
+                </ListItemIcon>
+                Dodaj artykuł
+              </MenuItem>
+            </a>
+          </Link>
+          <Link href="/">
+            <a className="adminNavigation-link">
+              <MenuItem
+                sx={{
+                  ':hover': {
+                    backgroundColor: colors.grey[600],
+                  },
+                }}
+              >
+                <ListItemIcon>
+                  <Help fontSize="small" sx={{ color: customColors.textLight }} />
+                </ListItemIcon>
+                Dodaj poradnik
+              </MenuItem>
+            </a>
+          </Link>
+          <Link href="/">
+            <a className="adminNavigation-link">
+              <MenuItem
+                sx={{
+                  ':hover': {
+                    backgroundColor: colors.grey[600],
+                  },
+                }}
+              >
+                <ListItemIcon>
+                  <People fontSize="small" sx={{ color: customColors.textLight }} />
+                </ListItemIcon>
+                Użytkownicy
+              </MenuItem>
+            </a>
+          </Link>
         </Menu>
       </Box>
       <style jsx>{`
-        .userNavigation-link {
+        .adminNavigation-link {
           text-decoration: none;
           color: ${customColors.textLight};
         }
@@ -212,4 +188,4 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
   );
 };
 
-export default UserNavigation;
+export default AdminNavigation;
