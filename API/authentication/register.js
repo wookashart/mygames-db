@@ -27,14 +27,24 @@ module.exports = (req, res) => {
   const now = new Date();
   const timestamp = dateFormat(now, 'yyyymmddHHMMss');
   const response = {};
+  let usersCount = 0;
 
   queryPromise(`
-    SELECT *
+    SELECT COUNT(*) AS usersCount
     FROM users
-    WHERE user_name = "${name}"
-    OR user_email = "${email}"
   `)
   .then(({ err, rows }) => {
+    usersCount = Number(rows[0].usersCount);
+    response.error = err;
+
+    return queryPromise(`
+      SELECT *
+      FROM users
+      WHERE user_name = "${name}"
+      OR user_email = "${email}"
+    `)
+  })
+  .then(({err, rows}) => {
     const nameDuplicated = rows && rows.find(item => item.user_name === name) ? true : false;
     const emailDuplicated = rows && rows.find(item => item.user_email === email) ? true : false;
 
@@ -62,7 +72,7 @@ module.exports = (req, res) => {
           "${name}",
           "${email}",
           "${passwordHash.generate(password)}",
-          "0",
+          "${usersCount === 0 ? 1 : 0}",
           "${city}",
           "${birthday ? birthday : null}",
           "${gender}",
