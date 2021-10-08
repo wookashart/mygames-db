@@ -6,6 +6,7 @@ import { Button, colors, Divider, ListItemIcon, Menu, MenuItem, Typography } fro
 import {
   AdminPanelSettings,
   Article,
+  Devices,
   Extension,
   Help,
   People,
@@ -173,6 +174,30 @@ const AdminNavigation = () => {
                   <People fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Użytkownicy
+              </MenuItem>
+            </a>
+          </Link>
+
+          <Divider
+            sx={{
+              marginTop: 1,
+              marginBottom: 1,
+              borderColor: colors.grey[700],
+            }}
+          />
+          <Link href="/admin/platforms">
+            <a className="adminNavigation-link">
+              <MenuItem
+                sx={{
+                  ':hover': {
+                    backgroundColor: colors.grey[600],
+                  },
+                }}
+              >
+                <ListItemIcon>
+                  <Devices fontSize="small" sx={{ color: customColors.textLight }} />
+                </ListItemIcon>
+                Platformy
               </MenuItem>
             </a>
           </Link>

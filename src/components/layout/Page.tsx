@@ -22,7 +22,7 @@ interface PageProps {
 
 class Page extends Component<PageProps> {
   state = {
-    user: null,
+    user: null as UserData | null,
     userLoading: true,
     loginOpened: false,
   };
@@ -107,8 +107,10 @@ class Page extends Component<PageProps> {
           </ThemeProvider>
         ) : (
           <>
-            {this.state.user &&
-            pagesBlockedForLoggedUser.find((item) => item === this.props.pageType) ? (
+            {(this.state.user &&
+              pagesBlockedForLoggedUser.find((item) => item === this.props.pageType)) ||
+            (this.state.user && this.state.user.type === 0 && this.props.pageType === 'admin') ||
+            (!this.state.user && this.props.pageType === 'admin') ? (
               <ErrorPage statusCode={404} />
             ) : (
               <>
