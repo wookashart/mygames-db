@@ -167,9 +167,6 @@ const Wysiwig = ({ value, label, onChange }: WysiwigProps) => {
         .custom-richTextEditor .ql-container:hover {
           background-color: transparent;
         }
-        .custom-richTextEditor .ql-container:hover::before {
-          border-color: black;
-        }
         .custom-richTextEditor .ql-container:hover .ql-editor {
           background-color: rgba(255, 255, 255, 0.15);
         }

@@ -10,3 +10,8 @@ export interface RegisterInitialValuesData {
   gender: number;
   description: string;
 }
+
+export interface DropdownOptionsData {
+  title: string;
+  value: number | string;
+}

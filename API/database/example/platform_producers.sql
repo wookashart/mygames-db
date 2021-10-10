@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql18.mydevil.net
--- Generation Time: Oct 10, 2021 at 04:01 PM
+-- Generation Time: Oct 08, 2021 at 03:59 PM
 -- Server version: 5.7.34-37-log
 -- PHP Version: 7.3.23
 
@@ -25,17 +25,12 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `platforms`
+-- Table structure for table `platform_producer`
 --
 
-CREATE TABLE `platforms` (
-  `platform_id` int(255) NOT NULL,
-  `platform_name` varchar(255) COLLATE utf8_polish_ci NOT NULL,
-  `platform_sort_name` varchar(255) COLLATE utf8_polish_ci NOT NULL,
-  `platform_code` varchar(255) COLLATE utf8_polish_ci NOT NULL,
-  `platform_producer` int(255) NOT NULL,
-  `platform_date` date DEFAULT NULL,
-  `platform_description` mediumtext COLLATE utf8_polish_ci
+CREATE TABLE `platform_producer` (
+  `pproducer_id` int(255) NOT NULL,
+  `pproducer_name` varchar(255) COLLATE utf8_polish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
@@ -43,23 +38,21 @@ CREATE TABLE `platforms` (
 --
 
 --
--- Indexes for table `platforms`
+-- Indexes for table `platform_producer`
 --
-ALTER TABLE `platforms`
-  ADD PRIMARY KEY (`platform_id`),
-  ADD UNIQUE KEY `platform_name` (`platform_name`),
-  ADD UNIQUE KEY `platform_sort_name` (`platform_sort_name`),
-  ADD UNIQUE KEY `platform_code` (`platform_code`);
+ALTER TABLE `platform_producer`
+  ADD PRIMARY KEY (`pproducer_id`),
+  ADD UNIQUE KEY `pproducer_name` (`pproducer_name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `platforms`
+-- AUTO_INCREMENT for table `platform_producer`
 --
-ALTER TABLE `platforms`
-  MODIFY `platform_id` int(255) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `platform_producer`
+  MODIFY `pproducer_id` int(255) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

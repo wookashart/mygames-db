@@ -1,7 +1,8 @@
 import React from 'react';
 
 // === Components === //
-import { Grid, TextField } from '@mui/material';
+import { Grid } from '@mui/material';
+import { TextField } from '@material-ui/core';
 import DividerText from '../../common/DividerText';
 import Radio from '../../common/form/Radio';
 import DatePicker from '../../common/form/DatePicker';

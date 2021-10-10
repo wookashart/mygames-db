@@ -8,16 +8,25 @@ interface CustomModalProps {
   children: React.ReactChild;
   title: string;
   open: boolean;
+  size?: 'sm' | 'md';
   handleClose: Function;
 }
 
-const CustomModal = ({ children, title, open, handleClose }: CustomModalProps) => {
+const CustomModal = ({ children, title, open, handleClose, size = 'sm' }: CustomModalProps) => {
+  let modalWidth = 400;
+
+  if (size === 'sm') {
+    modalWidth = 400;
+  } else if (size === 'md') {
+    modalWidth = 800;
+  }
+
   const style = {
     position: 'absolute' as const,
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: modalWidth,
     bgcolor: colors.grey[800],
     boxShadow: 24,
     borderRadius: '4px',

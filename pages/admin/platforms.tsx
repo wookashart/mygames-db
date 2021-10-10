@@ -9,6 +9,7 @@ import { Add } from '@mui/icons-material';
 import Page from '../../src/components/layout/Page';
 import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
+import CreateEditForm from '../../src/components/pages/admin-platforms/CreateEditForm';
 
 // === Styles === //
 import { customColors } from '../../src/styles/variables';
@@ -18,6 +19,7 @@ class Platforms extends Component {
     platforms: [],
     totalCount: 0,
     searchInput: '',
+    createEditOpen: false,
   };
 
   handleChangeSearchInput = (value: string) => {
@@ -67,6 +69,7 @@ class Platforms extends Component {
                       color="primary"
                       variant="contained"
                       startIcon={<Add />}
+                      onClick={() => this.setState({ createEditOpen: true })}
                     >
                       Dodaj platformę
                     </LoadingButton>
@@ -74,6 +77,12 @@ class Platforms extends Component {
                 </Box>
               </Box>
             </Paper>
+
+            <CreateEditForm
+              id={null}
+              open={this.state.createEditOpen}
+              handleClose={() => this.setState({ createEditOpen: false })}
+            />
           </Container>
         </>
       </Page>
