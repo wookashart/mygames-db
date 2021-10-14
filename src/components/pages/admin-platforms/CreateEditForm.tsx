@@ -25,6 +25,7 @@ interface CreateEditFormProps {
   id: number | null;
   open: boolean;
   handleClose: Function;
+  handleReloadData: Function;
 }
 
 const validationSchema = yup.object({
@@ -41,7 +42,7 @@ const validationSchema = yup.object({
     .required('Musisz wybrać producenta!'),
 });
 
-const CreateEditForm = ({ id, open, handleClose }: CreateEditFormProps) => {
+const CreateEditForm = ({ id, open, handleClose, handleReloadData }: CreateEditFormProps) => {
   const [buttonLoading, toggleButtonLoading] = useState(false);
   const [producers, setProducers] = useState([]);
   const [formError, setFormError] = useState({ error: false, message: '' });
@@ -118,6 +119,7 @@ const CreateEditForm = ({ id, open, handleClose }: CreateEditFormProps) => {
               message: '',
             });
             handleClose();
+            handleReloadData();
           }
           toggleButtonLoading(false);
         })

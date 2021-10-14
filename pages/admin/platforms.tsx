@@ -13,6 +13,7 @@ import CreateEditForm from '../../src/components/pages/admin-platforms/CreateEdi
 
 // === Styles === //
 import { customColors } from '../../src/styles/variables';
+import PlatformsTable from '../../src/components/pages/admin-platforms/PlatformsTable';
 
 class Platforms extends Component {
   state = {
@@ -22,8 +23,38 @@ class Platforms extends Component {
     createEditOpen: false,
   };
 
+  componentDidMount() {
+    this.handleGetPlatforms();
+  }
+
+  handleGetPlatforms = () => {
+    const params =
+      this.state.searchInput && this.state.searchInput !== ''
+        ? `?platform=${this.state.searchInput}`
+        : '';
+
+    fetch(`/api/platforms${params}`, {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json && !json.error) {
+          this.setState({
+            platforms: json.items,
+            totalCount: json.items.length,
+          });
+        }
+      });
+  };
+
   handleChangeSearchInput = (value: string) => {
-    this.setState({ searchInput: value });
+    this.setState({ searchInput: value }, () => {
+      this.handleGetPlatforms();
+    });
   };
 
   render() {
@@ -53,11 +84,12 @@ class Platforms extends Component {
                     </Typography>
                   </Box>
                   <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}>
-                    <Box mr={{ xs: 0, md: 2 }} mb={{ xs: 2, md: 0 }}>
+                    <Box mr={{ xs: 0, md: 2 }} mb={{ xs: 2, md: 0 }} sx={{ width: 230 }}>
                       <TextField
+                        fullWidth
                         id="name"
                         name="name"
-                        label="Wyszukaj po nazwie"
+                        label="Wyszukaj po nazwie/kodzie"
                         variant="filled"
                         size="small"
                         value={this.state.searchInput}
@@ -76,12 +108,16 @@ class Platforms extends Component {
                   </Box>
                 </Box>
               </Box>
+              <Box px={2} pb={2}>
+                <PlatformsTable items={this.state.platforms} />
+              </Box>
             </Paper>
 
             <CreateEditForm
               id={null}
               open={this.state.createEditOpen}
               handleClose={() => this.setState({ createEditOpen: false })}
+              handleReloadData={this.handleGetPlatforms}
             />
           </Container>
         </>

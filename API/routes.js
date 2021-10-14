@@ -8,6 +8,7 @@ const apiLogout = require('./authentication/logout');
 const apiPlatformProducerCreate = require('./admin/platformProducerCreate');
 const apiPlatformProducersList = require('./admin/platformProducersList');
 const apiPlatformCreate = require('./admin/platformCreate');
+const apiPlatformsList = require('./admin/platformsList');
 
 const routes = [
   // === authentication === //
@@ -20,6 +21,7 @@ const routes = [
   { endpoint: '/api/platform-producer-create', function: apiPlatformProducerCreate, method: 'post' },
   { endpoint: '/api/platform-producers', function: apiPlatformProducersList, method: 'get' },
   { endpoint: '/api/platform-create', function: apiPlatformCreate, method: 'post' },
+  { endpoint: '/api/platforms', function: apiPlatformsList, method: 'get' },
 ];
 
 module.exports = routes;

@@ -73,22 +73,23 @@ const AdminNavigation = () => {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <Link href="/">
-            <a className="adminNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/admin/stats">
+              <a className="adminNavigation-link">
                 <ListItemIcon>
                   <QueryStats fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Statystyki
-              </MenuItem>
-            </a>
-          </Link>
+              </a>
+            </Link>
+          </MenuItem>
 
           <Divider
             sx={{
@@ -97,86 +98,91 @@ const AdminNavigation = () => {
               borderColor: colors.grey[700],
             }}
           />
-          <Link href="/">
-            <a className="adminNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/">
+              <a className="adminNavigation-link">
                 <ListItemIcon>
                   <SportsEsports fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Dodaj grę
-              </MenuItem>
-            </a>
-          </Link>
-          <Link href="/">
-            <a className="adminNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
+              </a>
+            </Link>
+          </MenuItem>
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/">
+              <a className="adminNavigation-link">
                 <ListItemIcon>
                   <Extension fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Dodaj DLC
-              </MenuItem>
-            </a>
-          </Link>
-          <Link href="/">
-            <a className="adminNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
+              </a>
+            </Link>
+          </MenuItem>
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/">
+              <a className="adminNavigation-link">
                 <ListItemIcon>
                   <Article fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Dodaj artykuł
-              </MenuItem>
-            </a>
-          </Link>
-          <Link href="/">
-            <a className="adminNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
+              </a>
+            </Link>
+          </MenuItem>
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/">
+              <a className="adminNavigation-link">
                 <ListItemIcon>
                   <Help fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Dodaj poradnik
-              </MenuItem>
-            </a>
-          </Link>
-          <Link href="/">
-            <a className="adminNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
+              </a>
+            </Link>
+          </MenuItem>
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/">
+              <a className="adminNavigation-link">
                 <ListItemIcon>
                   <People fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Użytkownicy
-              </MenuItem>
-            </a>
-          </Link>
+              </a>
+            </Link>
+          </MenuItem>
 
           <Divider
             sx={{
@@ -185,28 +191,33 @@ const AdminNavigation = () => {
               borderColor: colors.grey[700],
             }}
           />
-          <Link href="/admin/platforms">
-            <a className="adminNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/admin/platforms">
+              <a className="adminNavigation-link">
                 <ListItemIcon>
                   <Devices fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Platformy
-              </MenuItem>
-            </a>
-          </Link>
+              </a>
+            </Link>
+          </MenuItem>
         </Menu>
       </Box>
       <style jsx>{`
         .adminNavigation-link {
           text-decoration: none;
           color: ${customColors.textLight};
+          padding: 6px 16px;
+          display: flex;
+          align-items: center;
+          width: 100%;
         }
       `}</style>
     </>

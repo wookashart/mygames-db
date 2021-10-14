@@ -86,22 +86,23 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <Link href="/">
-            <a className="userNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/">
+              <a className="userNavigation-link">
                 <ListItemIcon>
                   <AccountCircle fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Profil
-              </MenuItem>
-            </a>
-          </Link>
+              </a>
+            </Link>
+          </MenuItem>
 
           <Divider
             sx={{
@@ -110,58 +111,54 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
               borderColor: colors.grey[700],
             }}
           />
-          <Link href="/">
-            <a className="userNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
-                Moja kolekcja
-              </MenuItem>
-            </a>
-          </Link>
-          <Link href="/">
-            <a className="userNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
-                Ukończone
-              </MenuItem>
-            </a>
-          </Link>
-          <Link href="/">
-            <a className="userNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
-                Porzucone
-              </MenuItem>
-            </a>
-          </Link>
-          <Link href="/">
-            <a className="userNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
-                Pominięte
-              </MenuItem>
-            </a>
-          </Link>
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/">
+              <a className="userNavigation-link">Moja kolekcja</a>
+            </Link>
+          </MenuItem>
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/">
+              <a className="userNavigation-link">Ukończone</a>
+            </Link>
+          </MenuItem>
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/">
+              <a className="userNavigation-link">Porzucone</a>
+            </Link>
+          </MenuItem>
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/">
+              <a className="userNavigation-link">Pominięte</a>
+            </Link>
+          </MenuItem>
 
           <Divider
             sx={{
@@ -170,22 +167,23 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
               borderColor: colors.grey[700],
             }}
           />
-          <Link href="/">
-            <a className="userNavigation-link">
-              <MenuItem
-                sx={{
-                  ':hover': {
-                    backgroundColor: colors.grey[600],
-                  },
-                }}
-              >
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/">
+              <a className="userNavigation-link">
                 <ListItemIcon>
                   <Settings fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Edytuj profil
-              </MenuItem>
-            </a>
-          </Link>
+              </a>
+            </Link>
+          </MenuItem>
           <MenuItem
             sx={{
               color: customColors.textLight,
@@ -206,6 +204,10 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
         .userNavigation-link {
           text-decoration: none;
           color: ${customColors.textLight};
+          padding: 6px 16px;
+          display: flex;
+          align-items: center;
+          width: 100%;
         }
       `}</style>
     </>
