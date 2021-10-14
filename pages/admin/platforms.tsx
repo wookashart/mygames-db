@@ -10,10 +10,13 @@ import Page from '../../src/components/layout/Page';
 import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
 import CreateEditForm from '../../src/components/pages/admin-platforms/CreateEditForm';
+import PlatformsTable from '../../src/components/pages/admin-platforms/PlatformsTable';
 
 // === Styles === //
 import { customColors } from '../../src/styles/variables';
-import PlatformsTable from '../../src/components/pages/admin-platforms/PlatformsTable';
+
+// === Types === //
+import { PlatformsData } from '../../src/types/admin';
 
 class Platforms extends Component {
   state = {
@@ -21,6 +24,7 @@ class Platforms extends Component {
     totalCount: 0,
     searchInput: '',
     createEditOpen: false,
+    editItem: null,
   };
 
   componentDidMount() {
@@ -54,6 +58,13 @@ class Platforms extends Component {
   handleChangeSearchInput = (value: string) => {
     this.setState({ searchInput: value }, () => {
       this.handleGetPlatforms();
+    });
+  };
+
+  handleOpenEditModal = (item: PlatformsData) => {
+    this.setState({
+      createEditOpen: true,
+      editItem: item,
     });
   };
 
@@ -109,14 +120,17 @@ class Platforms extends Component {
                 </Box>
               </Box>
               <Box px={2} pb={2}>
-                <PlatformsTable items={this.state.platforms} />
+                <PlatformsTable
+                  items={this.state.platforms}
+                  handleOpenEditModal={(item: PlatformsData) => this.handleOpenEditModal(item)}
+                />
               </Box>
             </Paper>
 
             <CreateEditForm
-              id={null}
+              editItem={this.state.editItem}
               open={this.state.createEditOpen}
-              handleClose={() => this.setState({ createEditOpen: false })}
+              handleClose={() => this.setState({ createEditOpen: false, editItem: null })}
               handleReloadData={this.handleGetPlatforms}
             />
           </Container>

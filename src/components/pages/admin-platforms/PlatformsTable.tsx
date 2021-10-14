@@ -29,9 +29,10 @@ import { Delete, Edit } from '@mui/icons-material';
 
 interface PlatformsTableProps {
   items: PlatformsData[];
+  handleOpenEditModal: Function;
 }
 
-const PlatformsTable = ({ items }: PlatformsTableProps) => {
+const PlatformsTable = ({ items, handleOpenEditModal }: PlatformsTableProps) => {
   return (
     <TableContainer>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="dense-table">
@@ -100,7 +101,7 @@ const PlatformsTable = ({ items }: PlatformsTableProps) => {
                         backgroundColor: colors.grey[600],
                       },
                     }}
-                    // onClick={() => handleLogout()}
+                    onClick={() => handleOpenEditModal(row)}
                   >
                     <ListItemIcon>
                       <Edit fontSize="small" sx={{ color: customColors.textLight }} />

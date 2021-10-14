@@ -14,7 +14,7 @@ import { DropdownOptionsData } from '../../../types/forms';
 interface DropdownProps {
   id: string;
   options: DropdownOptionsData[];
-  value: DropdownOptionsData | null;
+  value: DropdownOptionsData | null | undefined;
   handleChange: Function;
   error?: boolean;
   helperText?: string | boolean;

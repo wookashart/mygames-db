@@ -18,11 +18,11 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 // === Types === //
-import { PlatformProducersData } from '../../../types/admin';
+import { PlatformProducersData, PlatformsData } from '../../../types/admin';
 import { DropdownOptionsData } from '../../../types/forms';
 
 interface CreateEditFormProps {
-  id: number | null;
+  editItem: PlatformsData | null;
   open: boolean;
   handleClose: Function;
   handleReloadData: Function;
@@ -42,7 +42,7 @@ const validationSchema = yup.object({
     .required('Musisz wybrać producenta!'),
 });
 
-const CreateEditForm = ({ id, open, handleClose, handleReloadData }: CreateEditFormProps) => {
+const CreateEditForm = ({ editItem, open, handleClose, handleReloadData }: CreateEditFormProps) => {
   const [buttonLoading, toggleButtonLoading] = useState(false);
   const [producers, setProducers] = useState([]);
   const [formError, setFormError] = useState({ error: false, message: '' });
@@ -78,17 +78,21 @@ const CreateEditForm = ({ id, open, handleClose, handleReloadData }: CreateEditF
 
   const formik = useFormik({
     initialValues: {
-      name: '',
-      sortName: '',
-      code: '',
-      producer: null as DropdownOptionsData | null,
-      date: null,
-      description: '',
+      name: editItem ? editItem.platform_name : '',
+      sortName: editItem ? editItem.platform_sort_name : '',
+      code: editItem ? editItem.platform_code : '',
+      producer: editItem
+        ? producers.find((p: DropdownOptionsData) => p.value === editItem.platform_producer_id)
+        : (null as DropdownOptionsData | null),
+      date: editItem ? editItem.platform_date : null,
+      description: editItem ? editItem.platform_description : '',
     },
+    enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
       toggleButtonLoading(true);
       const input = {
+        id: editItem ? editItem.platform_id : null,
         name: values.name,
         sortName: values.sortName,
         code: values.code,
@@ -97,7 +101,7 @@ const CreateEditForm = ({ id, open, handleClose, handleReloadData }: CreateEditF
         description: values.description,
       };
 
-      fetch(`/api/platform-create`, {
+      fetch(`/api/${editItem ? 'platform-edit' : 'platform-create'}`, {
         headers: {
           'Content-type': 'application/json',
         },
@@ -132,10 +136,16 @@ const CreateEditForm = ({ id, open, handleClose, handleReloadData }: CreateEditF
 
   return (
     <Modal
-      title={id ? 'Edytuj platformę' : 'Dodaj platformę'}
+      title={editItem ? 'Edytuj platformę' : 'Dodaj platformę'}
       open={open}
       size="md"
-      handleClose={handleClose}
+      handleClose={() => {
+        setFormError({
+          error: false,
+          message: '',
+        });
+        handleClose();
+      }}
     >
       <>
         <form onSubmit={formik.handleSubmit}>
@@ -229,7 +239,13 @@ const CreateEditForm = ({ id, open, handleClose, handleReloadData }: CreateEditF
               type="button"
               color="error"
               variant="contained"
-              onClick={() => handleClose()}
+              onClick={() => {
+                setFormError({
+                  error: false,
+                  message: '',
+                });
+                handleClose();
+              }}
               sx={{ marginRight: 2 }}
             >
               Zamknij
