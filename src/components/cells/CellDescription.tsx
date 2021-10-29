@@ -11,9 +11,21 @@ interface CellDescriptionProps {
 
 const CellDescription = ({ value }: CellDescriptionProps) => {
   return (
-    <TableCell width={400} sx={{ color: customColors.textLight }}>
-      {ReactHtmlParser(value)}
-    </TableCell>
+    <>
+      <TableCell
+        width={400}
+        sx={{
+          color: customColors.textLight,
+        }}
+      >
+        <div className="cellDescription">{ReactHtmlParser(value)}</div>
+      </TableCell>
+      <style jsx global>{`
+        .cellDescription p {
+          margin: 5px 0;
+        }
+      `}</style>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ const { queryPromise } = require('../../utils');
 const connection = require('../../database/connection');
 
 module.exports = (req, res) => {
+  const id = req.body.id;
   const name = req.body.name;
   const description = req.body.description;
   const response = {};
@@ -10,6 +11,7 @@ module.exports = (req, res) => {
     SELECT *
     FROM tags
     WHERE tag_name = "${name}"
+    AND tag_id != "${id}"
   `)
   .then(({err, rows}) => {
     const nameDuplicated = rows && rows.find(item => item.tag_name === name) ? true : false;
@@ -18,7 +20,7 @@ module.exports = (req, res) => {
       const errorMessage = 'Tag o takiej nazwie już istnieje! Zmień nazwę i spróbuj ponownie.';
 
       response.tag = null;
-      response.created = false;
+      response.edited = false;
       response.nameDuplicated = nameDuplicated;
       response.errorMessage = errorMessage;
       response.error = err;
@@ -26,15 +28,14 @@ module.exports = (req, res) => {
       res.json(response);
     } else {
       connection.query(`
-        INSERT INTO tags
-        VALUES (
-          null,
-          "${name}",
-          "${description}"
-        )
+        UPDATE tags
+        SET
+          tag_name = "${name}",
+          tag_description = "${description}"
+        WHERE tag_id = "${id}"
       `, (err, rows) => {
         response.tag = rows;
-        response.created = true;
+        response.edited = true;
         response.nameDuplicated = nameDuplicated;
         response.errorMessage = '';
         response.error = err;
