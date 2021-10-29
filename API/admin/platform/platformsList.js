@@ -1,4 +1,4 @@
-const { queryPromise } = require('../utils');
+const { queryPromise } = require('../../utils');
 
 module.exports = (req, res) => {
   const name = req.query.platform;

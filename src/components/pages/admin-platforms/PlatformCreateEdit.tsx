@@ -21,7 +21,7 @@ import * as yup from 'yup';
 import { PlatformProducersData, PlatformsData } from '../../../types/admin';
 import { DropdownOptionsData } from '../../../types/forms';
 
-interface CreateEditFormProps {
+interface PlatformCreateEditProps {
   editItem: PlatformsData | null;
   open: boolean;
   handleClose: Function;
@@ -42,7 +42,12 @@ const validationSchema = yup.object({
     .required('Musisz wybrać producenta!'),
 });
 
-const CreateEditForm = ({ editItem, open, handleClose, handleReloadData }: CreateEditFormProps) => {
+const PlatformCreateEdit = ({
+  editItem,
+  open,
+  handleClose,
+  handleReloadData,
+}: PlatformCreateEditProps) => {
   const [buttonLoading, toggleButtonLoading] = useState(false);
   const [producers, setProducers] = useState([]);
   const [formError, setFormError] = useState({ error: false, message: '' });
@@ -280,4 +285,4 @@ const CreateEditForm = ({ editItem, open, handleClose, handleReloadData }: Creat
   );
 };
 
-export default CreateEditForm;
+export default PlatformCreateEdit;

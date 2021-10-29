@@ -9,7 +9,7 @@ import { Add } from '@mui/icons-material';
 import Page from '../../src/components/layout/Page';
 import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
-import CreateEditForm from '../../src/components/pages/admin-platforms/CreateEditForm';
+import PlatformCreateEdit from '../../src/components/pages/admin-platforms/PlatformCreateEdit';
 import PlatformsTable from '../../src/components/pages/admin-platforms/PlatformsTable';
 
 // === Styles === //
@@ -17,6 +17,7 @@ import { customColors } from '../../src/styles/variables';
 
 // === Types === //
 import { PlatformsData } from '../../src/types/admin';
+import PlatformDelete from '../../src/components/pages/admin-platforms/PlatformDelete';
 
 class Platforms extends Component {
   state = {
@@ -24,6 +25,7 @@ class Platforms extends Component {
     totalCount: 0,
     searchInput: '',
     createEditOpen: false,
+    deleteOpen: false,
     editItem: null,
   };
 
@@ -64,6 +66,12 @@ class Platforms extends Component {
   handleOpenEditModal = (item: PlatformsData) => {
     this.setState({
       createEditOpen: true,
+      editItem: item,
+    });
+  };
+  handleOpenDeleteModal = (item: PlatformsData) => {
+    this.setState({
+      deleteOpen: true,
       editItem: item,
     });
   };
@@ -123,14 +131,21 @@ class Platforms extends Component {
                 <PlatformsTable
                   items={this.state.platforms}
                   handleOpenEditModal={(item: PlatformsData) => this.handleOpenEditModal(item)}
+                  handleOpenDeleteModal={(item: PlatformsData) => this.handleOpenDeleteModal(item)}
                 />
               </Box>
             </Paper>
 
-            <CreateEditForm
+            <PlatformCreateEdit
               editItem={this.state.editItem}
               open={this.state.createEditOpen}
               handleClose={() => this.setState({ createEditOpen: false, editItem: null })}
+              handleReloadData={this.handleGetPlatforms}
+            />
+            <PlatformDelete
+              editItem={this.state.editItem}
+              open={this.state.deleteOpen}
+              handleClose={() => this.setState({ deleteOpen: false, editItem: null })}
               handleReloadData={this.handleGetPlatforms}
             />
           </Container>

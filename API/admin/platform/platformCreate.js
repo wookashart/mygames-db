@@ -1,8 +1,7 @@
-const { queryPromise } = require('../utils');
-const connection = require('../database/connection');
+const { queryPromise } = require('../../utils');
+const connection = require('../../database/connection');
 
 module.exports = (req, res) => {
-  const id = req.body.id;
   const name = req.body.name;
   const sortName = req.body.sortName;
   const code = req.body.code;
@@ -14,10 +13,9 @@ module.exports = (req, res) => {
   queryPromise(`
     SELECT *
     FROM platforms
-    WHERE (platform_name = "${name}"
+    WHERE platform_name = "${name}"
     OR platform_sort_name = "${sortName}"
-    OR platform_code = "${code}")
-    AND platform_id != "${id}"
+    OR platform_code = "${code}"
   `)
   .then(({err, rows}) => {
     const nameDuplicated = rows && rows.find(item => item.platform_name === name) ? true : false;
@@ -46,18 +44,19 @@ module.exports = (req, res) => {
       res.json(response);
     } else {
       connection.query(`
-        UPDATE platforms
-        SET
-          platform_name = "${name}",
-          platform_sort_name = "${sortName}",
-          platform_code = "${code}",
-          platform_producer = "${producer}",
-          platform_date = "${date ? date : null}",
-          platform_description = "${description}"
-        WHERE platform_id = "${id}"
+        INSERT INTO platforms
+        VALUES (
+          null,
+          "${name}",
+          "${sortName}",
+          "${code}",
+          "${producer}",
+          "${date ? date : null}",
+          "${description}"
+        )
       `, (err, rows) => {
         response.platform = rows;
-        response.edited = true;
+        response.created = true;
         response.nameDuplicated = nameDuplicated;
         response.sortNameDuplicated = sortNameDuplicated;
         response.codeDuplicated = codeDuplicated;

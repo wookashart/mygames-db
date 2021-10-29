@@ -1,5 +1,5 @@
-const { queryPromise } = require('../utils');
-const connection = require('../database/connection');
+const { queryPromise } = require('../../utils');
+const connection = require('../../database/connection');
 
 module.exports = (req, res) => {
   const name = req.body.name;
