@@ -11,6 +11,7 @@ const apiPlatformCreate = require('./admin/platform/platformCreate');
 const apiPlatformEdit = require('./admin/platform/platformEdit');
 const apiPlatformDelete = require('./admin/platform/platformDelete');
 const apiPlatformsList = require('./admin/platform/platformsList');
+const apiTagCreate = require('./admin/tag/tagCreate');
 
 const routes = [
   // === authentication === //
@@ -26,6 +27,7 @@ const routes = [
   { endpoint: '/api/platform-edit', function: apiPlatformEdit, method: 'post' },
   { endpoint: '/api/platform-delete', function: apiPlatformDelete, method: 'post' },
   { endpoint: '/api/platforms', function: apiPlatformsList, method: 'get' },
+  { endpoint: '/api/tag-create', function: apiTagCreate, method: 'post' },
 ];
 
 module.exports = routes;

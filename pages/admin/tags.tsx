@@ -9,9 +9,13 @@ import { Add } from '@mui/icons-material';
 import Page from '../../src/components/layout/Page';
 import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
+import TagCreateEdit from '../../src/components/pages/admin-tags/TagCreateEdit';
 
 // === Styles === //
 import { customColors } from '../../src/styles/variables';
+
+// === Types === //
+import { TagData } from '../../src/types/admin';
 
 class Tags extends Component {
   state = {
@@ -29,6 +33,20 @@ class Tags extends Component {
 
   handleGetTags = () => {
     //
+  };
+
+  handleOpenEditModal = (item: TagData) => {
+    this.setState({
+      createEditOpen: true,
+      editItem: item,
+    });
+  };
+
+  handleOpenDeleteModal = (item: TagData) => {
+    this.setState({
+      deleteOpen: true,
+      editItem: item,
+    });
   };
 
   handleChangeSearchInput = (value: string) => {
@@ -89,6 +107,13 @@ class Tags extends Component {
                 </Box>
               </Box>
             </Paper>
+
+            <TagCreateEdit
+              editItem={this.state.editItem}
+              open={this.state.createEditOpen}
+              handleClose={() => this.setState({ createEditOpen: false, editItem: null })}
+              handleReloadData={this.handleGetTags}
+            />
           </Container>
         </>
       </Page>

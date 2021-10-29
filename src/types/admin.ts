@@ -13,3 +13,9 @@ export interface PlatformsData {
   platform_description: string;
   platform_producer: string;
 }
+
+export interface TagData {
+  tag_id: number;
+  tag_name: string;
+  tag_description: string;
+}
