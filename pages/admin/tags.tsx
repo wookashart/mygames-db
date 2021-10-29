@@ -9,6 +9,7 @@ import { Add } from '@mui/icons-material';
 import Page from '../../src/components/layout/Page';
 import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
+import TagsTable from '../../src/components/pages/admin-tags/TagsTable';
 import TagCreateEdit from '../../src/components/pages/admin-tags/TagCreateEdit';
 
 // === Styles === //
@@ -32,7 +33,27 @@ class Tags extends Component {
   }
 
   handleGetTags = () => {
-    //
+    const params =
+      this.state.searchInput && this.state.searchInput !== ''
+        ? `?tag=${this.state.searchInput}`
+        : '';
+
+    fetch(`/api/tags${params}`, {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      method: 'GET',
+      credentials: 'include',
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json && !json.error) {
+          this.setState({
+            tags: json.items,
+            totalCount: json.items.length,
+          });
+        }
+      });
   };
 
   handleOpenEditModal = (item: TagData) => {
@@ -105,6 +126,13 @@ class Tags extends Component {
                     </LoadingButton>
                   </Box>
                 </Box>
+              </Box>
+              <Box px={2} pb={2}>
+                <TagsTable
+                  items={this.state.tags}
+                  handleOpenEditModal={(item: TagData) => this.handleOpenEditModal(item)}
+                  handleOpenDeleteModal={(item: TagData) => this.handleOpenDeleteModal(item)}
+                />
               </Box>
             </Paper>
 
