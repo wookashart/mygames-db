@@ -13,17 +13,17 @@ import { useFormik } from 'formik';
 import { customColors } from '../../../styles/variables';
 
 // === Types === //
-import { PlatformsData } from '../../../types/admin';
+import { TagData } from '../../../types/admin';
 import { colors, Typography } from '@mui/material';
 
-interface PlatformDeleteProps {
-  editItem: PlatformsData | null;
+interface TagDeleteProps {
+  editItem: TagData | null;
   open: boolean;
   handleClose: Function;
   handleReloadData: Function;
 }
 
-const PlatformDelete = ({ editItem, open, handleClose, handleReloadData }: PlatformDeleteProps) => {
+const TagDelete = ({ editItem, open, handleClose, handleReloadData }: TagDeleteProps) => {
   const [buttonLoading, toggleButtonLoading] = useState(false);
   const [formError, setFormError] = useState({ error: false, message: '' });
 
@@ -34,10 +34,10 @@ const PlatformDelete = ({ editItem, open, handleClose, handleReloadData }: Platf
       toggleButtonLoading(true);
 
       const input = {
-        id: editItem?.platform_id,
+        id: editItem?.tag_id,
       };
 
-      fetch(`/api/platform-delete`, {
+      fetch(`/api/tag-delete`, {
         headers: {
           'Content-type': 'application/json',
         },
@@ -74,7 +74,7 @@ const PlatformDelete = ({ editItem, open, handleClose, handleReloadData }: Platf
 
   return (
     <Modal
-      title="Usuń platformę"
+      title="Usuń tag"
       open={open}
       size="sm"
       handleClose={() => {
@@ -88,7 +88,7 @@ const PlatformDelete = ({ editItem, open, handleClose, handleReloadData }: Platf
       <form onSubmit={formik.handleSubmit}>
         <Box mt={2}>
           <Typography color={customColors.textLight}>
-            Czy na pewno chcesz usunąć platformę: <strong>{editItem?.platform_name}</strong>?
+            Czy na pewno chcesz usunąć tag: <strong>{editItem?.tag_name}</strong>?
           </Typography>
         </Box>
 
@@ -132,4 +132,4 @@ const PlatformDelete = ({ editItem, open, handleClose, handleReloadData }: Platf
   );
 };
 
-export default PlatformDelete;
+export default TagDelete;

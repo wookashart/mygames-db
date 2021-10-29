@@ -13,6 +13,7 @@ const apiPlatformDelete = require('./admin/platform/platformDelete');
 const apiPlatformsList = require('./admin/platform/platformsList');
 const apiTagCreate = require('./admin/tag/tagCreate');
 const apiTagEdit = require('./admin/tag/tagEdit');
+const apiTagDelete = require('./admin/tag/tagDelete');
 const apiTagsList = require('./admin/tag/tagsList');
 
 const routes = [
@@ -31,6 +32,7 @@ const routes = [
   { endpoint: '/api/platforms', function: apiPlatformsList, method: 'get' },
   { endpoint: '/api/tag-create', function: apiTagCreate, method: 'post' },
   { endpoint: '/api/tag-edit', function: apiTagEdit, method: 'post' },
+  { endpoint: '/api/tag-delete', function: apiTagDelete, method: 'post' },
   { endpoint: '/api/tags', function: apiTagsList, method: 'get' },
 ];
 

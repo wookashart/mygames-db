@@ -11,6 +11,7 @@ import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
 import TagsTable from '../../src/components/pages/admin-tags/TagsTable';
 import TagCreateEdit from '../../src/components/pages/admin-tags/TagCreateEdit';
+import TagDelete from '../../src/components/pages/admin-tags/TagDelete';
 
 // === Styles === //
 import { customColors } from '../../src/styles/variables';
@@ -140,6 +141,12 @@ class Tags extends Component {
               editItem={this.state.editItem}
               open={this.state.createEditOpen}
               handleClose={() => this.setState({ createEditOpen: false, editItem: null })}
+              handleReloadData={this.handleGetTags}
+            />
+            <TagDelete
+              editItem={this.state.editItem}
+              open={this.state.deleteOpen}
+              handleClose={() => this.setState({ deleteOpen: false, editItem: null })}
               handleReloadData={this.handleGetTags}
             />
           </Container>
