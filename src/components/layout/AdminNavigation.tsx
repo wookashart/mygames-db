@@ -9,6 +9,7 @@ import {
   Devices,
   Extension,
   Help,
+  LocalOffer,
   People,
   QueryStats,
   SportsEsports,
@@ -205,6 +206,23 @@ const AdminNavigation = () => {
                   <Devices fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Platformy
+              </a>
+            </Link>
+          </MenuItem>
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/admin/tags">
+              <a className="adminNavigation-link">
+                <ListItemIcon>
+                  <LocalOffer fontSize="small" sx={{ color: customColors.textLight }} />
+                </ListItemIcon>
+                Tagi
               </a>
             </Link>
           </MenuItem>

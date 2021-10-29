@@ -9,19 +9,13 @@ import { Add } from '@mui/icons-material';
 import Page from '../../src/components/layout/Page';
 import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
-import PlatformCreateEdit from '../../src/components/pages/admin-platforms/PlatformCreateEdit';
-import PlatformsTable from '../../src/components/pages/admin-platforms/PlatformsTable';
 
 // === Styles === //
 import { customColors } from '../../src/styles/variables';
 
-// === Types === //
-import { PlatformsData } from '../../src/types/admin';
-import PlatformDelete from '../../src/components/pages/admin-platforms/PlatformDelete';
-
-class Platforms extends Component {
+class Tags extends Component {
   state = {
-    platforms: [],
+    tags: [],
     totalCount: 0,
     searchInput: '',
     createEditOpen: false,
@@ -30,65 +24,31 @@ class Platforms extends Component {
   };
 
   componentDidMount() {
-    this.handleGetPlatforms();
+    this.handleGetTags();
   }
 
-  handleGetPlatforms = () => {
-    const params =
-      this.state.searchInput && this.state.searchInput !== ''
-        ? `?platform=${this.state.searchInput}`
-        : '';
-
-    fetch(`/api/platforms${params}`, {
-      headers: {
-        'Content-type': 'application/json',
-      },
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json && !json.error) {
-          this.setState({
-            platforms: json.items,
-            totalCount: json.items.length,
-          });
-        }
-      });
+  handleGetTags = () => {
+    //
   };
 
   handleChangeSearchInput = (value: string) => {
     this.setState({ searchInput: value }, () => {
-      this.handleGetPlatforms();
-    });
-  };
-
-  handleOpenEditModal = (item: PlatformsData) => {
-    this.setState({
-      createEditOpen: true,
-      editItem: item,
-    });
-  };
-
-  handleOpenDeleteModal = (item: PlatformsData) => {
-    this.setState({
-      deleteOpen: true,
-      editItem: item,
+      this.handleGetTags();
     });
   };
 
   render() {
     return (
-      <Page seo={{ title: 'Platformy', description: '' }} pageType="admin">
+      <Page seo={{ title: 'Tagi', description: '' }} pageType="admin">
         <>
           <Breadcrumbs
             options={[
               { current: false, label: 'Strona główna', href: '/' },
-              { current: true, label: 'Platformy', href: '/admin/platforms' },
+              { current: true, label: 'Tagi', href: '/admin/tags' },
             ]}
           />
           <Container maxWidth="xl">
-            <PageHeader title="Platformy" />
+            <PageHeader title="Tagi" />
 
             <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>
               <Box px={3} py={3}>
@@ -100,7 +60,7 @@ class Platforms extends Component {
                 >
                   <Box>
                     <Typography color={customColors.textLight} mb={{ xs: 2, md: 0 }}>
-                      Wszystkich platform: {this.state.totalCount}
+                      Wszystkich tagów: {this.state.totalCount}
                     </Typography>
                   </Box>
                   <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}>
@@ -109,7 +69,7 @@ class Platforms extends Component {
                         fullWidth
                         id="name"
                         name="name"
-                        label="Wyszukaj po nazwie/kodzie"
+                        label="Wyszukaj po nazwie"
                         variant="filled"
                         size="small"
                         value={this.state.searchInput}
@@ -123,32 +83,12 @@ class Platforms extends Component {
                       startIcon={<Add />}
                       onClick={() => this.setState({ createEditOpen: true })}
                     >
-                      Dodaj platformę
+                      Dodaj tag
                     </LoadingButton>
                   </Box>
                 </Box>
               </Box>
-              <Box px={2} pb={2}>
-                <PlatformsTable
-                  items={this.state.platforms}
-                  handleOpenEditModal={(item: PlatformsData) => this.handleOpenEditModal(item)}
-                  handleOpenDeleteModal={(item: PlatformsData) => this.handleOpenDeleteModal(item)}
-                />
-              </Box>
             </Paper>
-
-            <PlatformCreateEdit
-              editItem={this.state.editItem}
-              open={this.state.createEditOpen}
-              handleClose={() => this.setState({ createEditOpen: false, editItem: null })}
-              handleReloadData={this.handleGetPlatforms}
-            />
-            <PlatformDelete
-              editItem={this.state.editItem}
-              open={this.state.deleteOpen}
-              handleClose={() => this.setState({ deleteOpen: false, editItem: null })}
-              handleReloadData={this.handleGetPlatforms}
-            />
           </Container>
         </>
       </Page>
@@ -156,4 +96,4 @@ class Platforms extends Component {
   }
 }
 
-export default Platforms;
+export default Tags;
