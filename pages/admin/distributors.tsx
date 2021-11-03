@@ -10,8 +10,7 @@ import Page from '../../src/components/layout/Page';
 import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
 import DistributorsTable from '../../src/components/pages/admin-distributors/DistributorsTable';
-// import ProducerCreateEdit from '../../src/components/pages/admin-producers/ProducerCreateEdit';
-// import ProducerDelete from '../../src/components/pages/admin-producers/ProducerDelete';
+import DistributorCreateEdit from '../../src/components/pages/admin-distributors/DistributorCreateEdit';
 
 // === Styles === //
 import { customColors } from '../../src/styles/variables';
@@ -137,12 +136,12 @@ class Distributors extends Component {
               </Box>
             </Paper>
 
-            {/* <ProducerCreateEdit
+            <DistributorCreateEdit
               editItem={this.state.editItem}
               open={this.state.createEditOpen}
               handleClose={() => this.setState({ createEditOpen: false, editItem: null })}
               handleReloadData={this.handleGetDistributor}
-            /> */}
+            />
             {/* <ProducerDelete
               editItem={this.state.editItem}
               open={this.state.deleteOpen}

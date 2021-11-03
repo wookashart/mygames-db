@@ -8,16 +8,16 @@ module.exports = (req, res) => {
 
   queryPromise(`
     SELECT *
-    FROM producers
-    WHERE producer_name = "${name}"
+    FROM distributors
+    WHERE distributor_name = "${name}"
   `)
   .then(({err, rows}) => {
-    const nameDuplicated = rows && rows.find(item => item.producer_name === name) ? true : false;
+    const nameDuplicated = rows && rows.find(item => item.distributor_name === name) ? true : false;
 
     if (nameDuplicated) {
-      const errorMessage = 'Producent o takiej nazwie już istnieje! Zmień nazwę i spróbuj ponownie.';
+      const errorMessage = 'Wydawca o takiej nazwie już istnieje! Zmień nazwę i spróbuj ponownie.';
 
-      response.producer = null;
+      response.distributor = null;
       response.created = false;
       response.nameDuplicated = nameDuplicated;
       response.errorMessage = errorMessage;
@@ -26,14 +26,14 @@ module.exports = (req, res) => {
       res.json(response);
     } else {
       connection.query(`
-        INSERT INTO producers
+        INSERT INTO distributors
         VALUES (
           null,
           "${name}",
           "${description}"
         )
       `, (err, rows) => {
-        response.producer = rows;
+        response.distributor = rows;
         response.created = true;
         response.nameDuplicated = nameDuplicated;
         response.errorMessage = '';
