@@ -15,6 +15,7 @@ const apiTagCreate = require('./admin/tag/tagCreate');
 const apiTagEdit = require('./admin/tag/tagEdit');
 const apiTagDelete = require('./admin/tag/tagDelete');
 const apiTagsList = require('./admin/tag/tagsList');
+const apiProducersList = require('./admin/producer/producerList');
 
 const routes = [
   // === authentication === //
@@ -34,6 +35,7 @@ const routes = [
   { endpoint: '/api/tag-edit', function: apiTagEdit, method: 'post' },
   { endpoint: '/api/tag-delete', function: apiTagDelete, method: 'post' },
   { endpoint: '/api/tags', function: apiTagsList, method: 'get' },
+  { endpoint: '/api/producers', function: apiProducersList, method: 'get' },
 ];
 
 module.exports = routes;

@@ -9,6 +9,7 @@ import {
   Devices,
   Extension,
   Help,
+  HomeWork,
   LocalOffer,
   People,
   QueryStats,
@@ -223,6 +224,23 @@ const AdminNavigation = () => {
                   <LocalOffer fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Tagi
+              </a>
+            </Link>
+          </MenuItem>
+          <MenuItem
+            sx={{
+              padding: 0,
+              ':hover': {
+                backgroundColor: colors.grey[600],
+              },
+            }}
+          >
+            <Link href="/admin/producers">
+              <a className="adminNavigation-link">
+                <ListItemIcon>
+                  <HomeWork fontSize="small" sx={{ color: customColors.textLight }} />
+                </ListItemIcon>
+                Producenci
               </a>
             </Link>
           </MenuItem>

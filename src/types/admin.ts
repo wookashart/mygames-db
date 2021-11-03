@@ -19,3 +19,9 @@ export interface TagData {
   tag_name: string;
   tag_description: string;
 }
+
+export interface ProducerData {
+  producer_id: number;
+  producer_name: string;
+  producer_description: string;
+}

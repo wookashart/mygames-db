@@ -9,19 +9,19 @@ import { Add } from '@mui/icons-material';
 import Page from '../../src/components/layout/Page';
 import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
-import PlatformCreateEdit from '../../src/components/pages/admin-platforms/PlatformCreateEdit';
-import PlatformsTable from '../../src/components/pages/admin-platforms/PlatformsTable';
-import PlatformDelete from '../../src/components/pages/admin-platforms/PlatformDelete';
+import ProducersTable from '../../src/components/pages/admin-producers/ProducersTable';
+// import PlatformCreateEdit from '../../src/components/pages/admin-platforms/PlatformCreateEdit';
+// import PlatformDelete from '../../src/components/pages/admin-platforms/PlatformDelete';
 
 // === Styles === //
 import { customColors } from '../../src/styles/variables';
 
 // === Types === //
-import { PlatformsData } from '../../src/types/admin';
+import { ProducerData } from '../../src/types/admin';
 
-class Platforms extends Component {
+class Producers extends Component {
   state = {
-    platforms: [],
+    producers: [],
     totalCount: 0,
     searchInput: '',
     createEditOpen: false,
@@ -30,16 +30,16 @@ class Platforms extends Component {
   };
 
   componentDidMount() {
-    this.handleGetPlatforms();
+    this.handleGetProducers();
   }
 
-  handleGetPlatforms = () => {
+  handleGetProducers = () => {
     const params =
       this.state.searchInput && this.state.searchInput !== ''
-        ? `?platform=${this.state.searchInput}`
+        ? `?producer=${this.state.searchInput}`
         : '';
 
-    fetch(`/api/platforms${params}`, {
+    fetch(`/api/producers${params}`, {
       headers: {
         'Content-type': 'application/json',
       },
@@ -50,7 +50,7 @@ class Platforms extends Component {
       .then((json) => {
         if (json && !json.error) {
           this.setState({
-            platforms: json.items,
+            producers: json.items,
             totalCount: json.items.length,
           });
         }
@@ -59,18 +59,18 @@ class Platforms extends Component {
 
   handleChangeSearchInput = (value: string) => {
     this.setState({ searchInput: value }, () => {
-      this.handleGetPlatforms();
+      this.handleGetProducers();
     });
   };
 
-  handleOpenEditModal = (item: PlatformsData) => {
+  handleOpenEditModal = (item: ProducerData) => {
     this.setState({
       createEditOpen: true,
       editItem: item,
     });
   };
 
-  handleOpenDeleteModal = (item: PlatformsData) => {
+  handleOpenDeleteModal = (item: ProducerData) => {
     this.setState({
       deleteOpen: true,
       editItem: item,
@@ -79,16 +79,16 @@ class Platforms extends Component {
 
   render() {
     return (
-      <Page seo={{ title: 'Platformy', description: '' }} pageType="admin">
+      <Page seo={{ title: 'Producenci', description: '' }} pageType="admin">
         <>
           <Breadcrumbs
             options={[
               { current: false, label: 'Strona główna', href: '/' },
-              { current: true, label: 'Platformy', href: '/admin/platforms' },
+              { current: true, label: 'Producenci', href: '/admin/producers' },
             ]}
           />
           <Container maxWidth="xl">
-            <PageHeader title="Platformy" />
+            <PageHeader title="Producenci" />
 
             <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>
               <Box px={3} py={3}>
@@ -100,7 +100,7 @@ class Platforms extends Component {
                 >
                   <Box>
                     <Typography color={customColors.textLight} mb={{ xs: 2, md: 0 }}>
-                      Wszystkich platform: {this.state.totalCount}
+                      Wszystkich producentów: {this.state.totalCount}
                     </Typography>
                   </Box>
                   <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}>
@@ -109,7 +109,7 @@ class Platforms extends Component {
                         fullWidth
                         id="name"
                         name="name"
-                        label="Wyszukaj po nazwie/kodzie"
+                        label="Wyszukaj po nazwie"
                         variant="filled"
                         size="small"
                         value={this.state.searchInput}
@@ -123,21 +123,21 @@ class Platforms extends Component {
                       startIcon={<Add />}
                       onClick={() => this.setState({ createEditOpen: true })}
                     >
-                      Dodaj platformę
+                      Dodaj producenta
                     </LoadingButton>
                   </Box>
                 </Box>
               </Box>
               <Box px={2} pb={2}>
-                <PlatformsTable
-                  items={this.state.platforms}
-                  handleOpenEditModal={(item: PlatformsData) => this.handleOpenEditModal(item)}
-                  handleOpenDeleteModal={(item: PlatformsData) => this.handleOpenDeleteModal(item)}
+                <ProducersTable
+                  items={this.state.producers}
+                  handleOpenEditModal={(item: ProducerData) => this.handleOpenEditModal(item)}
+                  handleOpenDeleteModal={(item: ProducerData) => this.handleOpenDeleteModal(item)}
                 />
               </Box>
             </Paper>
 
-            <PlatformCreateEdit
+            {/* <PlatformCreateEdit
               editItem={this.state.editItem}
               open={this.state.createEditOpen}
               handleClose={() => this.setState({ createEditOpen: false, editItem: null })}
@@ -148,7 +148,7 @@ class Platforms extends Component {
               open={this.state.deleteOpen}
               handleClose={() => this.setState({ deleteOpen: false, editItem: null })}
               handleReloadData={this.handleGetPlatforms}
-            />
+            /> */}
           </Container>
         </>
       </Page>
@@ -156,4 +156,4 @@ class Platforms extends Component {
   }
 }
 
-export default Platforms;
+export default Producers;
