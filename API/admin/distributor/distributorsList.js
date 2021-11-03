@@ -1,7 +1,7 @@
 const { queryPromise } = require('../../utils');
 
 module.exports = (req, res) => {
-  const name = req.query.tag;
+  const name = req.query.distributor;
   const response = {};
 
   const where = name && name !== '' ? `WHERE distributor_name LIKE "%${name}%"` : '';

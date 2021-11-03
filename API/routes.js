@@ -23,6 +23,10 @@ const apiDistributorList = require('./admin/distributor/distributorsList');
 const apiDistributorCreate = require('./admin/distributor/distributorCreate');
 const apiDistributorEdit = require('./admin/distributor/distributorEdit');
 const apiDistributorDelete = require('./admin/distributor/distributorDelete');
+const apiDistributorPlList = require('./admin/distributor-pl/distributorsPlList');
+const apiDistributorPlCreate = require('./admin/distributor-pl/distributorPlCreate');
+const apiDistributorPlEdit = require('./admin/distributor-pl/distributorPlEdit');
+const apiDistributorPlDelete = require('./admin/distributor-pl/distributorPlDelete');
 
 const routes = [
   // === authentication === //
@@ -50,6 +54,10 @@ const routes = [
   { endpoint: '/api/distributor-create', function: apiDistributorCreate, method: 'post' },
   { endpoint: '/api/distributor-edit', function: apiDistributorEdit, method: 'post' },
   { endpoint: '/api/distributor-delete', function: apiDistributorDelete, method: 'post' },
+  { endpoint: '/api/distributors-pl', function: apiDistributorPlList, method: 'get' },
+  { endpoint: '/api/distributor-pl-create', function: apiDistributorPlCreate, method: 'post' },
+  { endpoint: '/api/distributor-pl-edit', function: apiDistributorPlEdit, method: 'post' },
+  { endpoint: '/api/distributor-pl-delete', function: apiDistributorPlDelete, method: 'post' },
 ];
 
 module.exports = routes;

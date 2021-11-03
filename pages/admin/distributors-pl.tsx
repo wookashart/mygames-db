@@ -10,8 +10,8 @@ import Page from '../../src/components/layout/Page';
 import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
 import DistributorsPlTable from '../../src/components/pages/admin-distributors-pl/DistributorsPlTable';
-// import DistributorCreateEdit from '../../src/components/pages/admin-distributors/DistributorCreateEdit';
-// import DistributorDelete from '../../src/components/pages/admin-distributors/DistributorDelete';
+import DistributorPlCreateEdit from '../../src/components/pages/admin-distributors-pl/DistributorPlCreateEdit';
+import DistributorPlDelete from '../../src/components/pages/admin-distributors-pl/DistributorPlDelete';
 
 // === Styles === //
 import { customColors } from '../../src/styles/variables';
@@ -139,18 +139,18 @@ class DistributorsPl extends Component {
               </Box>
             </Paper>
 
-            {/* <DistributorCreateEdit
+            <DistributorPlCreateEdit
               editItem={this.state.editItem}
               open={this.state.createEditOpen}
               handleClose={() => this.setState({ createEditOpen: false, editItem: null })}
               handleReloadData={this.handleGetDistributorPl}
-            /> */}
-            {/* <DistributorDelete
+            />
+            <DistributorPlDelete
               editItem={this.state.editItem}
               open={this.state.deleteOpen}
               handleClose={() => this.setState({ deleteOpen: false, editItem: null })}
               handleReloadData={this.handleGetDistributorPl}
-            /> */}
+            />
           </Container>
         </>
       </Page>
