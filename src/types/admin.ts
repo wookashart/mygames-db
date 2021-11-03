@@ -25,3 +25,15 @@ export interface ProducerData {
   producer_name: string;
   producer_description: string;
 }
+
+export interface DistributorData {
+  distributor_id: number;
+  distributor_name: string;
+  distributor_description: string;
+}
+
+export interface DistributorPlData {
+  distributor_pl_id: number;
+  distributor_pl_name: string;
+  distributor_pl_description: string;
+}

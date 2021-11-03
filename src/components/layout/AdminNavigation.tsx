@@ -5,6 +5,7 @@ import { Box } from '@mui/system';
 import { Button, colors, Divider, ListItemIcon, Menu, MenuItem, Typography } from '@mui/material';
 import {
   AdminPanelSettings,
+  Album,
   Article,
   Devices,
   Extension,
@@ -16,6 +17,9 @@ import {
   SportsEsports,
 } from '@mui/icons-material';
 import Link from 'next/link';
+
+// === Config === //
+import { adminNavigation } from '../../config/navigation';
 
 // === Styles === //
 import { customColors } from '../../styles/variables';
@@ -193,57 +197,38 @@ const AdminNavigation = () => {
               borderColor: colors.grey[700],
             }}
           />
-          <MenuItem
-            sx={{
-              padding: 0,
-              ':hover': {
-                backgroundColor: colors.grey[600],
-              },
-            }}
-          >
-            <Link href="/admin/platforms">
-              <a className="adminNavigation-link">
-                <ListItemIcon>
-                  <Devices fontSize="small" sx={{ color: customColors.textLight }} />
-                </ListItemIcon>
-                Platformy
-              </a>
-            </Link>
-          </MenuItem>
-          <MenuItem
-            sx={{
-              padding: 0,
-              ':hover': {
-                backgroundColor: colors.grey[600],
-              },
-            }}
-          >
-            <Link href="/admin/tags">
-              <a className="adminNavigation-link">
-                <ListItemIcon>
-                  <LocalOffer fontSize="small" sx={{ color: customColors.textLight }} />
-                </ListItemIcon>
-                Tagi
-              </a>
-            </Link>
-          </MenuItem>
-          <MenuItem
-            sx={{
-              padding: 0,
-              ':hover': {
-                backgroundColor: colors.grey[600],
-              },
-            }}
-          >
-            <Link href="/admin/producers">
-              <a className="adminNavigation-link">
-                <ListItemIcon>
-                  <HomeWork fontSize="small" sx={{ color: customColors.textLight }} />
-                </ListItemIcon>
-                Producenci
-              </a>
-            </Link>
-          </MenuItem>
+
+          {adminNavigation.map((admin) => (
+            <MenuItem
+              key={admin.label}
+              sx={{
+                padding: 0,
+                ':hover': {
+                  backgroundColor: colors.grey[600],
+                },
+              }}
+            >
+              <Link href={admin.url}>
+                <a className="adminNavigation-link">
+                  <ListItemIcon>
+                    {admin.icon === 'Devices' && (
+                      <Devices fontSize="small" sx={{ color: customColors.textLight }} />
+                    )}
+                    {admin.icon === 'HomeWork' && (
+                      <HomeWork fontSize="small" sx={{ color: customColors.textLight }} />
+                    )}
+                    {admin.icon === 'LocalOffer' && (
+                      <LocalOffer fontSize="small" sx={{ color: customColors.textLight }} />
+                    )}
+                    {admin.icon === 'Album' && (
+                      <Album fontSize="small" sx={{ color: customColors.textLight }} />
+                    )}
+                  </ListItemIcon>
+                  {admin.label}
+                </a>
+              </Link>
+            </MenuItem>
+          ))}
         </Menu>
       </Box>
       <style jsx>{`
