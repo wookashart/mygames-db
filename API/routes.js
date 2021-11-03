@@ -22,6 +22,7 @@ const apiProducerDelete = require('./admin/producer/producerDelete');
 const apiDistributorList = require('./admin/distributor/distributorsList');
 const apiDistributorCreate = require('./admin/distributor/distributorCreate');
 const apiDistributorEdit = require('./admin/distributor/distributorEdit');
+const apiDistributorDelete = require('./admin/distributor/distributorDelete');
 
 const routes = [
   // === authentication === //
@@ -48,6 +49,7 @@ const routes = [
   { endpoint: '/api/distributors', function: apiDistributorList, method: 'get' },
   { endpoint: '/api/distributor-create', function: apiDistributorCreate, method: 'post' },
   { endpoint: '/api/distributor-edit', function: apiDistributorEdit, method: 'post' },
+  { endpoint: '/api/distributor-delete', function: apiDistributorDelete, method: 'post' },
 ];
 
 module.exports = routes;
