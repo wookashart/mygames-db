@@ -14,10 +14,10 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 
 // === Types === //
-import { TagData } from '../../../types/admin';
+import { ProducerData } from '../../../types/admin';
 
-interface TagCreateEditProps {
-  editItem: TagData | null;
+interface ProducerCreateEditProps {
+  editItem: ProducerData | null;
   open: boolean;
   handleClose: Function;
   handleReloadData: Function;
@@ -27,26 +27,31 @@ const validationSchema = yup.object({
   name: yup.string().required('Musisz podać nazwę!'),
 });
 
-const TagCreateEdit = ({ editItem, open, handleClose, handleReloadData }: TagCreateEditProps) => {
+const ProducerCreateEdit = ({
+  editItem,
+  open,
+  handleClose,
+  handleReloadData,
+}: ProducerCreateEditProps) => {
   const [buttonLoading, toggleButtonLoading] = useState(false);
   const [formError, setFormError] = useState({ error: false, message: '' });
 
   const formik = useFormik({
     initialValues: {
-      name: editItem ? editItem.tag_name : '',
-      description: editItem ? editItem.tag_description : '',
+      name: editItem ? editItem.producer_name : '',
+      description: editItem ? editItem.producer_description : '',
     },
     enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values, { resetForm }) => {
       toggleButtonLoading(true);
       const input = {
-        id: editItem ? editItem.tag_id : null,
+        id: editItem ? editItem.producer_id : null,
         name: values.name,
         description: values.description,
       };
 
-      fetch(`/api/${editItem ? 'tag-edit' : 'tag-create'}`, {
+      fetch(`/api/${editItem ? 'producer-edit' : 'producer-create'}`, {
         headers: {
           'Content-type': 'application/json',
         },
@@ -81,7 +86,7 @@ const TagCreateEdit = ({ editItem, open, handleClose, handleReloadData }: TagCre
 
   return (
     <Modal
-      title={editItem ? 'Edytuj tag' : 'Dodaj tag'}
+      title={editItem ? 'Edytuj producenta' : 'Dodaj producenta'}
       open={open}
       size="md"
       handleClose={() => {
@@ -158,4 +163,4 @@ const TagCreateEdit = ({ editItem, open, handleClose, handleReloadData }: TagCre
   );
 };
 
-export default TagCreateEdit;
+export default ProducerCreateEdit;

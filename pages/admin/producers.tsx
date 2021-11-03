@@ -10,7 +10,7 @@ import Page from '../../src/components/layout/Page';
 import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
 import ProducersTable from '../../src/components/pages/admin-producers/ProducersTable';
-// import PlatformCreateEdit from '../../src/components/pages/admin-platforms/PlatformCreateEdit';
+import ProducerCreateEdit from '../../src/components/pages/admin-producers/ProducerCreateEdit';
 // import PlatformDelete from '../../src/components/pages/admin-platforms/PlatformDelete';
 
 // === Styles === //
@@ -137,17 +137,18 @@ class Producers extends Component {
               </Box>
             </Paper>
 
-            {/* <PlatformCreateEdit
+            <ProducerCreateEdit
               editItem={this.state.editItem}
               open={this.state.createEditOpen}
               handleClose={() => this.setState({ createEditOpen: false, editItem: null })}
-              handleReloadData={this.handleGetPlatforms}
+              handleReloadData={this.handleGetProducers}
             />
+            {/* 
             <PlatformDelete
               editItem={this.state.editItem}
               open={this.state.deleteOpen}
               handleClose={() => this.setState({ deleteOpen: false, editItem: null })}
-              handleReloadData={this.handleGetPlatforms}
+              handleReloadData={this.handleGetProducers}
             /> */}
           </Container>
         </>
