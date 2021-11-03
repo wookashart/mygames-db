@@ -32,4 +32,9 @@ export const adminNavigation = [
     url: '/admin/distributors',
     icon: 'Album',
   },
+  {
+    label: 'Wydawcy w Polsce',
+    url: '/admin/distributors-pl',
+    icon: 'DiscFull',
+  },
 ];

@@ -9,19 +9,19 @@ import { Add } from '@mui/icons-material';
 import Page from '../../src/components/layout/Page';
 import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
-import DistributorsTable from '../../src/components/pages/admin-distributors/DistributorsTable';
-import DistributorCreateEdit from '../../src/components/pages/admin-distributors/DistributorCreateEdit';
-import DistributorDelete from '../../src/components/pages/admin-distributors/DistributorDelete';
+import DistributorsPlTable from '../../src/components/pages/admin-distributors-pl/DistributorsPlTable';
+// import DistributorCreateEdit from '../../src/components/pages/admin-distributors/DistributorCreateEdit';
+// import DistributorDelete from '../../src/components/pages/admin-distributors/DistributorDelete';
 
 // === Styles === //
 import { customColors } from '../../src/styles/variables';
 
 // === Types === //
-import { DistributorData } from '../../src/types/admin';
+import { DistributorPlData } from '../../src/types/admin';
 
-class Distributors extends Component {
+class DistributorsPl extends Component {
   state = {
-    distributors: [],
+    distributorsPl: [],
     totalCount: 0,
     searchInput: '',
     createEditOpen: false,
@@ -30,16 +30,16 @@ class Distributors extends Component {
   };
 
   componentDidMount() {
-    this.handleGetDistributor();
+    this.handleGetDistributorPl();
   }
 
-  handleGetDistributor = () => {
+  handleGetDistributorPl = () => {
     const params =
       this.state.searchInput && this.state.searchInput !== ''
-        ? `?distributor=${this.state.searchInput}`
+        ? `?distributorPl=${this.state.searchInput}`
         : '';
 
-    fetch(`/api/distributors${params}`, {
+    fetch(`/api/distributors-pl${params}`, {
       headers: {
         'Content-type': 'application/json',
       },
@@ -50,7 +50,7 @@ class Distributors extends Component {
       .then((json) => {
         if (json && !json.error) {
           this.setState({
-            distributors: json.items,
+            distributorsPl: json.items,
             totalCount: json.items.length,
           });
         }
@@ -59,18 +59,18 @@ class Distributors extends Component {
 
   handleChangeSearchInput = (value: string) => {
     this.setState({ searchInput: value }, () => {
-      this.handleGetDistributor();
+      this.handleGetDistributorPl();
     });
   };
 
-  handleOpenEditModal = (item: DistributorData) => {
+  handleOpenEditModal = (item: DistributorPlData) => {
     this.setState({
       createEditOpen: true,
       editItem: item,
     });
   };
 
-  handleOpenDeleteModal = (item: DistributorData) => {
+  handleOpenDeleteModal = (item: DistributorPlData) => {
     this.setState({
       deleteOpen: true,
       editItem: item,
@@ -79,16 +79,16 @@ class Distributors extends Component {
 
   render() {
     return (
-      <Page seo={{ title: 'Wydawcy', description: '' }} pageType="admin">
+      <Page seo={{ title: 'Wydawcy w Polsce', description: '' }} pageType="admin">
         <>
           <Breadcrumbs
             options={[
               { current: false, label: 'Strona główna', href: '/' },
-              { current: true, label: 'Wydawcy', href: '/admin/distributors' },
+              { current: true, label: 'Wydawcy w Polsce', href: '/admin/distributors-pl' },
             ]}
           />
           <Container maxWidth="xl">
-            <PageHeader title="Wydawcy" />
+            <PageHeader title="Wydawcy w Polsce" />
 
             <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>
               <Box px={3} py={3}>
@@ -100,7 +100,7 @@ class Distributors extends Component {
                 >
                   <Box>
                     <Typography color={customColors.textLight} mb={{ xs: 2, md: 0 }}>
-                      Wszystkich wydawców: {this.state.totalCount}
+                      Wszystkich polskich wydawców: {this.state.totalCount}
                     </Typography>
                   </Box>
                   <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}>
@@ -123,34 +123,34 @@ class Distributors extends Component {
                       startIcon={<Add />}
                       onClick={() => this.setState({ createEditOpen: true })}
                     >
-                      Dodaj wydawcę
+                      Dodaj polskiego wydawcę
                     </LoadingButton>
                   </Box>
                 </Box>
               </Box>
               <Box px={2} pb={2}>
-                <DistributorsTable
-                  items={this.state.distributors}
-                  handleOpenEditModal={(item: DistributorData) => this.handleOpenEditModal(item)}
-                  handleOpenDeleteModal={(item: DistributorData) =>
+                <DistributorsPlTable
+                  items={this.state.distributorsPl}
+                  handleOpenEditModal={(item: DistributorPlData) => this.handleOpenEditModal(item)}
+                  handleOpenDeleteModal={(item: DistributorPlData) =>
                     this.handleOpenDeleteModal(item)
                   }
                 />
               </Box>
             </Paper>
 
-            <DistributorCreateEdit
+            {/* <DistributorCreateEdit
               editItem={this.state.editItem}
               open={this.state.createEditOpen}
               handleClose={() => this.setState({ createEditOpen: false, editItem: null })}
-              handleReloadData={this.handleGetDistributor}
-            />
-            <DistributorDelete
+              handleReloadData={this.handleGetDistributorPl}
+            /> */}
+            {/* <DistributorDelete
               editItem={this.state.editItem}
               open={this.state.deleteOpen}
               handleClose={() => this.setState({ deleteOpen: false, editItem: null })}
-              handleReloadData={this.handleGetDistributor}
-            />
+              handleReloadData={this.handleGetDistributorPl}
+            /> */}
           </Container>
         </>
       </Page>
@@ -158,4 +158,4 @@ class Distributors extends Component {
   }
 }
 
-export default Distributors;
+export default DistributorsPl;

@@ -8,6 +8,7 @@ import {
   Album,
   Article,
   Devices,
+  DiscFull,
   Extension,
   Help,
   HomeWork,
@@ -222,6 +223,9 @@ const AdminNavigation = () => {
                     )}
                     {admin.icon === 'Album' && (
                       <Album fontSize="small" sx={{ color: customColors.textLight }} />
+                    )}
+                    {admin.icon === 'DiscFull' && (
+                      <DiscFull fontSize="small" sx={{ color: customColors.textLight }} />
                     )}
                   </ListItemIcon>
                   {admin.label}
