@@ -18,6 +18,7 @@ const apiTagsList = require('./admin/tag/tagsList');
 const apiProducersList = require('./admin/producer/producerList');
 const apiProducerCreate = require('./admin/producer/producerCreate');
 const apiProducerEdit = require('./admin/producer/producerEdit');
+const apiProducerDelete = require('./admin/producer/producerDelete');
 
 const routes = [
   // === authentication === //
@@ -40,6 +41,7 @@ const routes = [
   { endpoint: '/api/producers', function: apiProducersList, method: 'get' },
   { endpoint: '/api/producer-create', function: apiProducerCreate, method: 'post' },
   { endpoint: '/api/producer-edit', function: apiProducerEdit, method: 'post' },
+  { endpoint: '/api/producer-delete', function: apiProducerDelete, method: 'post' },
 ];
 
 module.exports = routes;

@@ -11,7 +11,7 @@ import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
 import ProducersTable from '../../src/components/pages/admin-producers/ProducersTable';
 import ProducerCreateEdit from '../../src/components/pages/admin-producers/ProducerCreateEdit';
-// import PlatformDelete from '../../src/components/pages/admin-platforms/PlatformDelete';
+import ProducerDelete from '../../src/components/pages/admin-producers/ProducerDelete';
 
 // === Styles === //
 import { customColors } from '../../src/styles/variables';
@@ -143,13 +143,12 @@ class Producers extends Component {
               handleClose={() => this.setState({ createEditOpen: false, editItem: null })}
               handleReloadData={this.handleGetProducers}
             />
-            {/* 
-            <PlatformDelete
+            <ProducerDelete
               editItem={this.state.editItem}
               open={this.state.deleteOpen}
               handleClose={() => this.setState({ deleteOpen: false, editItem: null })}
               handleReloadData={this.handleGetProducers}
-            /> */}
+            />
           </Container>
         </>
       </Page>
