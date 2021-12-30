@@ -1,63 +1,182 @@
-// === authentication === //
-const apiRegister = require('./authentication/register');
-const apiLogin = require('./authentication/login');
-const apiMe = require('./authentication/me');
-const apiLogout = require('./authentication/logout');
-
-// === admin === //
-const apiPlatformProducerCreate = require('./admin/platform-producer/platformProducerCreate');
-const apiPlatformProducersList = require('./admin/platform-producer/platformProducersList');
-const apiPlatformCreate = require('./admin/platform/platformCreate');
-const apiPlatformEdit = require('./admin/platform/platformEdit');
-const apiPlatformDelete = require('./admin/platform/platformDelete');
-const apiPlatformsList = require('./admin/platform/platformsList');
-const apiTagCreate = require('./admin/tag/tagCreate');
-const apiTagEdit = require('./admin/tag/tagEdit');
-const apiTagDelete = require('./admin/tag/tagDelete');
-const apiTagsList = require('./admin/tag/tagsList');
-const apiProducersList = require('./admin/producer/producerList');
-const apiProducerCreate = require('./admin/producer/producerCreate');
-const apiProducerEdit = require('./admin/producer/producerEdit');
-const apiProducerDelete = require('./admin/producer/producerDelete');
-const apiDistributorList = require('./admin/distributor/distributorsList');
-const apiDistributorCreate = require('./admin/distributor/distributorCreate');
-const apiDistributorEdit = require('./admin/distributor/distributorEdit');
-const apiDistributorDelete = require('./admin/distributor/distributorDelete');
-const apiDistributorPlList = require('./admin/distributor-pl/distributorsPlList');
-const apiDistributorPlCreate = require('./admin/distributor-pl/distributorPlCreate');
-const apiDistributorPlEdit = require('./admin/distributor-pl/distributorPlEdit');
-const apiDistributorPlDelete = require('./admin/distributor-pl/distributorPlDelete');
-
 const routes = [
   // === authentication === //
-  { endpoint: '/api/register', function: apiRegister, method: 'post' },
-  { endpoint: '/api/login', function: apiLogin, method: 'post' },
-  { endpoint: '/api/me', function: apiMe, method: 'post' },
-  { endpoint: '/api/logout', function: apiLogout, method: 'post' },
+  {
+    endpoint: '/api/register',
+    module: require('./authentication/register'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/login',
+    module: require('./authentication/login'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/me',
+    module: require('./authentication/me'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/logout',
+    module: require('./authentication/logout'),
+    method: 'post'
+  },
 
   // === admin === //
-  { endpoint: '/api/platform-producer-create', function: apiPlatformProducerCreate, method: 'post' },
-  { endpoint: '/api/platform-producers', function: apiPlatformProducersList, method: 'get' },
-  { endpoint: '/api/platform-create', function: apiPlatformCreate, method: 'post' },
-  { endpoint: '/api/platform-edit', function: apiPlatformEdit, method: 'post' },
-  { endpoint: '/api/platform-delete', function: apiPlatformDelete, method: 'post' },
-  { endpoint: '/api/platforms', function: apiPlatformsList, method: 'get' },
-  { endpoint: '/api/tag-create', function: apiTagCreate, method: 'post' },
-  { endpoint: '/api/tag-edit', function: apiTagEdit, method: 'post' },
-  { endpoint: '/api/tag-delete', function: apiTagDelete, method: 'post' },
-  { endpoint: '/api/tags', function: apiTagsList, method: 'get' },
-  { endpoint: '/api/producers', function: apiProducersList, method: 'get' },
-  { endpoint: '/api/producer-create', function: apiProducerCreate, method: 'post' },
-  { endpoint: '/api/producer-edit', function: apiProducerEdit, method: 'post' },
-  { endpoint: '/api/producer-delete', function: apiProducerDelete, method: 'post' },
-  { endpoint: '/api/distributors', function: apiDistributorList, method: 'get' },
-  { endpoint: '/api/distributor-create', function: apiDistributorCreate, method: 'post' },
-  { endpoint: '/api/distributor-edit', function: apiDistributorEdit, method: 'post' },
-  { endpoint: '/api/distributor-delete', function: apiDistributorDelete, method: 'post' },
-  { endpoint: '/api/distributors-pl', function: apiDistributorPlList, method: 'get' },
-  { endpoint: '/api/distributor-pl-create', function: apiDistributorPlCreate, method: 'post' },
-  { endpoint: '/api/distributor-pl-edit', function: apiDistributorPlEdit, method: 'post' },
-  { endpoint: '/api/distributor-pl-delete', function: apiDistributorPlDelete, method: 'post' },
+  {
+    endpoint: '/api/platform-producer-create',
+    module: require('./admin/platform-producer/platformProducerCreate'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/platform-producers',
+    module: require('./admin/platform-producer/platformProducersList'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/platform-create',
+    module: require('./admin/platform/platformCreate'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/platform-edit',
+    module: require('./admin/platform/platformEdit'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/platform-delete',
+    module: require('./admin/platform/platformDelete'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/platforms',
+    module: require('./admin/platform/platformsList'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/tag-create',
+    module: require('./admin/tag/tagCreate'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/tag-edit',
+    module: require('./admin/tag/tagEdit'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/tag-delete',
+    module: require('./admin/tag/tagDelete'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/tags',
+    module: require('./admin/tag/tagsList'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/producers',
+    module: require('./admin/producer/producerList'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/producer-create',
+    module: require('./admin/producer/producerCreate'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/producer-edit',
+    module: require('./admin/producer/producerEdit'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/producer-delete',
+    module: require('./admin/producer/producerDelete'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/distributors',
+    module: require('./admin/distributor/distributorsList'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/distributor-create',
+    module: require('./admin/distributor/distributorCreate'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/distributor-edit',
+    module: require('./admin/distributor/distributorEdit'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/distributor-delete',
+    module: require('./admin/distributor/distributorDelete'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/distributors-pl',
+    module: require('./admin/distributor-pl/distributorsPlList'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/distributor-pl-create',
+    module: require('./admin/distributor-pl/distributorPlCreate'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/distributor-pl-edit',
+    module: require('./admin/distributor-pl/distributorPlEdit'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/distributor-pl-delete',
+    module: require('./admin/distributor-pl/distributorPlDelete'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/directx',
+    module: require('./admin/directx/directxList'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/directx-create',
+    module: require('./admin/directx/directxCreate'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/directx-edit',
+    module: require('./admin/directx/directxEdit'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/directx-delete',
+    module: require('./admin/directx/directxDelete'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/windows',
+    module: require('./admin/windows/windowsList'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/windows-create',
+    module: require('./admin/windows/windowsCreate'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/windows-edit',
+    module: require('./admin/windows/windowsEdit'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/windows-delete',
+    module: require('./admin/windows/windowsDelete'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/game-create',
+    module: require('./admin/game/gameCreate'),
+    method: 'post'
+  }
 ];
 
 module.exports = routes;

@@ -37,4 +37,9 @@ export const adminNavigation = [
     url: '/admin/distributors-pl',
     icon: 'DiscFull',
   },
+  {
+    label: 'Wymagania sprzętowe',
+    url: '/admin/requirements',
+    icon: 'Computer',
+  },
 ];

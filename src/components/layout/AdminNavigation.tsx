@@ -7,6 +7,7 @@ import {
   AdminPanelSettings,
   Album,
   Article,
+  Computer,
   Devices,
   DiscFull,
   Extension,
@@ -113,7 +114,7 @@ const AdminNavigation = () => {
               },
             }}
           >
-            <Link href="/">
+            <Link href="/admin/create-game">
               <a className="adminNavigation-link">
                 <ListItemIcon>
                   <SportsEsports fontSize="small" sx={{ color: customColors.textLight }} />
@@ -226,6 +227,9 @@ const AdminNavigation = () => {
                     )}
                     {admin.icon === 'DiscFull' && (
                       <DiscFull fontSize="small" sx={{ color: customColors.textLight }} />
+                    )}
+                    {admin.icon === 'Computer' && (
+                      <Computer fontSize="small" sx={{ color: customColors.textLight }} />
                     )}
                   </ListItemIcon>
                   {admin.label}

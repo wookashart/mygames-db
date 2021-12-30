@@ -7,6 +7,9 @@ import { Box } from '@mui/system';
 import { colors, FormLabel, Slider, useMediaQuery, useTheme } from '@mui/material';
 import InputFile from './InputFile';
 
+// === Styles === //
+import { customColors } from '../../../styles/variables';
+
 // === Types === //
 import { CroppedAreaData } from '../../../types/images';
 
@@ -49,7 +52,9 @@ const ImageCropper = ({
   return (
     <>
       <Box mb={2}>
-        <FormLabel component="legend">{label}</FormLabel>
+        <FormLabel component="legend" sx={{ color: customColors.textLight }}>
+          {label}
+        </FormLabel>
       </Box>
       <Box display="flex" flexDirection={isMobile ? 'column' : 'row'}>
         <Box flex={1} mr={4}>
@@ -60,7 +65,7 @@ const ImageCropper = ({
             />
           </Box>
           <Box display="flex" alignItems="center" mb={isMobile ? 0 : 2}>
-            <FormLabel component="legend" sx={{ width: 120 }}>
+            <FormLabel component="legend" sx={{ width: 120, color: customColors.textLight }}>
               Zoom
             </FormLabel>
             <Slider
@@ -73,7 +78,7 @@ const ImageCropper = ({
             />
           </Box>
           <Box display="flex" alignItems="center">
-            <FormLabel component="legend" sx={{ width: 120 }}>
+            <FormLabel component="legend" sx={{ width: 120, color: customColors.textLight }}>
               Rotacja
             </FormLabel>
             <Slider

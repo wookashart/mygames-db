@@ -39,9 +39,9 @@ app
 
     routes.forEach(r => {
       if (r.method === 'post') {
-        server.post(r.endpoint, r.function);
+        server.post(r.endpoint, r.module);
       } else {
-        server.get(r.endpoint, r.function);
+        server.get(r.endpoint, r.module);
       }
 
     });

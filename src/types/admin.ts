@@ -37,3 +37,13 @@ export interface DistributorPlData {
   distributor_pl_name: string;
   distributor_pl_description: string;
 }
+
+export interface DirectXData {
+  directx_id: number;
+  directx_name: string;
+}
+
+export interface WindowsData {
+  windows_id: number;
+  windows_name: string;
+}

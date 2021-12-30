@@ -66,7 +66,9 @@ const Wysiwig = ({ value, label, onChange }: WysiwigProps) => {
   return (
     <>
       <Box mb={2}>
-        <FormLabel component="legend">{label}</FormLabel>
+        <FormLabel component="legend" sx={{ color: customColors.textLight }}>
+          {label}
+        </FormLabel>
       </Box>
       <Box>
         <QuillNoSSRWrapper

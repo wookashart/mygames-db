@@ -211,6 +211,7 @@ const PlatformCreateEdit = ({
           <Box display="flex">
             <Dropdown
               id="producer"
+              label="Producent"
               options={producers}
               value={formik.values.producer}
               handleChange={(value: DropdownOptionsData | null) =>

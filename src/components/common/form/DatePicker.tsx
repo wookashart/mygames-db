@@ -11,9 +11,10 @@ interface DatePickerProps {
   value: Date | null;
   handleChange: Function;
   label: string;
+  disabled?: boolean;
 }
 
-const DatePicker = ({ value, label, handleChange }: DatePickerProps) => {
+const DatePicker = ({ value, label, disabled = false, handleChange }: DatePickerProps) => {
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -30,6 +31,7 @@ const DatePicker = ({ value, label, handleChange }: DatePickerProps) => {
             label={label}
             inputFormat="dd/MM/yyyy"
             value={value}
+            disabled={disabled}
             onChange={(value) => handleChange(value)}
             renderInput={(params) => {
               return (
