@@ -3,5 +3,5 @@ export const customColors = {
 };
 
 export const animation = {
-  fast: 300,
+  fast: 250,
 };

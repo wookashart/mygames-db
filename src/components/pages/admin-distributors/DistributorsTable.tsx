@@ -1,6 +1,7 @@
 import React from 'react';
 
 // === Components === //
+import { Box } from '@mui/system';
 import {
   colors,
   ListItemIcon,
@@ -13,6 +14,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
+import { Delete, Edit } from '@mui/icons-material';
 import CellLink from '../../cells/CellLink';
 import CellDescription from '../../cells/CellDescription';
 import CellMenu from '../../cells/CellMenu';
@@ -22,8 +24,6 @@ import { animation, customColors } from '../../../styles/variables';
 
 // === Types === //
 import { DistributorData } from '../../../types/admin';
-import { Box } from '@mui/system';
-import { Delete, Edit } from '@mui/icons-material';
 
 interface DistributorsTableProps {
   items: DistributorData[];

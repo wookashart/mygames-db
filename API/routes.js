@@ -176,6 +176,13 @@ const routes = [
     endpoint: '/api/game-create',
     module: require('./admin/game/gameCreate'),
     method: 'post'
+  },
+
+  // === games === //
+  {
+    endpoint: '/api/games',
+    module: require('./games/GamesList'),
+    method: 'get'
   }
 ];
 

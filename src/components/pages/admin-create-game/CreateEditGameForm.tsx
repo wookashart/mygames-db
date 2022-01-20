@@ -125,7 +125,7 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
     if (index === 4) {
       setTimeout(() => {
         toggleSubmitDisabled(false);
-      }, 200);
+      }, 1000);
     }
   };
 
@@ -361,6 +361,7 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
               .then((response) => response.json())
               .then((json) => {
                 toggleButtonLoading(false);
+                toggleSubmitDisabled(true);
 
                 if (json.emailDuplicated || json.nameDuplicated) {
                   setFormError({
@@ -392,6 +393,7 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
               })
               .catch((error) => {
                 toggleButtonLoading(false);
+                toggleSubmitDisabled(true);
                 console.error(error);
               });
           });
@@ -411,6 +413,7 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
           .then((response) => response.json())
           .then((json) => {
             toggleButtonLoading(false);
+            toggleSubmitDisabled(true);
             if (json.emailDuplicated || json.nameDuplicated) {
               setFormError({
                 error: true,
@@ -440,6 +443,7 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
           })
           .catch((error) => {
             toggleButtonLoading(false);
+            toggleSubmitDisabled(true);
             console.error(error);
           });
       }

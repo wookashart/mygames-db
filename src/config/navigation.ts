@@ -5,7 +5,7 @@ export const navigation = [
     pageType: 'homepage',
   },
   {
-    label: 'Gry',
+    label: 'Biblioteka gier',
     href: '/games',
     pageType: 'games',
   },

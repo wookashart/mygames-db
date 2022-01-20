@@ -75,8 +75,8 @@ module.exports = (req, res) => {
         ? `${slugify(name, slugifuOptions)}-${timestamp}.${image.split(';')[0].split('/')[1]}`
         : '';
 
-      const platformsString = platforms && platforms.length > 0 ? `|${platforms.map(platform => platform.value).join('|')}|` : null;
-      const tagsString = tags && tags.length > 0 ? `|${tags.map(tag => tag.value).join('|')}|` : null;
+      const platformsString = platforms && platforms.length > 0 ? `|${platforms.map(platform => platform.value).join('|')}|` : '';
+      const tagsString = tags && tags.length > 0 ? `|${tags.map(tag => tag.value).join('|')}|` : '';
 
       connection.query(`
         INSERT INTO games
@@ -142,7 +142,7 @@ module.exports = (req, res) => {
                     INSERT INTO game_dates
                     VALUES (
                       null,
-                      "${rows.game_id}",
+                      "${rows.insertId}",
                       "${platform.platformId}",
                       "${platform.date}"
                     )
