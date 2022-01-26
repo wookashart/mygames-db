@@ -47,7 +47,18 @@ const CellGameData = ({ data }: CellGameDataProps) => {
         <Box mt={1}>
           {data.platforms.map((platform) => (
             <Box key={platform.id} display="inline-block" mr="5px">
-              <HtmlTooltip label={platform.description} placement="top">
+              <HtmlTooltip
+                label={`<p><strong>${platform.name}${
+                  platform.producerName && platform.producerName !== ''
+                    ? `<span> (${platform.producerName})</span>`
+                    : ''
+                }</strong>${
+                  platform.date && platform.date !== '0000-00-00'
+                    ? `<span> - ${dateFormat(platform.date, 'dd.mm.yyyy')}</span>`
+                    : ''
+                }</p>${platform.description}`}
+                placement="top"
+              >
                 <Chip
                   label={platform.code}
                   variant="outlined"
@@ -99,7 +110,7 @@ const CellGameData = ({ data }: CellGameDataProps) => {
                 Data premiery
               </Typography>
               <Typography color="white" variant="subtitle2" component="p">
-                {data.firstDate ? dateFormat(data.firstDate, 'dd-mm-yyyy') : '-'}
+                {data.firstDate ? dateFormat(data.firstDate, 'dd.mm.yyyy') : '-'}
               </Typography>
             </Box>
           )}

@@ -1,3 +1,5 @@
+import { AuditData } from './other';
+
 export interface GamesListData {
   cover: string;
   earlyAccess: boolean;
@@ -13,7 +15,7 @@ export interface GamesListData {
 
 export interface PlatformsData {
   code: string;
-  date: Date | null;
+  date: Date | string | null;
   description: string;
   id: number;
   name: string;
@@ -29,4 +31,76 @@ export interface TagsData {
 
 export interface GamesFiltersData {
   name: string;
+}
+
+export interface GameDetailData {
+  id: number;
+  name: string;
+  namePl: string;
+  nameSort: string;
+  firstDate: Date | null;
+  earlyAccess: boolean;
+  cover: string;
+  description: string;
+  platforms: PlatformsData[];
+  tags: TagsData[];
+  requirements: GameRequirementsTypesData;
+  audit: AuditData;
+  producer: ProducerData;
+  distributor: DistributorData;
+  distributorPl: DistributorData;
+  dates: GameDatesData[];
+  ratioInfo: GameRatioData;
+
+  // temp
+  dlc: any; // should be an array
+  related: any; // should be an array
+}
+
+export interface GameRequirementsTypesData {
+  min: GameRequirementsData;
+  recommended: GameRequirementsData;
+}
+
+export interface GameRequirementsData {
+  cpu: string;
+  gpu: string;
+  ram: string;
+  directx: GameDirectXData | null;
+  system: GameSystemData | null;
+  hdd: string;
+}
+
+export interface GameDirectXData {
+  id: number;
+  name: string;
+}
+
+export interface GameSystemData {
+  id: number;
+  name: string;
+}
+
+export interface ProducerData {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface DistributorData {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface GameDatesData {
+  date: Date;
+  platformId: number;
+  platformName: string;
+  platformCode: string;
+}
+
+export interface GameRatioData {
+  ratio: number | string | null;
+  ratedCount: number;
 }

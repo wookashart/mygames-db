@@ -183,6 +183,11 @@ const routes = [
     endpoint: '/api/games',
     module: require('./games/GamesList'),
     method: 'get'
+  },
+  {
+    endpoint: '/api/game/:id',
+    module: require('./games/GameById'),
+    method: 'get'
   }
 ];
 

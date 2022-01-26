@@ -8,12 +8,13 @@ import { customColors } from '../../styles/variables';
 
 interface CellDefaultProps {
   value: string | number | null;
+  color?: string;
 }
 
-const CellDefault = ({ value }: CellDefaultProps) => {
+const CellDefault = ({ value, color }: CellDefaultProps) => {
   return (
     <TableCell>
-      <Typography color={customColors.textLight}>{value ? value : '-'}</Typography>
+      <Typography color={color ? color : customColors.textLight}>{value ? value : '-'}</Typography>
     </TableCell>
   );
 };

@@ -2,8 +2,10 @@ import React from 'react';
 
 // === Components === //
 import ReactHtmlParser from 'react-html-parser';
-import { customColors } from '../../styles/variables';
 import { TableCell } from '@mui/material';
+
+// === Styles === //
+import { customColors } from '../../styles/variables';
 
 interface CellDescriptionProps {
   value: string;

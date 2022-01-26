@@ -2,8 +2,8 @@ import React from 'react';
 
 // === Components === //
 import { Box } from '@mui/system';
-import { Tab } from '@mui/material';
-import { Tabs } from '@material-ui/core';
+import { Tab, Tabs } from '@mui/material';
+// import { Tabs } from '@material-ui/core';
 
 // === Styles === //
 import { customColors } from '../../styles/variables';
@@ -15,6 +15,7 @@ interface CustomTabProps {
 interface TabsData {
   header: string;
   content: string | React.ReactChild | React.ReactNode;
+  disabled?: boolean;
 }
 
 interface TabPanelProps {
@@ -64,6 +65,7 @@ const CustomTab = ({ tabs }: CustomTabProps) => {
           textColor="primary"
           indicatorColor="primary"
           scrollButtons="auto"
+          variant="fullWidth"
         >
           {tabs.map((tab, index) => (
             <Tab
@@ -71,6 +73,7 @@ const CustomTab = ({ tabs }: CustomTabProps) => {
               label={tab.header}
               {...a11yProps(index)}
               sx={{ color: customColors.textLight }}
+              disabled={tab.disabled ? true : false}
             />
           ))}
         </Tabs>
