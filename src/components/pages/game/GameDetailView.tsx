@@ -13,6 +13,7 @@ import DLC from './content-sections/DLC';
 
 // === Types === //
 import { GameDetailData } from '../../../types/games';
+import { UserData } from '../../../types/users';
 
 interface GameDetailViewProps {
   game: GameDetailData | null;
@@ -21,6 +22,10 @@ interface GameDetailViewProps {
 class GameDetailView extends Component<GameDetailViewProps> {
   state = {
     user: null,
+    userLoading: true,
+    funcLoading: false,
+    funcData: null,
+    userRatio: null,
   };
 
   componentDidMount() {
@@ -39,19 +44,92 @@ class GameDetailView extends Component<GameDetailViewProps> {
         .then((response) => response.json())
         .then((json) => {
           if (json && !json.error && json.user) {
-            this.setState({ user: json.user });
+            this.setState({ user: json.user }, () => {
+              this.handleLoadUserFunctionalities();
+            });
           }
+          this.setState({ userLoading: false });
         })
         .catch((error) => {
+          this.setState({ userLoading: false });
           console.error(error);
         });
     });
   };
 
+  handleLoadUserFunctionalities = () => {
+    this.setState({ funcLoading: true }, () => {
+      const user = this.state.user as UserData | null;
+
+      if (this.props.game && user) {
+        fetch(`/api/game-user-info/${this.props.game.id}/${user.id}`, {
+          headers: {
+            'Content-type': 'application/json',
+          },
+          method: 'GET',
+          credentials: 'include',
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            if (json && !json.error) {
+              this.setState({
+                funcData: {
+                  library: json.library,
+                  ratio: json.ratio,
+                  status: json.status,
+                },
+                userRatio: json.ratio ? json.ratio.ratio : null,
+              });
+            }
+            this.setState({ funcLoading: false });
+          })
+          .catch((error) => {
+            this.setState({ funcLoading: false });
+            console.error(error);
+          });
+      }
+    });
+  };
+
+  handleSetRatio = (value: number) => this.setState({ userRatio: value });
+  handleRequestRatio = (handleButtonLoading: Function, handleCloseModal: Function) => {
+    const user = this.state.user as UserData | null;
+
+    if (user && this.props.game) {
+      handleButtonLoading(true);
+
+      const input = {
+        userId: user.id,
+        gameId: this.props.game?.id,
+        ratio: this.state.userRatio,
+      };
+
+      fetch(`/api/game-ratio-set`, {
+        headers: {
+          'Content-type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({ ...input }),
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          handleButtonLoading(false);
+
+          if (json && !json.error) {
+            this.handleLoadUserFunctionalities();
+            handleCloseModal();
+          }
+        })
+        .catch((error) => {
+          handleButtonLoading(false);
+          console.error(error);
+        });
+    }
+  };
+
   render() {
     const { game } = this.props;
-
-    console.log(this.state.user);
 
     return (
       <Box>
@@ -78,7 +156,16 @@ class GameDetailView extends Component<GameDetailViewProps> {
           >
             <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}>
               <GameDetailSidebar game={game} />
-              <GameDetailContent game={game} user={this.state.user} />
+              <GameDetailContent
+                game={game}
+                user={this.state.user}
+                userLoading={this.state.userLoading}
+                funcLoading={this.state.funcLoading}
+                funcData={this.state.funcData}
+                userRatio={this.state.userRatio}
+                handleSetRatio={this.handleSetRatio}
+                handleRequestRatio={this.handleRequestRatio}
+              />
             </Box>
           </Paper>
 

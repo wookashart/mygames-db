@@ -11,7 +11,7 @@ import {
   MenuItem,
   Typography,
 } from '@mui/material';
-import { Delete, Edit, MoreHoriz } from '@mui/icons-material';
+import { Add, Delete, Edit, MoreHoriz } from '@mui/icons-material';
 
 // === Helpers === //
 import dateFormat from 'dateformat';
@@ -140,7 +140,7 @@ const Title = ({ game, user }: TitleProps) => {
                 onClick={() => console.log('dlc modal opened')}
               >
                 <ListItemIcon>
-                  <Delete fontSize="small" sx={{ color: customColors.textLight }} />
+                  <Add fontSize="small" sx={{ color: customColors.textLight }} />
                 </ListItemIcon>
                 Dodaj DLC
               </MenuItem>

@@ -188,6 +188,16 @@ const routes = [
     endpoint: '/api/game/:id',
     module: require('./games/GameById'),
     method: 'get'
+  },
+  {
+    endpoint: '/api/game-user-info/:gameId/:userId',
+    module: require('./games/GameUserInfoById'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/game-ratio-set',
+    module: require('./games/GameRatioSet'),
+    method: 'post'
   }
 ];
 
