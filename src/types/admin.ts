@@ -47,3 +47,15 @@ export interface WindowsData {
   windows_id: number;
   windows_name: string;
 }
+
+export interface GameDistributionData {
+  id: number;
+  name: string;
+  platforms: GameDistributionPlatformsData[];
+}
+
+export interface GameDistributionPlatformsData {
+  id: number;
+  name: string;
+  code: string;
+}

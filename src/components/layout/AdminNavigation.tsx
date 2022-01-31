@@ -17,6 +17,7 @@ import {
   People,
   QueryStats,
   SportsEsports,
+  ShoppingCart,
 } from '@mui/icons-material';
 import Link from 'next/link';
 
@@ -230,6 +231,9 @@ const AdminNavigation = () => {
                     )}
                     {admin.icon === 'Computer' && (
                       <Computer fontSize="small" sx={{ color: customColors.textLight }} />
+                    )}
+                    {admin.icon === 'ShoppingCart' && (
+                      <ShoppingCart fontSize="small" sx={{ color: customColors.textLight }} />
                     )}
                   </ListItemIcon>
                   {admin.label}

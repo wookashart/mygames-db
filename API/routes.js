@@ -177,6 +177,26 @@ const routes = [
     module: require('./admin/game/gameCreate'),
     method: 'post'
   },
+  {
+    endpoint: '/api/game-distributions',
+    module: require('./admin/game-distribution/gameDistributionList'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/game-distribution-edit',
+    module: require('./admin/game-distribution/gameDistributionEdit'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/game-distribution-delete',
+    module: require('./admin/game-distribution/gameDistributionDelete'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/game-distribution-create',
+    module: require('./admin/game-distribution/gameDistributionCreate'),
+    method: 'post'
+  },
 
   // === games === //
   {

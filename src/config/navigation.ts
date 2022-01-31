@@ -13,6 +13,11 @@ export const navigation = [
 
 export const adminNavigation = [
   {
+    label: 'Dystrybucja gier',
+    url: '/admin/game-distribution',
+    icon: 'ShoppingCart',
+  },
+  {
     label: 'Platformy',
     url: '/admin/platforms',
     icon: 'Devices',
