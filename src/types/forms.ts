@@ -49,3 +49,8 @@ export interface CreateGamePlatformsDatesData {
   platformName: string;
   date: Date | null;
 }
+
+export interface AddToLibrarySelectedItemsData {
+  platform: DropdownOptionsData | null;
+  distribution: DropdownOptionsData | null;
+}

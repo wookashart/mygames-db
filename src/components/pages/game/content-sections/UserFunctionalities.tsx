@@ -5,6 +5,8 @@ import { Box } from '@mui/system';
 import { Button, Skeleton } from '@mui/material';
 import { Add, AddTask, Star } from '@mui/icons-material';
 import RateGame from '../user-functionalities/RateGame';
+import AddToLibrary from '../user-functionalities/AddToLibrary';
+import HtmlTooltip from '../../../common/HtmlTooltip';
 
 // === Types === //
 import { UserFunctionData } from '../../../../types/games';
@@ -18,6 +20,7 @@ interface UserFunctionalitiesProps {
   userRatio: number | null;
   handleSetRatio: Function;
   handleRequestRatio: Function;
+  handleRequestLibrary: Function;
 }
 
 const UserFunctionalities = ({
@@ -28,8 +31,10 @@ const UserFunctionalities = ({
   userRatio,
   handleSetRatio,
   handleRequestRatio,
+  handleRequestLibrary,
 }: UserFunctionalitiesProps) => {
   const [rateGameModalOpen, handleRateGameModalOpen] = useState(false);
+  const [addToLibraryModalOpen, handleAddToLibraryModalOpen] = useState(false);
 
   return (
     <>
@@ -55,14 +60,18 @@ const UserFunctionalities = ({
                   </Box>
                 </Button>
                 <Button
-                  // onClick={handleClick}
+                  onClick={() => handleAddToLibraryModalOpen(true)}
                   color="primary"
                   size="small"
                   variant="contained"
                   sx={{ marginLeft: '20px', marginBottom: '10px' }}
                 >
                   <Add />
-                  <Box ml={1}>Dodaj do biblioteki</Box>
+                  <Box ml={1}>
+                    {funcData && funcData.library && funcData.library.length > 0
+                      ? 'Gra w bibliotece'
+                      : 'Dodaj do biblioteki'}
+                  </Box>
                 </Button>
                 <Button
                   // onClick={handleClick}
@@ -79,50 +88,78 @@ const UserFunctionalities = ({
           ) : (
             <Box>
               <Box display="flex" flexWrap="wrap">
-                <Button
-                  color="primary"
-                  size="small"
-                  variant="contained"
-                  disabled
-                  sx={{ marginBottom: '10px' }}
+                <HtmlTooltip label="<p>Musisz się zalogować żeby ocenić grę!</p>" placement="top">
+                  <Box>
+                    <Button
+                      color="primary"
+                      size="small"
+                      variant="contained"
+                      disabled
+                      sx={{ marginBottom: '10px' }}
+                    >
+                      <Star />
+                      <Box ml={1}>Oceń grę</Box>
+                    </Button>
+                  </Box>
+                </HtmlTooltip>
+                <HtmlTooltip
+                  label="<p>Musisz się zalogować żeby dodać do biblioteki!</p>"
+                  placement="top"
                 >
-                  <Star />
-                  <Box ml={1}>Oceń grę</Box>
-                </Button>
-                <Button
-                  color="primary"
-                  size="small"
-                  variant="contained"
-                  sx={{ marginLeft: '20px', marginBottom: '10px' }}
-                  disabled
+                  <Box>
+                    <Button
+                      color="primary"
+                      size="small"
+                      variant="contained"
+                      sx={{ marginLeft: '20px', marginBottom: '10px' }}
+                      disabled
+                    >
+                      <Add />
+                      <Box ml={1}>Dodaj do biblioteki</Box>
+                    </Button>
+                  </Box>
+                </HtmlTooltip>
+                <HtmlTooltip
+                  label="<p>Musisz się zalogować żeby zmienić status!</p>"
+                  placement="top"
                 >
-                  <Add />
-                  <Box ml={1}>Dodaj do biblioteki</Box>
-                </Button>
-                <Button
-                  color="primary"
-                  size="small"
-                  variant="contained"
-                  sx={{ marginLeft: '20px', marginBottom: '10px' }}
-                  disabled
-                >
-                  <AddTask />
-                  <Box ml={1}>Zmień status</Box>
-                </Button>
+                  <Box>
+                    <Button
+                      color="primary"
+                      size="small"
+                      variant="contained"
+                      sx={{ marginLeft: '20px', marginBottom: '10px' }}
+                      disabled
+                    >
+                      <AddTask />
+                      <Box ml={1}>Zmień status</Box>
+                    </Button>
+                  </Box>
+                </HtmlTooltip>
               </Box>
             </Box>
           )}
         </>
       )}
 
-      <RateGame
-        funcData={funcData}
-        rateGameModalOpen={rateGameModalOpen}
-        userRatio={userRatio}
-        handleClose={() => handleRateGameModalOpen(false)}
-        handleSetRatio={handleSetRatio}
-        handleRequestRatio={handleRequestRatio}
-      />
+      {funcData && (
+        <>
+          <RateGame
+            funcData={funcData}
+            rateGameModalOpen={rateGameModalOpen}
+            userRatio={userRatio}
+            handleClose={() => handleRateGameModalOpen(false)}
+            handleSetRatio={handleSetRatio}
+            handleRequestRatio={handleRequestRatio}
+          />
+          <AddToLibrary
+            funcData={funcData}
+            modalOpen={addToLibraryModalOpen}
+            handleClose={() => handleAddToLibraryModalOpen(false)}
+            handleSubmit={handleRequestLibrary}
+          />
+        </>
+      )}
     </>
   );
 };

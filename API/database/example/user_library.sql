@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql18.mydevil.net
--- Generation Time: Jan 26, 2022 at 04:43 PM
+-- Generation Time: Feb 01, 2022 at 12:02 PM
 -- Server version: 5.7.35-log
 -- PHP Version: 7.3.31
 
@@ -33,8 +33,8 @@ CREATE TABLE `user_library` (
   `ul_game_id` int(255) NOT NULL,
   `ul_user_id` int(255) NOT NULL,
   `ul_date` date NOT NULL,
-  `ul_platform_id` varchar(255) COLLATE utf8_polish_ci NOT NULL,
-  `ul_distribution_id` varchar(255) COLLATE utf8_polish_ci NOT NULL
+  `ul_platform_id` int(255) NOT NULL,
+  `ul_distribution_id` int(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --

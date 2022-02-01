@@ -106,15 +106,15 @@ export interface GameRatioData {
 }
 
 export interface UserFunctionData {
-  library: UserFunctionLibraryData | null;
+  library: UserFunctionLibraryData[] | null;
   ratio: UserFunctionRatioData | null;
   status: UserFunctionStatusData | null;
 }
 
 export interface UserFunctionLibraryData {
   date: Date;
-  platforms: UserFunctionLibraryPlatformsData[];
-  distributions: UserFunctionLibraryDistributions[];
+  platform: UserFunctionLibraryPlatformsData[];
+  distribution: UserFunctionLibraryDistributions[];
 }
 
 export interface UserFunctionLibraryPlatformsData {

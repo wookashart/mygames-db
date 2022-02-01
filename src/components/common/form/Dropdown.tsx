@@ -86,6 +86,7 @@ const Dropdown = ({
           </Fragment>
         ))
       }
+      isOptionEqualToValue={(option, value) => option.value === value.value}
     />
   );
 };

@@ -14,6 +14,7 @@ import DLC from './content-sections/DLC';
 // === Types === //
 import { GameDetailData } from '../../../types/games';
 import { UserData } from '../../../types/users';
+import { AddToLibrarySelectedItemsData } from '../../../types/forms';
 
 interface GameDetailViewProps {
   game: GameDetailData | null;
@@ -128,6 +129,54 @@ class GameDetailView extends Component<GameDetailViewProps> {
     }
   };
 
+  handleRequestLibrary = (
+    handleButtonLoading: Function,
+    handleCloseModal: Function,
+    selectedItems: AddToLibrarySelectedItemsData[]
+  ) => {
+    const user = this.state.user as UserData | null;
+    const inputPlatforms: AddToLibrarySelectedItemsData[] = [];
+
+    selectedItems.forEach((item) => {
+      if (item.platform && item.distribution) {
+        inputPlatforms.push(item);
+      }
+    });
+
+    if (inputPlatforms.length > 0 && user) {
+      const input = {
+        userId: user.id,
+        gameId: this.props.game?.id,
+        platforms: inputPlatforms.map((item) => ({
+          platform: item.platform?.value,
+          distribution: item.distribution?.value,
+        })),
+      };
+
+      fetch(`/api/user-library-manage`, {
+        headers: {
+          'Content-type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({ ...input }),
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          handleButtonLoading(false);
+
+          if (json && !json.error) {
+            this.handleLoadUserFunctionalities();
+            handleCloseModal();
+          }
+        })
+        .catch((error) => {
+          handleButtonLoading(false);
+          console.error(error);
+        });
+    }
+  };
+
   render() {
     const { game } = this.props;
 
@@ -165,6 +214,7 @@ class GameDetailView extends Component<GameDetailViewProps> {
                 userRatio={this.state.userRatio}
                 handleSetRatio={this.handleSetRatio}
                 handleRequestRatio={this.handleRequestRatio}
+                handleRequestLibrary={this.handleRequestLibrary}
               />
             </Box>
           </Paper>

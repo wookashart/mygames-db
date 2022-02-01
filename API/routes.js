@@ -218,7 +218,14 @@ const routes = [
     endpoint: '/api/game-ratio-set',
     module: require('./games/GameRatioSet'),
     method: 'post'
-  }
+  },
+
+  // === user library === //
+  {
+    endpoint: '/api/user-library-manage',
+    module: require('./user-library/UserLibraryManage'),
+    method: 'post'
+  },
 ];
 
 module.exports = routes;

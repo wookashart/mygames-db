@@ -21,6 +21,7 @@ interface GameDetailContentProps {
   userRatio: number | null;
   handleSetRatio: Function;
   handleRequestRatio: Function;
+  handleRequestLibrary: Function;
 }
 
 const GameDetailContent = ({
@@ -32,6 +33,7 @@ const GameDetailContent = ({
   userRatio,
   handleSetRatio,
   handleRequestRatio,
+  handleRequestLibrary,
 }: GameDetailContentProps) => {
   return (
     <>
@@ -51,6 +53,7 @@ const GameDetailContent = ({
             userRatio={userRatio}
             handleSetRatio={handleSetRatio}
             handleRequestRatio={handleRequestRatio}
+            handleRequestLibrary={handleRequestLibrary}
           />
         </Box>
       ) : null}

@@ -31,6 +31,8 @@ const CustomModal = ({ children, title, open, handleClose, size = 'sm' }: Custom
     boxShadow: 24,
     borderRadius: '4px',
     p: 2,
+    overflow: 'auto',
+    maxHeight: '100%',
   };
 
   return (

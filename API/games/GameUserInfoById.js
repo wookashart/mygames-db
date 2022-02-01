@@ -27,11 +27,11 @@ module.exports = (req, res) => {
   })
   .then(({err, rows}) => {
     response.libraryError = err;
-    response.library = rows && rows.length > 0 ? {
-      date: rows[0].ul_date,
-      platforms: rows[0].ul_platform_id,
-      distributions: rows[0].ul_distribution_id,
-    } : null;
+    response.library = rows && rows.length > 0 ? rows.map(row => ({
+      date: row.ul_date,
+      platform: row.ul_platform_id,
+      distribution: row.ul_distribution_id,
+    })) : [];
 
     return queryPromise(`
       SELECT *
