@@ -4,13 +4,18 @@ import React, { useState } from 'react';
 import { Box } from '@mui/system';
 import { Button, Skeleton } from '@mui/material';
 import { Add, AddTask, Star } from '@mui/icons-material';
+import HtmlTooltip from '../../../common/HtmlTooltip';
 import RateGame from '../user-functionalities/RateGame';
 import AddToLibrary from '../user-functionalities/AddToLibrary';
-import HtmlTooltip from '../../../common/HtmlTooltip';
+import StatusManage from '../user-functionalities/StatusManage';
+
+// === Helpers === //
+import * as utils from '../../../../utils';
 
 // === Types === //
 import { UserFunctionData } from '../../../../types/games';
 import { UserData } from '../../../../types/users';
+import { ObjKeyStringValString } from '../../../../types/other';
 
 interface UserFunctionalitiesProps {
   funcLoading: boolean;
@@ -21,6 +26,7 @@ interface UserFunctionalitiesProps {
   handleSetRatio: Function;
   handleRequestRatio: Function;
   handleRequestLibrary: Function;
+  handleRequestStatus: Function;
 }
 
 const UserFunctionalities = ({
@@ -32,9 +38,17 @@ const UserFunctionalities = ({
   handleSetRatio,
   handleRequestRatio,
   handleRequestLibrary,
+  handleRequestStatus,
 }: UserFunctionalitiesProps) => {
   const [rateGameModalOpen, handleRateGameModalOpen] = useState(false);
   const [addToLibraryModalOpen, handleAddToLibraryModalOpen] = useState(false);
+  const [statusManageModalOpen, handleStatusManageModalOpen] = useState(false);
+
+  const status: ObjKeyStringValString = {
+    played: 'Grałem',
+    skip: 'Pomijam',
+    plan: 'Planuję',
+  };
 
   return (
     <>
@@ -74,14 +88,24 @@ const UserFunctionalities = ({
                   </Box>
                 </Button>
                 <Button
-                  // onClick={handleClick}
+                  onClick={() => handleStatusManageModalOpen(true)}
                   color="primary"
                   size="small"
                   variant="contained"
                   sx={{ marginLeft: '20px', marginBottom: '10px' }}
                 >
                   <AddTask />
-                  <Box ml={1}>Zmień status</Box>
+                  <Box ml={1}>
+                    {funcData && funcData.status
+                      ? `Status: ${status[funcData.status.status]} ${
+                          funcData.status.time && funcData.status.time > 0
+                            ? `(${utils.minutesToHoursAndMinutes(funcData.status.time).hours}h:${
+                                utils.minutesToHoursAndMinutes(funcData.status.time).minutes
+                              }m)`
+                            : ''
+                        }`
+                      : 'Zmień status'}
+                  </Box>
                 </Button>
               </Box>
             </Box>
@@ -157,6 +181,12 @@ const UserFunctionalities = ({
             modalOpen={addToLibraryModalOpen}
             handleClose={() => handleAddToLibraryModalOpen(false)}
             handleSubmit={handleRequestLibrary}
+          />
+          <StatusManage
+            funcData={funcData}
+            modalOpen={statusManageModalOpen}
+            handleCloseModal={() => handleStatusManageModalOpen(false)}
+            handleSubmit={handleRequestStatus}
           />
         </>
       )}

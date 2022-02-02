@@ -9,3 +9,7 @@ export interface AuditUserData {
   id: number;
   name: string;
 }
+
+export interface ObjKeyStringValString {
+  [key: string]: string;
+}

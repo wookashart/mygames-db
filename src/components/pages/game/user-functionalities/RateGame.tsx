@@ -12,7 +12,6 @@ import { customColors } from '../../../../styles/variables';
 
 // === Types === //
 import { UserFunctionData } from '../../../../types/games';
-// import { UserData } from '../../../../types/users';
 
 interface RateGameProps {
   funcData: UserFunctionData | null;

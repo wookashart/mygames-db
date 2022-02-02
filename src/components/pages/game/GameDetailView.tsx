@@ -14,10 +14,18 @@ import DLC from './content-sections/DLC';
 // === Types === //
 import { GameDetailData } from '../../../types/games';
 import { UserData } from '../../../types/users';
-import { AddToLibrarySelectedItemsData } from '../../../types/forms';
+import { AddToLibrarySelectedItemsData, DropdownOptionsData } from '../../../types/forms';
 
 interface GameDetailViewProps {
   game: GameDetailData | null;
+}
+
+interface StatusManageData {
+  status: DropdownOptionsData | null;
+  statusDetail: DropdownOptionsData | null;
+  favourite: boolean;
+  hours: string;
+  minutes: string;
 }
 
 class GameDetailView extends Component<GameDetailViewProps> {
@@ -177,6 +185,51 @@ class GameDetailView extends Component<GameDetailViewProps> {
     }
   };
 
+  handleRequestStatus = (
+    handleButtonLoading: Function,
+    handleCloseModal: Function,
+    data: StatusManageData
+  ) => {
+    const user = this.state.user as UserData | null;
+
+    if (user && data.status) {
+      const minutesFromHours = data.hours && data.hours !== '' ? Number(data.hours) * 60 : 0;
+      const minutes = data.minutes && data.minutes !== '' ? Number(data.minutes) : 0;
+      const minutesSum = minutesFromHours + minutes;
+
+      const input = {
+        userId: user.id,
+        gameId: this.props.game?.id,
+        status: data.status.value,
+        statusDetail: data.statusDetail ? data.statusDetail.value : null,
+        time: minutesSum,
+        favourite: data.favourite,
+      };
+
+      fetch(`/api/game-status-manage`, {
+        headers: {
+          'Content-type': 'application/json',
+        },
+        method: 'POST',
+        credentials: 'include',
+        body: JSON.stringify({ ...input }),
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          handleButtonLoading(false);
+
+          if (json && !json.error) {
+            this.handleLoadUserFunctionalities();
+            handleCloseModal();
+          }
+        })
+        .catch((error) => {
+          handleButtonLoading(false);
+          console.error(error);
+        });
+    }
+  };
+
   render() {
     const { game } = this.props;
 
@@ -215,6 +268,7 @@ class GameDetailView extends Component<GameDetailViewProps> {
                 handleSetRatio={this.handleSetRatio}
                 handleRequestRatio={this.handleRequestRatio}
                 handleRequestLibrary={this.handleRequestLibrary}
+                handleRequestStatus={this.handleRequestStatus}
               />
             </Box>
           </Paper>

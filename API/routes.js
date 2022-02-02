@@ -226,6 +226,13 @@ const routes = [
     module: require('./user-library/UserLibraryManage'),
     method: 'post'
   },
+  
+  // === game status === //
+  {
+    endpoint: '/api/game-status-manage',
+    module: require('./games-status/GameStatusManage'),
+    method: 'post'
+  },
 ];
 
 module.exports = routes;

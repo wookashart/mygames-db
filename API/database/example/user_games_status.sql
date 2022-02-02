@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql18.mydevil.net
--- Generation Time: Jan 26, 2022 at 05:18 PM
+-- Generation Time: Feb 02, 2022 at 01:48 PM
 -- Server version: 5.7.35-log
 -- PHP Version: 7.3.31
 
@@ -35,7 +35,7 @@ CREATE TABLE `user_games_status` (
   `ugs_status` varchar(255) COLLATE utf8_polish_ci NOT NULL COMMENT 'played, skip, planned',
   `ugs_status_detail` varchar(255) COLLATE utf8_polish_ci NOT NULL COMMENT '100p, endless, dropped, story',
   `ugs_date` date NOT NULL,
-  `ugs_time` int(255) NOT NULL COMMENT 'played time in miliseconds',
+  `ugs_time` int(255) NOT NULL COMMENT 'played time in minutes',
   `ugs_favourite` int(1) NOT NULL DEFAULT '0' COMMENT '0 - not favourite, 1 - favourite'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
