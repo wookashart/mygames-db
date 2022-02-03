@@ -214,10 +214,17 @@ const routes = [
     module: require('./games/GameUserInfoById'),
     method: 'get'
   },
+
+  // === ratio === //
   {
     endpoint: '/api/game-ratio-set',
-    module: require('./games/GameRatioSet'),
+    module: require('./ratio/GameRatioSet'),
     method: 'post'
+  },
+  {
+    endpoint: '/api/game-ratio-by-id/:id',
+    module: require('./ratio/RatioByGameId'),
+    method: 'get'
   },
 
   // === user library === //

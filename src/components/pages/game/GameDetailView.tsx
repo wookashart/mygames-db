@@ -35,10 +35,13 @@ class GameDetailView extends Component<GameDetailViewProps> {
     funcLoading: false,
     funcData: null,
     userRatio: null,
+    ratioLoading: true,
+    ratioData: null,
   };
 
   componentDidMount() {
     this.handleCheckUserSession();
+    this.handleGetRatio();
   }
 
   handleCheckUserSession = () => {
@@ -127,6 +130,7 @@ class GameDetailView extends Component<GameDetailViewProps> {
 
           if (json && !json.error) {
             this.handleLoadUserFunctionalities();
+            this.handleGetRatio();
             handleCloseModal();
           }
         })
@@ -230,6 +234,36 @@ class GameDetailView extends Component<GameDetailViewProps> {
     }
   };
 
+  handleGetRatio = () => {
+    if (this.props.game) {
+      this.setState({ ratioLoading: true }, () => {
+        fetch(`/api/game-ratio-by-id/${this.props.game?.id}`, {
+          headers: {
+            'Content-type': 'application/json',
+          },
+          method: 'GET',
+          credentials: 'include',
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            if (json && !json.error) {
+              this.setState({
+                ratioData: {
+                  ratio: json.ratio,
+                  totalCount: json.totalCount,
+                },
+              });
+            }
+            this.setState({ ratioLoading: false });
+          })
+          .catch((error) => {
+            this.setState({ ratioLoading: false });
+            console.error(error);
+          });
+      });
+    }
+  };
+
   render() {
     const { game } = this.props;
 
@@ -257,7 +291,11 @@ class GameDetailView extends Component<GameDetailViewProps> {
             sx={{ backgroundColor: colors.grey[800], marginBottom: 2, marginTop: 2 }}
           >
             <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}>
-              <GameDetailSidebar game={game} />
+              <GameDetailSidebar
+                game={game}
+                ratioData={this.state.ratioData}
+                ratioLoading={this.state.ratioLoading}
+              />
               <GameDetailContent
                 game={game}
                 user={this.state.user}

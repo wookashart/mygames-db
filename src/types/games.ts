@@ -50,7 +50,6 @@ export interface GameDetailData {
   distributor: DistributorData;
   distributorPl: DistributorData;
   dates: GameDatesData[];
-  ratioInfo: GameRatioData; // Todo: move to other interface
 
   // temp
   dlc: any; // should be an array
@@ -102,7 +101,7 @@ export interface GameDatesData {
 
 export interface GameRatioData {
   ratio: number | string | null;
-  ratedCount: number;
+  totalCount: number;
 }
 
 export interface UserFunctionData {

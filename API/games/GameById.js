@@ -98,10 +98,6 @@ module.exports = (req, res) => {
       tags: tTags,
 
       // Temp hardcoded
-      ratioInfo: {
-        ratio: null,
-        ratedCount: 0
-      },
       dlc: [],
       related: []
     } : null;
