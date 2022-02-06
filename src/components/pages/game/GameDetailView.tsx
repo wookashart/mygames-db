@@ -43,8 +43,10 @@ class GameDetailView extends Component<GameDetailViewProps> {
   };
 
   componentDidMount() {
-    this.handleCheckUserSession();
-    this.handleGetRatio();
+    setTimeout(() => {
+      this.handleCheckUserSession();
+      this.handleGetRatio();
+    }, 1000);
   }
 
   handleCheckUserSession = () => {
