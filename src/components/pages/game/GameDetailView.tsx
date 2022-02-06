@@ -15,9 +15,12 @@ import DLC from './content-sections/DLC';
 import { GameDetailData } from '../../../types/games';
 import { UserData } from '../../../types/users';
 import { AddToLibrarySelectedItemsData, DropdownOptionsData } from '../../../types/forms';
+import RelatedTitles from './content-sections/RelatedTitles';
+import GameDetailLoading from './GameDetailLoading';
 
 interface GameDetailViewProps {
   game: GameDetailData | null;
+  loading: boolean;
 }
 
 interface StatusManageData {
@@ -265,7 +268,7 @@ class GameDetailView extends Component<GameDetailViewProps> {
   };
 
   render() {
-    const { game } = this.props;
+    const { game, loading } = this.props;
 
     return (
       <Box>
@@ -286,55 +289,74 @@ class GameDetailView extends Component<GameDetailViewProps> {
         />
 
         <Container maxWidth="xl">
-          <Paper
-            elevation={6}
-            sx={{ backgroundColor: colors.grey[800], marginBottom: 2, marginTop: 2 }}
-          >
-            <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}>
-              <GameDetailSidebar
-                game={game}
-                ratioData={this.state.ratioData}
-                ratioLoading={this.state.ratioLoading}
-              />
-              <GameDetailContent
-                game={game}
-                user={this.state.user}
-                userLoading={this.state.userLoading}
-                funcLoading={this.state.funcLoading}
-                funcData={this.state.funcData}
-                userRatio={this.state.userRatio}
-                handleSetRatio={this.handleSetRatio}
-                handleRequestRatio={this.handleRequestRatio}
-                handleRequestLibrary={this.handleRequestLibrary}
-                handleRequestStatus={this.handleRequestStatus}
-              />
-            </Box>
-          </Paper>
+          {loading ? (
+            <GameDetailLoading />
+          ) : (
+            <>
+              <Paper
+                elevation={6}
+                sx={{ backgroundColor: colors.grey[800], marginBottom: 2, marginTop: 2 }}
+              >
+                <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }}>
+                  <GameDetailSidebar
+                    game={game}
+                    ratioData={this.state.ratioData}
+                    ratioLoading={this.state.ratioLoading}
+                  />
+                  <GameDetailContent
+                    game={game}
+                    user={this.state.user}
+                    userLoading={this.state.userLoading}
+                    funcLoading={this.state.funcLoading}
+                    funcData={this.state.funcData}
+                    userRatio={this.state.userRatio}
+                    handleSetRatio={this.handleSetRatio}
+                    handleRequestRatio={this.handleRequestRatio}
+                    handleRequestLibrary={this.handleRequestLibrary}
+                    handleRequestStatus={this.handleRequestStatus}
+                  />
+                </Box>
+              </Paper>
 
-          <Paper
-            elevation={6}
-            sx={{ backgroundColor: colors.grey[800], marginBottom: 4, marginTop: 2 }}
-          >
-            <Tab
-              tabs={[
-                { header: 'Opis', content: <Description description={game?.description} /> },
-                {
-                  header: 'Wymagania sprzętowe',
-                  content: <Requirements requirements={game?.requirements} />,
-                  disabled: game?.platforms
-                    ? game.platforms.find((item) => item.code === 'PC')
-                      ? false
-                      : true
-                    : true,
-                },
-                {
-                  header: 'Dodatki',
-                  content: <DLC />,
-                  disabled: game?.dlc ? (game.dlc.length > 0 ? false : true) : true,
-                },
-              ]}
-            />
-          </Paper>
+              <Paper
+                elevation={6}
+                sx={{
+                  backgroundColor: colors.grey[800],
+                  marginBottom: game?.related && game.related.length > 0 ? 2 : 4,
+                  marginTop: 2,
+                }}
+              >
+                <Tab
+                  tabs={[
+                    { header: 'Opis', content: <Description description={game?.description} /> },
+                    {
+                      header: 'Wymagania sprzętowe',
+                      content: <Requirements requirements={game?.requirements} />,
+                      disabled: game?.platforms
+                        ? game.platforms.find((item) => item.code === 'PC')
+                          ? false
+                          : true
+                        : true,
+                    },
+                    {
+                      header: 'Dodatki',
+                      content: <DLC />,
+                      disabled: game?.dlc ? (game.dlc.length > 0 ? false : true) : true,
+                    },
+                  ]}
+                />
+              </Paper>
+
+              {game?.related && game.related.length > 0 ? (
+                <Paper
+                  elevation={6}
+                  sx={{ backgroundColor: colors.grey[800], marginBottom: 4, marginTop: 2 }}
+                >
+                  <RelatedTitles list={game.related} />
+                </Paper>
+              ) : null}
+            </>
+          )}
         </Container>
       </Box>
     );
