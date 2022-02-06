@@ -50,10 +50,10 @@ export interface GameDetailData {
   distributor: DistributorData;
   distributorPl: DistributorData;
   dates: GameDatesData[];
+  related: GameRelatedTitlesData[];
 
   // temp
   dlc: any; // should be an array
-  related: any; // should be an array
 }
 
 export interface GameRequirementsTypesData {
@@ -138,4 +138,11 @@ export interface UserFunctionStatusData {
   date: Date;
   time: number;
   favourite: boolean;
+}
+
+export interface GameRelatedTitlesData {
+  id: number;
+  name: string;
+  namePl: string;
+  cover: string;
 }

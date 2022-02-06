@@ -4,6 +4,7 @@ module.exports = (req, res) => {
   const id = req.params.id;
   const response = {};
   let allPlatforms = [];
+  let groupName = '';
 
   queryPromise(`
     SELECT *
@@ -12,6 +13,7 @@ module.exports = (req, res) => {
   `)
   .then(({err, rows}) => {
     const gData = rows && rows.length ? rows[0] : null;
+    groupName = gData && gData.game_group ? gData.game_group : '';
     response.error = err;
 
     const pPlatforms = [];
@@ -36,7 +38,6 @@ module.exports = (req, res) => {
         }
       });
     }
-
 
     response.game = gData ? {
       id: gData.game_id,
@@ -96,10 +97,10 @@ module.exports = (req, res) => {
       } : null,
       platforms: pPlatforms,
       tags: tTags,
+      related: [],
 
       // Temp hardcoded
       dlc: [],
-      related: []
     } : null;
 
     return queryPromise(`
@@ -293,6 +294,22 @@ module.exports = (req, res) => {
         platformCode: allPlatforms.find(platform => platform.platform_id === item.gd_platform_id).platform_code,
       }
     });
+
+    return queryPromise(`
+      SELECT
+        game_id AS id,
+        game_name AS name,
+        game_name_pl AS namePl,
+        game_cover AS cover
+      FROM games
+      WHERE game_group = "${groupName}"
+      AND game_id != "${id}"
+      ORDER BY game_name_sort ASC
+    `)
+  })
+  // eslint-disable-next-line no-unused-vars
+  .then(({err, rows}) => {
+    response.game.related = rows && rows.length ? rows : []
     
     res.json(response);
   })
