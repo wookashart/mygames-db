@@ -9,7 +9,7 @@ const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-// const routes = require('./API/routes');
+const routes = require('./API/routes');
 
 app
   .prepare()
@@ -37,14 +37,13 @@ app
       }),
     );
 
-    // routes.forEach(r => {
-    //   if (r.method === 'post') {
-    //     server.post(r.endpoint, r.module);
-    //   } else {
-    //     server.get(r.endpoint, r.module);
-    //   }
-
-    // });
+    routes.forEach(r => {
+      if (r.method === 'post') {
+        server.post(r.endpoint, r.module);
+      } else {
+        server.get(r.endpoint, r.module);
+      }
+    });
 
     server.get('*', (req, res) => {
       return handle(req, res);

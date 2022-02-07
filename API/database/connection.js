@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const mysql = require('mysql');
+const data = require('./connectionData');
 
 const connectData = {
-  host: process.env.DATABASE_HOST,
-  user: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
-  port: process.env.DATABASE_PORT
+  host: data.DATABASE_HOST,
+  user: data.DATABASE_USER,
+  password: data.DATABASE_PASSWORD,
+  database: data.DATABASE_NAME,
+  port: data.DATABASE_PORT
 };
 
 const connection = mysql.createConnection(connectData);
