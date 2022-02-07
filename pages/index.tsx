@@ -7,7 +7,9 @@ class Index extends Component {
   render() {
     return (
       <Page seo={{ title: 'Strona główna', description: '' }} pageType="homepage">
+        <>
         <div>Homepage</div>
+        </>
       </Page>
     );
   }
