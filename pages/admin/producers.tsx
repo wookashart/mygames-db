@@ -87,7 +87,7 @@ class Producers extends Component {
               { current: true, label: 'Producenci', href: '/admin/producers' },
             ]}
           />
-          <Container maxWidth="xl">
+          <Container maxWidth="lg">
             <PageHeader title="Producenci" />
 
             <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>

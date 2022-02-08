@@ -199,10 +199,10 @@ const Register = () => {
             { current: true, label: 'Rejestracja', href: '/register' },
           ]}
         />
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <PageHeader title="Rejestracja" />
         </Container>
-        <Container maxWidth="md">
+        <Container maxWidth="lg">
           <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>
             <Box px={3} pb={3} pt={1}>
               <form onSubmit={formik.handleSubmit}>

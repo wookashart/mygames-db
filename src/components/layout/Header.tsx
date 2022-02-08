@@ -52,7 +52,7 @@ const Header = ({
     <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
-          <Container maxWidth="xl">
+          <Container maxWidth="lg">
             <Toolbar
               sx={{
                 padding: '0 !important',

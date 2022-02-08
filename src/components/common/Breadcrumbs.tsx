@@ -21,7 +21,7 @@ interface BreadcrumbsOptionsData {
 const CustomBreadcrumbs = ({ options }: CustomBreadcrumbsProps) => {
   return (
     <>
-      <Container maxWidth="xl" sx={{ marginTop: 1 }}>
+      <Container maxWidth="lg" sx={{ marginTop: 1 }}>
         <Breadcrumbs aria-label="breadcrumb" separator="›" color={customColors.textLight}>
           {options.map((item, index) => {
             if (item.current) {

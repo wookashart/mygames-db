@@ -87,7 +87,7 @@ class DistributorsPl extends Component {
               { current: true, label: 'Wydawcy w Polsce', href: '/admin/distributors-pl' },
             ]}
           />
-          <Container maxWidth="xl">
+          <Container maxWidth="lg">
             <PageHeader title="Wydawcy w Polsce" />
 
             <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>

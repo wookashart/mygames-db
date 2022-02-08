@@ -87,7 +87,7 @@ class Tags extends Component {
               { current: true, label: 'Tagi', href: '/admin/tags' },
             ]}
           />
-          <Container maxWidth="xl">
+          <Container maxWidth="lg">
             <PageHeader title="Tagi" />
 
             <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>

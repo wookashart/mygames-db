@@ -46,7 +46,7 @@ class GameDetailView extends Component<GameDetailViewProps> {
     setTimeout(() => {
       this.handleCheckUserSession();
       this.handleGetRatio();
-    }, 1000);
+    }, 300);
   }
 
   handleCheckUserSession = () => {
@@ -290,7 +290,7 @@ class GameDetailView extends Component<GameDetailViewProps> {
           ]}
         />
 
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           {loading ? (
             <GameDetailLoading />
           ) : (

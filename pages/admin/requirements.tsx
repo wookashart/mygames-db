@@ -20,7 +20,7 @@ class requirements extends Component {
               { current: true, label: 'Wymagania sprzętowe', href: '/admin/requirements' },
             ]}
           />
-          <Container maxWidth="xl">
+          <Container maxWidth="lg">
             <PageHeader title="Wymagania sprzętowe" />
 
             <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>

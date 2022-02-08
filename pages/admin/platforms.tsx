@@ -87,7 +87,7 @@ class Platforms extends Component {
               { current: true, label: 'Platformy', href: '/admin/platforms' },
             ]}
           />
-          <Container maxWidth="xl">
+          <Container maxWidth="lg">
             <PageHeader title="Platformy" />
 
             <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>

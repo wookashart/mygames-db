@@ -47,7 +47,7 @@ class CreateGame extends Component {
               { current: true, label: 'Dodaj grę', href: '/admin/create-game' },
             ]}
           />
-          <Container maxWidth="xl">
+          <Container maxWidth="lg">
             <PageHeader title="Dodaj grę" />
 
             <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>
