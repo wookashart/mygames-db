@@ -20,6 +20,7 @@ import DistributorPlCreateEdit from '../admin-distributors-pl/DistributorPlCreat
 import Notification from '../../common/Notification';
 
 // === Helper === //
+import dateFormat from 'dateformat';
 import { useFormik } from 'formik';
 import getCroppedImg from '../../../utils/image-cropper';
 import * as yup from 'yup';
@@ -29,7 +30,11 @@ import { customColors } from '../../../styles/variables';
 import { colors, makeStyles } from '@material-ui/core';
 
 // === Types === //
-import { DropdownOptionsData, NotificationType } from '../../../types/forms';
+import {
+  CreateGamePlatformsDatesData,
+  DropdownOptionsData,
+  NotificationType,
+} from '../../../types/forms';
 import {
   DistributorData,
   DistributorPlData,
@@ -316,14 +321,23 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
         namePl: values.namePl,
         nameSort: values.nameSort,
         groupName: values.groupName,
-        firstDate: values.earlyAccess ? null : values.firstDate,
+        firstDate: values.earlyAccess
+          ? null
+          : values.firstDate
+          ? dateFormat(values.firstDate, 'yyyy-mm-dd')
+          : null,
         platforms: values.platforms,
         tags: values.tags,
         producer: values.producer ? values.producer.value : null,
         distributor: values.distributor ? values.distributor.value : null,
         distributorPl: values.distributorPl ? values.distributorPl.value : null,
         earlyAccess: values.earlyAccess ? 1 : 0,
-        platformsDates: values.earlyAccess ? null : values.platformsDates,
+        platformsDates: values.earlyAccess
+          ? null
+          : values.platformsDates.map((pd: CreateGamePlatformsDatesData) => ({
+              ...pd,
+              date: pd.date ? dateFormat(pd.date, 'yyyy-mm-dd') : null,
+            })),
         cpuMin: values.cpuMin,
         gpuMin: values.gpuMin,
         ramMin: values.ramMin,

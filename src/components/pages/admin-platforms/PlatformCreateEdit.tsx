@@ -14,6 +14,7 @@ import Wysiwig from '../../common/form/Wysiwig';
 import PlatformProducerCreate from './PlatformProducerCreate';
 
 // === Helper === //
+import dateFormat from 'dateformat';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -102,7 +103,7 @@ const PlatformCreateEdit = ({
         sortName: values.sortName,
         code: values.code,
         producer: values.producer?.value,
-        date: values.date,
+        date: values.date ? dateFormat(values.date, 'yyyy-mm-dd') : null,
         description: values.description,
       };
 
