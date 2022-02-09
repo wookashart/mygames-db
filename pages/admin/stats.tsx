@@ -35,7 +35,6 @@ class Stats extends Component {
       })
         .then((response) => response.json())
         .then((json) => {
-          console.log(json);
           if (json && !json.error) {
             this.setState({
               lastAddedGames: json.lastAddedGames,
