@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 
@@ -28,12 +29,24 @@ interface CarouselItemData {
 }
 
 const CarouselComponent = ({ items }: CarouselComponentProps) => {
+  const slidesToShow = (number: number) => {
+    let toShow = number;
+
+    if (items.length > number) {
+      toShow = number;
+    } else {
+      toShow = items.length;
+    }
+
+    return toShow;
+  };
+
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
-    slidesToScroll: 5,
+    slidesToShow: slidesToShow(5),
+    slidesToScroll: 1,
     pauseOnHover: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
@@ -41,8 +54,8 @@ const CarouselComponent = ({ items }: CarouselComponentProps) => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToShow: slidesToShow(3),
+          slidesToScroll: 1,
           infinite: true,
           dots: true,
           swipeToSlide: true,
@@ -51,8 +64,8 @@ const CarouselComponent = ({ items }: CarouselComponentProps) => {
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: slidesToShow(2),
+          slidesToScroll: 1,
           initialSlide: 2,
           swipeToSlide: true,
           arrows: false,
@@ -61,7 +74,7 @@ const CarouselComponent = ({ items }: CarouselComponentProps) => {
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: slidesToShow(1),
           slidesToScroll: 1,
           swipeToSlide: true,
           arrows: false,
@@ -84,12 +97,22 @@ const CarouselComponent = ({ items }: CarouselComponentProps) => {
 const Item = ({ item }: CarouselItemProps) => {
   return (
     <>
-      <Paper elevation={6} sx={{ backgroundColor: colors.grey[900], marginBottom: 4, margin: 1 }}>
+      <Paper
+        elevation={6}
+        sx={{
+          backgroundColor: 'transparent',
+          overflow: 'hidden',
+          maxWidth: '200px',
+          margin: 'auto',
+        }}
+      >
         <Link href={item.linkUrl}>
           <a>
             <Box
               position="relative"
               sx={{
+                maxWidth: '100%',
+                margin: 'auto',
                 '&:hover': {
                   '.title-wrapper': {
                     opacity: 1,
@@ -106,13 +129,16 @@ const Item = ({ item }: CarouselItemProps) => {
                   left: 0,
                   right: 0,
                   bottom: 0,
+                  top: 0,
                   opacity: 0,
                   transition: `opacity ease-out ${animation.fast}ms`,
+                  display: 'flex',
+                  alignItems: 'center',
                 }}
               >
                 <Typography
                   color="white"
-                  sx={{ textAlign: 'center', padding: 2, fontSize: '12px' }}
+                  sx={{ textAlign: 'center', padding: 2, fontSize: '16px' }}
                 >
                   {item.title}
                 </Typography>
@@ -139,6 +165,7 @@ const arrowStyles = {
   bottom: '0',
   margin: 'auto',
   zIndex: '1',
+  transform: 'scale(0.7)',
 };
 
 const SamplePrevArrow = (props: any) => {
@@ -150,7 +177,7 @@ const SamplePrevArrow = (props: any) => {
       onClick={onClick}
       sx={{
         ...arrowStyles,
-        left: '-20px',
+        left: '-25px',
       }}
     >
       <NavigateBefore sx={{ color: 'white' }} />
@@ -167,7 +194,7 @@ const SampleNextArrow = (props: any) => {
       onClick={onClick}
       sx={{
         ...arrowStyles,
-        right: '-20px',
+        right: '-25px',
       }}
     >
       <NavigateNext />

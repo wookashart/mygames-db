@@ -46,7 +46,7 @@ class GameDetailView extends Component<GameDetailViewProps> {
     setTimeout(() => {
       this.handleCheckUserSession();
       this.handleGetRatio();
-    }, 300);
+    }, 500);
   }
 
   handleCheckUserSession = () => {
