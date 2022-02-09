@@ -59,3 +59,13 @@ export interface GameDistributionPlatformsData {
   name: string;
   code: string;
 }
+
+export interface StatsData {
+  lastAddedGames: LastAddedGamesData[];
+}
+
+export interface LastAddedGamesData {
+  id: number;
+  name: string;
+  cover: string;
+}

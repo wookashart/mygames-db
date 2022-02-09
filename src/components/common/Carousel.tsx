@@ -138,7 +138,7 @@ const Item = ({ item }: CarouselItemProps) => {
               >
                 <Typography
                   color="white"
-                  sx={{ textAlign: 'center', padding: 2, fontSize: '16px' }}
+                  sx={{ textAlign: 'center', padding: 2, fontSize: '16px', width: '100%' }}
                 >
                   {item.title}
                 </Typography>

@@ -197,6 +197,11 @@ const routes = [
     module: require('./admin/game-distribution/gameDistributionCreate'),
     method: 'post'
   },
+  {
+    endpoint: '/api/admin-stats',
+    module: require('./admin/stats/getStats'),
+    method: 'get'
+  },
 
   // === games === //
   {
