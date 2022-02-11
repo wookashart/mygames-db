@@ -54,3 +54,15 @@ export interface AddToLibrarySelectedItemsData {
   platform: DropdownOptionsData | null;
   distribution: DropdownOptionsData | null;
 }
+
+export interface CreateDlcInitialValues {
+  name: string;
+  namePl: string;
+  nameSort: string;
+  platforms: DropdownOptionsData[] | null | undefined;
+  earlyAccess: boolean;
+  firstDate: Date | null;
+  platformsDates: CreateGamePlatformsDatesData[];
+  description: string;
+  game: DropdownOptionsData | null | undefined;
+}

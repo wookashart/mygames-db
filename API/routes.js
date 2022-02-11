@@ -202,6 +202,11 @@ const routes = [
     module: require('./admin/stats/getStats'),
     method: 'get'
   },
+  {
+    endpoint: '/api/dlc-create',
+    module: require('./admin/dlc/dlcCreate'),
+    method: 'post'
+  },
 
   // === games === //
   {
@@ -217,6 +222,11 @@ const routes = [
   {
     endpoint: '/api/game-user-info/:gameId/:userId',
     module: require('./games/GameUserInfoById'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/games-dropdown',
+    module: require('./games/GamesListDropdown'),
     method: 'get'
   },
 
@@ -245,6 +255,9 @@ const routes = [
     module: require('./games-status/GameStatusManage'),
     method: 'post'
   },
+
+  // === DLC === //
+
 ];
 
 module.exports = routes;

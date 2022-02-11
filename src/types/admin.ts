@@ -62,10 +62,19 @@ export interface GameDistributionPlatformsData {
 
 export interface StatsData {
   lastAddedGames: LastAddedGamesData[];
+  lastAddedDLC: LastAddedDLCData[];
 }
 
 export interface LastAddedGamesData {
   id: number;
+  name: string;
+  cover: string;
+}
+
+export interface LastAddedDLCData {
+  id: number;
+  gameId: number;
+  gameName: string;
   name: string;
   cover: string;
 }

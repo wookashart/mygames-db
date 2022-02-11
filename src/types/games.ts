@@ -146,3 +146,9 @@ export interface GameRelatedTitlesData {
   namePl: string;
   cover: string;
 }
+
+export interface GamesListForDropdownData {
+  id: number;
+  name: string;
+  namePl: string;
+}

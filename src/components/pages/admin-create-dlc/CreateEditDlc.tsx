@@ -6,17 +6,12 @@ import { Box } from '@mui/system';
 import { Button, Step, StepLabel, Stepper, Typography } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { Send } from '@mui/icons-material';
-import Step1BasicFields from './steps/Step1BasicFields';
-import Step2DatesFields from './steps/Step2DatesFields';
-import Step3Requirements from './steps/Step3Requirements';
-import Step4Description from './steps/Step4Description';
-import Step5Cover from './steps/Step5Cover';
-import Step6Summary from './steps/Step6Summary';
 import PlatformCreateEdit from '../admin-platforms/PlatformCreateEdit';
-import TagCreateEdit from '../admin-tags/TagCreateEdit';
-import ProducerCreateEdit from '../admin-producers/ProducerCreateEdit';
-import DistributorCreateEdit from '../admin-distributors/DistributorCreateEdit';
-import DistributorPlCreateEdit from '../admin-distributors-pl/DistributorPlCreateEdit';
+import Step1BasicFields from './steps/Step1BasicFields';
+import Step2DatesFields from '../admin-create-game/steps/Step2DatesFields';
+import Step4Description from '../admin-create-game/steps/Step4Description';
+import Step5Cover from '../admin-create-game/steps/Step5Cover';
+import Step5Summary from './steps/Step5Summary';
 import Notification from '../../common/Notification';
 
 // === Helper === //
@@ -30,42 +25,32 @@ import { customColors } from '../../../styles/variables';
 import { colors, makeStyles } from '@material-ui/core';
 
 // === Types === //
+import { UserData } from '../../../types/users';
 import {
   CreateGamePlatformsDatesData,
   DropdownOptionsData,
   NotificationType,
 } from '../../../types/forms';
-import {
-  DistributorData,
-  DistributorPlData,
-  PlatformsData,
-  ProducerData,
-  TagData,
-} from '../../../types/admin';
+import { PlatformsData } from '../../../types/admin';
 import { CroppedAreaData } from '../../../types/images';
-import { UserData } from '../../../types/users';
 
-const validationSchema = yup.object({
-  name: yup.string().required('Musisz podać nazwę!'),
-  nameSort: yup.string().required('Musisz podać nazwę do sortowania!'),
-  groupName: yup.string().required('Musisz podać nazwę do serii!'),
-});
-
-interface CreateEditGameFormProps {
+interface CreateEditDlcFormProps {
   editItem: any | null;
   user: UserData | null;
 }
 
-const steps = [
-  'Podstawowe dane',
-  'Daty premier',
-  'Wymagania sprzętowe',
-  'Opis',
-  'Okładka',
-  'Podsumowanie',
-];
+const validationSchema = yup.object({
+  name: yup.string().required('Musisz podać nazwę!'),
+  nameSort: yup.string().required('Musisz podać nazwę do sortowania!'),
+  game: yup.object({
+    title: yup.string().required('Musisz wybrać grę!'),
+    value: yup.number().required('Musisz wybrać grę!'),
+  }),
+});
 
-const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
+const steps = ['Podstawowe dane', 'Daty premier', 'Opis', 'Okładka', 'Podsumowanie'];
+
+const CreateEditDlc = ({ editItem, user }: CreateEditDlcFormProps) => {
   const [activeStep, setActiveStep] = useState(0);
   const [buttonLoading, toggleButtonLoading] = useState(false);
   const [step1Failed, toggleStep1Failed] = useState(false);
@@ -79,10 +64,9 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
 
   // dropdowns data
   const [platforms, setPlatforms] = useState([]);
-  const [tags, setTags] = useState([]);
-  const [producers, setProducers] = useState([]);
-  const [distributors, setDistributors] = useState([]);
-  const [distributorsPl, setDistributorsPl] = useState([]);
+
+  // modals
+  const [openCreatePlatform, toggleOpenCreatePlatform] = useState(false);
 
   // image cropper
   const [imageSrc, setImageSrc]: Array<any> = useState('');
@@ -91,13 +75,6 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
   const [croppedAreaPixels, handleChangeCroppedAreaPixels]: Array<
     CroppedAreaData | null | Function
   > = useState(null);
-
-  // modals
-  const [openCreatePlatform, toggleOpenCreatePlatform] = useState(false);
-  const [openCreateTag, toggleOpenCreateTag] = useState(false);
-  const [openCreateProducer, toggleOpenCreateProducer] = useState(false);
-  const [openCreateDistributor, toggleOpenCreateDistributor] = useState(false);
-  const [openCreateDistributorPl, toggleOpenCreateDistributorPl] = useState(false);
 
   const useStyles = makeStyles(() => ({
     root: {
@@ -116,7 +93,7 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
           formik.setTouched({
             name: true,
             nameSort: true,
-            groupName: true,
+            game: true,
           });
           toggleStep1Failed(true);
         } else {
@@ -127,7 +104,7 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     }
 
-    if (index === 4) {
+    if (index === 3) {
       setTimeout(() => {
         toggleSubmitDisabled(false);
       }, 1000);
@@ -162,105 +139,9 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
         console.error(error);
       });
   };
-  const getAllTags = () => {
-    fetch(`/api/tags`, {
-      headers: {
-        'Content-type': 'application/json',
-      },
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json) {
-          setTags(
-            json.items.map((item: TagData) => ({
-              title: item.tag_name,
-              value: item.tag_id,
-            }))
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-  const getAllProducers = () => {
-    fetch(`/api/producers`, {
-      headers: {
-        'Content-type': 'application/json',
-      },
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json) {
-          setProducers(
-            json.items.map((item: ProducerData) => ({
-              title: item.producer_name,
-              value: item.producer_id,
-            }))
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-  const getAllDistributors = () => {
-    fetch(`/api/distributors`, {
-      headers: {
-        'Content-type': 'application/json',
-      },
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json) {
-          setDistributors(
-            json.items.map((item: DistributorData) => ({
-              title: item.distributor_name,
-              value: item.distributor_id,
-            }))
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-  const getAllDistributorsPl = () => {
-    fetch(`/api/distributors-pl`, {
-      headers: {
-        'Content-type': 'application/json',
-      },
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json) {
-          setDistributorsPl(
-            json.items.map((item: DistributorPlData) => ({
-              title: item.distributor_pl_name,
-              value: item.distributor_pl_id,
-            }))
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
 
   useEffect(() => {
     getAllPlatforms();
-    getAllTags();
-    getAllProducers();
-    getAllDistributors();
-    getAllDistributorsPl();
   }, []);
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -280,35 +161,13 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
     initialValues: {
       name: editItem ? editItem.distributor_name : '',
       namePl: editItem ? editItem.distributor_namePl : '',
-      nameSort: editItem ? editItem.distributor_nameSort : '',
-      groupName: editItem ? editItem.distributor_groupName : '',
+      nameSort: '',
       firstDate: editItem ? editItem.distributor_firstDate : null,
       platforms: [],
-      tags: [],
-      producer: editItem
-        ? producers.find((p: DropdownOptionsData) => p.value === editItem.platform_producer_id)
-        : (null as DropdownOptionsData | null),
-      distributor: editItem
-        ? distributors.find((p: DropdownOptionsData) => p.value === editItem.platform_producer_id)
-        : (null as DropdownOptionsData | null),
-      distributorPl: editItem
-        ? distributorsPl.find((p: DropdownOptionsData) => p.value === editItem.platform_producer_id)
-        : (null as DropdownOptionsData | null),
       earlyAccess: false,
       platformsDates: [],
-      cpuMin: '',
-      gpuMin: '',
-      ramMin: '',
-      systemMin: null,
-      directxMin: null,
-      hddMin: '',
-      cpuReccomended: '',
-      gpuReccomended: '',
-      ramReccomended: '',
-      systemReccomended: null,
-      directxReccomended: null,
-      hddReccomended: '',
       description: editItem ? editItem.game_description : '',
+      game: null as DropdownOptionsData | null,
     },
     enableReinitialize: true,
     validationSchema: validationSchema,
@@ -316,21 +175,16 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
       toggleButtonLoading(true);
 
       const input = {
-        id: editItem ? editItem.game_id : null,
+        id: editItem ? editItem.dlc_id : null,
         name: values.name,
         namePl: values.namePl,
         nameSort: values.nameSort,
-        groupName: values.groupName,
         firstDate: values.earlyAccess
           ? null
           : values.firstDate
           ? dateFormat(values.firstDate, 'yyyy-mm-dd')
           : null,
         platforms: values.platforms,
-        tags: values.tags,
-        producer: values.producer ? values.producer.value : null,
-        distributor: values.distributor ? values.distributor.value : null,
-        distributorPl: values.distributorPl ? values.distributorPl.value : null,
         earlyAccess: values.earlyAccess ? 1 : 0,
         platformsDates: values.earlyAccess
           ? null
@@ -338,33 +192,20 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
               ...pd,
               date: pd.date ? dateFormat(pd.date, 'yyyy-mm-dd') : null,
             })),
-        cpuMin: values.cpuMin,
-        gpuMin: values.gpuMin,
-        ramMin: values.ramMin,
-        systemMin: values.systemMin ? (values.systemMin as DropdownOptionsData).value : null,
-        directxMin: values.directxMin ? (values.directxMin as DropdownOptionsData).value : null,
-        hddMin: values.hddMin,
-        cpuReccomended: values.cpuReccomended,
-        gpuReccomended: values.gpuReccomended,
-        ramReccomended: values.ramReccomended,
-        systemReccomended: values.systemReccomended
-          ? (values.systemReccomended as DropdownOptionsData).value
-          : null,
-        directxReccomended: values.directxReccomended
-          ? (values.directxReccomended as DropdownOptionsData).value
-          : null,
-        hddReccomended: values.hddReccomended,
         description: values.description,
         image: null,
         userId: user ? user.id : null,
+        game: values.game ? values.game.value : null,
       };
+
+      console.log(input);
 
       if (imageSrc && imageSrc !== '') {
         try {
           getCroppedImg(imageSrc, croppedAreaPixels, rotation).then((image) => {
             input.image = image;
 
-            fetch(`/api/game-create`, {
+            fetch(`/api/dlc-create`, {
               headers: {
                 'Content-type': 'application/json',
               },
@@ -384,13 +225,13 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
                   });
                   handleNotification({
                     open: true,
-                    message: `Nie udało się dodać gry!`,
+                    message: `Nie udało się dodać DLC!`,
                     type: 'error',
                   });
                 } else {
                   handleNotification({
                     open: true,
-                    message: `Poprawnie dodano grę ${values.name}!`,
+                    message: `Poprawnie dodano DLC ${values.name}!`,
                     type: 'success',
                   });
                   resetForm();
@@ -415,51 +256,6 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
           toggleButtonLoading(false);
           console.error(e);
         }
-      } else {
-        fetch(`/api/game-create`, {
-          headers: {
-            'Content-type': 'application/json',
-          },
-          method: 'POST',
-          credentials: 'include',
-          body: JSON.stringify({ ...input }),
-        })
-          .then((response) => response.json())
-          .then((json) => {
-            toggleButtonLoading(false);
-            toggleSubmitDisabled(true);
-            if (json.nameSortDuplicated || json.nameDuplicated) {
-              setFormError({
-                error: true,
-                message: json.errorMessage,
-              });
-              handleNotification({
-                open: true,
-                message: `Nie udało się dodać gry!`,
-                type: 'error',
-              });
-            } else {
-              handleNotification({
-                open: true,
-                message: `Poprawnie dodano grę ${values.name}!`,
-                type: 'success',
-              });
-              resetForm();
-              setImageSrc('');
-              handleChangeZoom(1);
-              handleChangeRotation(0);
-              handleChangeCroppedAreaPixels(null);
-              setFormError({
-                error: false,
-                message: '',
-              });
-            }
-          })
-          .catch((error) => {
-            toggleButtonLoading(false);
-            toggleSubmitDisabled(true);
-            console.error(error);
-          });
       }
     },
   });
@@ -497,21 +293,12 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
             formik={formik as any}
             toggleStep1Failed={toggleStep1Failed}
             platforms={platforms}
-            tags={tags}
-            producers={producers}
-            distributors={distributors}
-            distributorsPl={distributorsPl}
             toggleOpenCreatePlatform={toggleOpenCreatePlatform}
-            toggleOpenCreateTag={toggleOpenCreateTag}
-            toggleOpenCreateProducer={toggleOpenCreateProducer}
-            toggleOpenCreateDistributor={toggleOpenCreateDistributor}
-            toggleOpenCreateDistributorPl={toggleOpenCreateDistributorPl}
           />
         )}
         {activeStep === 1 && <Step2DatesFields formik={formik as any} />}
-        {activeStep === 2 && <Step3Requirements formik={formik as any} />}
-        {activeStep === 3 && <Step4Description formik={formik as any} />}
-        {activeStep === 4 && (
+        {activeStep === 2 && <Step4Description formik={formik as any} />}
+        {activeStep === 3 && (
           <Step5Cover
             imageSrc={imageSrc}
             zoom={zoom}
@@ -522,7 +309,7 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
             onPreviewUpdate={onPreviewUpdate}
           />
         )}
-        {activeStep === 5 && <Step6Summary formik={formik as any} imageSrc={imageSrc} />}
+        {activeStep === 4 && <Step5Summary formik={formik as any} imageSrc={imageSrc} />}
 
         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
           <Button
@@ -574,30 +361,6 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
         handleClose={() => toggleOpenCreatePlatform(false)}
         handleReloadData={() => getAllPlatforms()}
       />
-      <TagCreateEdit
-        editItem={null}
-        open={openCreateTag}
-        handleClose={() => toggleOpenCreateTag(false)}
-        handleReloadData={() => getAllTags()}
-      />
-      <ProducerCreateEdit
-        editItem={null}
-        open={openCreateProducer}
-        handleClose={() => toggleOpenCreateProducer(false)}
-        handleReloadData={() => getAllProducers()}
-      />
-      <DistributorCreateEdit
-        editItem={null}
-        open={openCreateDistributor}
-        handleClose={() => toggleOpenCreateDistributor(false)}
-        handleReloadData={() => getAllDistributors()}
-      />
-      <DistributorPlCreateEdit
-        editItem={null}
-        open={openCreateDistributorPl}
-        handleClose={() => toggleOpenCreateDistributorPl(false)}
-        handleReloadData={() => getAllDistributorsPl()}
-      />
       <Notification
         open={notification.open}
         message={notification.message}
@@ -614,4 +377,4 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
   );
 };
 
-export default CreateEditGameForm;
+export default CreateEditDlc;

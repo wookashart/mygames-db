@@ -132,7 +132,7 @@ const AdminNavigation = () => {
               },
             }}
           >
-            <Link href="/">
+            <Link href="/admin/create-dlc">
               <a className="adminNavigation-link">
                 <ListItemIcon>
                   <Extension fontSize="small" sx={{ color: customColors.textLight }} />
