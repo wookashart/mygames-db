@@ -87,8 +87,6 @@ module.exports = (req, res) => {
         response.errorMessage = '';
         response.error = err;
 
-        console.log(rows)
-
         if (image) {
           const dir = `./public/img/dlc`;
           if (!fs.existsSync(dir)){

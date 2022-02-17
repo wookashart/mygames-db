@@ -45,7 +45,7 @@ class LastAddedDLC extends Component<LastAddedDLCProps> {
                     padding: 1,
                   }}
                 >
-                  <Link href={`/game/${dlc.gameId}/${dlc.id}`}>
+                  <Link href={`/game/${dlc.gameId}/dlc/${dlc.id}`}>
                     <a>
                       <Box
                         position="relative"

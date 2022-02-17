@@ -5,8 +5,8 @@ import { Container } from '@mui/material';
 import Page from '../../src/components/layout/Page';
 import Breadcrumbs from '../../src/components/common/Breadcrumbs';
 import PageHeader from '../../src/components/common/PageHeader';
-import LastAddedGames from '../../src/components/pages/stats/LastAddedGames';
-import LastAddedDLC from '../../src/components/pages/stats/LastAddedDLC';
+import LastAddedGames from '../../src/components/pages/admin-stats/LastAddedGames';
+import LastAddedDLC from '../../src/components/pages/admin-stats/LastAddedDLC';
 
 class Stats extends Component {
   state = {
@@ -30,7 +30,6 @@ class Stats extends Component {
       })
         .then((response) => response.json())
         .then((json) => {
-          console.log(json);
           if (json && !json.error) {
             this.setState({
               lastAddedGames: json.lastAddedGames,

@@ -138,7 +138,6 @@ class Step3Requirements extends Component<Step3RequirementsProps> {
                 options={this.state.windows}
                 value={this.props.formik.values.systemMin}
                 handleChange={(value: DropdownOptionsData | null) => {
-                  console.log(value);
                   this.props.formik.setFieldValue('systemMin', value);
                 }}
                 error={

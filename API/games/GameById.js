@@ -45,7 +45,7 @@ module.exports = (req, res) => {
       namePl: gData.game_name_pl,
       nameSort: gData.game_name_sort,
       earlyAccess: gData.game_early_access === 0 ? false : true,
-      firstDate: gData.game_first_date,
+      firstDate: gData.game_first_date !== '0000-00-00' ? gData.game_first_date : null,
       cover: gData.game_cover,
       description: gData.game_description,
       requirements: {
@@ -278,6 +278,7 @@ module.exports = (req, res) => {
         gd_date
       FROM game_dates
       WHERE gd_game_id = "${id}"
+      AND gd_date != "0000-00-00"
       ORDER BY gd_date ASC
     `)
   })
