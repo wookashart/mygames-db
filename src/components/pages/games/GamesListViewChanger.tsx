@@ -10,9 +10,13 @@ import { styled } from '@material-ui/styles';
 
 interface GamesListViewChangerProps {
   activeItem: number;
+  handleChangeActiveView: Function;
 }
 
-const GamesListViewChanger = ({ activeItem }: GamesListViewChangerProps) => {
+const GamesListViewChanger = ({
+  activeItem,
+  handleChangeActiveView,
+}: GamesListViewChangerProps) => {
   const ColorButtonList = styled(Button)<ButtonProps>(() => ({
     backgroundColor: activeItem === 0 ? colors.blue[700] : colors.grey[700],
     transition: 'background-color 250ms ease-out',
@@ -31,7 +35,7 @@ const GamesListViewChanger = ({ activeItem }: GamesListViewChangerProps) => {
   return (
     <Box>
       <ButtonGroup variant="contained" aria-label="games list view changer">
-        <ColorButtonList>
+        <ColorButtonList onClick={() => handleChangeActiveView(0)}>
           <List
             sx={{
               color: activeItem === 0 ? 'white' : customColors.textLight,
@@ -40,7 +44,7 @@ const GamesListViewChanger = ({ activeItem }: GamesListViewChangerProps) => {
             }}
           />
         </ColorButtonList>
-        <ColorButtonTiles>
+        <ColorButtonTiles onClick={() => handleChangeActiveView(1)}>
           <ViewComfy
             sx={{
               color: activeItem === 1 ? 'white' : customColors.textLight,

@@ -34,8 +34,6 @@ const GamesTablePagination = ({ count, currentPage, filters }: GamesTablePaginat
   const parametersArr = Object.keys(parameters);
   const parametersString = parametersArr.map((p) => `${p}=${parameters[p]}`).join('&');
 
-  console.log(parametersString);
-
   return (
     <Box py={4} display="flex" justifyContent="center">
       <Pagination

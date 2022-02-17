@@ -10,6 +10,7 @@ import GamesTable from './GamesTable';
 import GamesTablePagination from './GamesTablePagination';
 import GamesViewSearchbar from './GamesViewSearchbar';
 import GamesTableLoading from './GamesTableLoading';
+import GamesTiles from './GamesTiles';
 
 // === Helpers === //
 import debounce from 'lodash.debounce';
@@ -28,6 +29,7 @@ class GamesView extends Component<GamesViewProps> {
     games: [],
     totalCount: 1,
     advancedFiltersOpen: false,
+    activeView: 0,
 
     // filters:
     searchInput: '',
@@ -36,6 +38,8 @@ class GamesView extends Component<GamesViewProps> {
   debounceFunc = debounce((func: Function) => func(), 300);
 
   componentDidMount() {
+    this.checkViewType();
+
     this.setState(
       {
         searchInput: this.props.filters.name,
@@ -45,6 +49,18 @@ class GamesView extends Component<GamesViewProps> {
       }
     );
   }
+
+  checkViewType = () => {
+    if (localStorage.getItem('mygames-db-activeView')) {
+      this.setState({ activeView: Number(localStorage.getItem('mygames-db-activeView')) });
+    }
+  };
+
+  handleChangeActiveView = (nr: number) => {
+    this.setState({ activeView: nr }, () => {
+      localStorage.setItem('mygames-db-activeView', `${nr}`);
+    });
+  };
 
   handleGetGames = () => {
     this.setState({ loading: true }, () => {
@@ -109,15 +125,29 @@ class GamesView extends Component<GamesViewProps> {
               <GamesViewSearchbar
                 totalCount={this.state.totalCount}
                 searchInput={this.state.searchInput}
+                activeView={this.state.activeView}
                 handleAdvancedFiltersOpen={(value: boolean) =>
                   this.setState({ advancedFiltersOpen: value })
                 }
                 handleChangeSearchInput={this.handleChangeSearchInput}
                 handleSearchByName={this.handleSearchByName}
+                handleChangeActiveView={this.handleChangeActiveView}
               />
             </Box>
 
-            {this.state.loading ? <GamesTableLoading /> : <GamesTable items={this.state.games} />}
+            {this.state.activeView === 0 ? (
+              <>
+                {this.state.loading ? (
+                  <GamesTableLoading />
+                ) : (
+                  <GamesTable items={this.state.games} />
+                )}
+              </>
+            ) : (
+              <>
+                <GamesTiles items={this.state.games} />
+              </>
+            )}
             <GamesTablePagination
               count={Math.ceil(this.state.totalCount / 30)}
               currentPage={this.props.pageId ? Number(this.props.pageId) : 1}

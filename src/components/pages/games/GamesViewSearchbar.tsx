@@ -18,17 +18,21 @@ import { customColors } from '../../../styles/variables';
 interface GamesViewSearchbarProps {
   totalCount: number;
   searchInput: string;
+  activeView: number;
   handleAdvancedFiltersOpen: Function;
   handleChangeSearchInput: Function;
   handleSearchByName: Function;
+  handleChangeActiveView: Function;
 }
 
 const GamesViewSearchbar = ({
   totalCount,
   searchInput,
+  activeView,
   handleAdvancedFiltersOpen,
   handleChangeSearchInput,
   handleSearchByName,
+  handleChangeActiveView,
 }: GamesViewSearchbarProps) => {
   const router = useRouter();
 
@@ -97,7 +101,10 @@ const GamesViewSearchbar = ({
             </LoadingButton>
           </Box>
         </form>
-        <GamesListViewChanger activeItem={0} />
+        <GamesListViewChanger
+          activeItem={activeView}
+          handleChangeActiveView={handleChangeActiveView}
+        />
       </Box>
     </Box>
   );
