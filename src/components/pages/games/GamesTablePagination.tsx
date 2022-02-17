@@ -2,10 +2,9 @@ import React from 'react';
 
 // == Components === //
 import { Box } from '@mui/system';
-import { Pagination } from '@mui/material';
+import { Pagination, PaginationItem } from '@mui/material';
 
 // === Helpers === //
-import { useRouter } from 'next/router';
 import * as utils from '../../../utils';
 
 // === Styles === //
@@ -31,17 +30,11 @@ const GamesTablePagination = ({ count, currentPage, filters }: GamesTablePaginat
   }));
   const classes = useStyles();
 
-  const router = useRouter();
-  const onChangePage = (page: number) => {
-    router.push(
-      {
-        pathname: `/games/${page}`,
-        query: utils.addParametersToUrl({ ...filters }),
-      },
-      undefined,
-      { shallow: true }
-    );
-  };
+  const parameters = utils.addParametersToUrl({ ...filters });
+  const parametersArr = Object.keys(parameters);
+  const parametersString = parametersArr.map((p) => `${p}=${parameters[p]}`).join('&');
+
+  console.log(parametersString);
 
   return (
     <Box py={4} display="flex" justifyContent="center">
@@ -53,7 +46,15 @@ const GamesTablePagination = ({ count, currentPage, filters }: GamesTablePaginat
         showFirstButton
         showLastButton
         className={classes.root}
-        onChange={(e, page) => onChangePage(page)}
+        renderItem={(item) => (
+          <PaginationItem
+            component="a"
+            href={`/games/${item.page}${
+              parametersString && parametersString !== '' ? `?${parametersString}` : ''
+            }`}
+            {...item}
+          />
+        )}
       />
     </Box>
   );

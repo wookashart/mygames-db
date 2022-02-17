@@ -68,7 +68,7 @@ class LastAddedGames extends Component<LastAddedGamesProps> {
                         <Box
                           className="title-wrapper"
                           sx={{
-                            backgroundColor: colors.grey[900],
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
                             position: 'absolute',
                             left: 0,
                             right: 0,

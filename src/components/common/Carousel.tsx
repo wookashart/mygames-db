@@ -4,10 +4,9 @@ import React from 'react';
 
 // === Components === //
 import { Box } from '@mui/system';
-import { colors, Paper, Typography } from '@mui/material';
+import { Paper, Typography } from '@mui/material';
 import { NavigateBefore, NavigateNext } from '@mui/icons-material';
 import Slider from 'react-slick';
-import Link from 'next/link';
 
 // === Styles === //
 import { animation } from '../../styles/variables';
@@ -106,46 +105,44 @@ const Item = ({ item }: CarouselItemProps) => {
           margin: 'auto',
         }}
       >
-        <Link href={item.linkUrl}>
-          <a>
-            <Box
-              position="relative"
-              sx={{
-                maxWidth: '100%',
-                margin: 'auto',
-                '&:hover': {
-                  '.title-wrapper': {
-                    opacity: 1,
-                  },
+        <a href={item.linkUrl}>
+          <Box
+            position="relative"
+            sx={{
+              maxWidth: '100%',
+              margin: 'auto',
+              '&:hover': {
+                '.title-wrapper': {
+                  opacity: 1,
                 },
+              },
+            }}
+          >
+            <img className="slider-item__img" src={item.img} alt={item.title} />
+            <Box
+              className="title-wrapper"
+              sx={{
+                backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                bottom: 0,
+                top: 0,
+                opacity: 0,
+                transition: `opacity ease-out ${animation.fast}ms`,
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
-              <img className="slider-item__img" src={item.img} alt={item.title} />
-              <Box
-                className="title-wrapper"
-                sx={{
-                  backgroundColor: colors.grey[900],
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  top: 0,
-                  opacity: 0,
-                  transition: `opacity ease-out ${animation.fast}ms`,
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
+              <Typography
+                color="white"
+                sx={{ textAlign: 'center', padding: 2, fontSize: '16px', width: '100%' }}
               >
-                <Typography
-                  color="white"
-                  sx={{ textAlign: 'center', padding: 2, fontSize: '16px', width: '100%' }}
-                >
-                  {item.title}
-                </Typography>
-              </Box>
+                {item.title}
+              </Typography>
             </Box>
-          </a>
-        </Link>
+          </Box>
+        </a>
       </Paper>
       <style jsx>{`
         .slider-item__img {
