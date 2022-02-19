@@ -8,7 +8,7 @@ interface CustomModalProps {
   children: React.ReactChild;
   title: string;
   open: boolean;
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md' | 'lg';
   handleClose: Function;
 }
 
@@ -19,6 +19,8 @@ const CustomModal = ({ children, title, open, handleClose, size = 'sm' }: Custom
     modalWidth = 400;
   } else if (size === 'md') {
     modalWidth = 800;
+  } else if (size === 'lg') {
+    modalWidth = 1000;
   }
 
   const style = {

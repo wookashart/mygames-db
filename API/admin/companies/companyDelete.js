@@ -6,8 +6,8 @@ module.exports = (req, res) => {
   const response = {};
 
   connection.query(`
-    DELETE FROM producers
-    WHERE producer_id = "${id}"
+    DELETE FROM companies
+    WHERE company_id = "${id}"
   `, (err) => {
     response.deleted = true;
     response.errorMessage = '';

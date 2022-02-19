@@ -73,66 +73,6 @@ const routes = [
     method: 'get'
   },
   {
-    endpoint: '/api/producers',
-    module: require('./admin/producer/producerList'),
-    method: 'get'
-  },
-  {
-    endpoint: '/api/producer-create',
-    module: require('./admin/producer/producerCreate'),
-    method: 'post'
-  },
-  {
-    endpoint: '/api/producer-edit',
-    module: require('./admin/producer/producerEdit'),
-    method: 'post'
-  },
-  {
-    endpoint: '/api/producer-delete',
-    module: require('./admin/producer/producerDelete'),
-    method: 'post'
-  },
-  {
-    endpoint: '/api/distributors',
-    module: require('./admin/distributor/distributorsList'),
-    method: 'get'
-  },
-  {
-    endpoint: '/api/distributor-create',
-    module: require('./admin/distributor/distributorCreate'),
-    method: 'post'
-  },
-  {
-    endpoint: '/api/distributor-edit',
-    module: require('./admin/distributor/distributorEdit'),
-    method: 'post'
-  },
-  {
-    endpoint: '/api/distributor-delete',
-    module: require('./admin/distributor/distributorDelete'),
-    method: 'post'
-  },
-  {
-    endpoint: '/api/distributors-pl',
-    module: require('./admin/distributor-pl/distributorsPlList'),
-    method: 'get'
-  },
-  {
-    endpoint: '/api/distributor-pl-create',
-    module: require('./admin/distributor-pl/distributorPlCreate'),
-    method: 'post'
-  },
-  {
-    endpoint: '/api/distributor-pl-edit',
-    module: require('./admin/distributor-pl/distributorPlEdit'),
-    method: 'post'
-  },
-  {
-    endpoint: '/api/distributor-pl-delete',
-    module: require('./admin/distributor-pl/distributorPlDelete'),
-    method: 'post'
-  },
-  {
     endpoint: '/api/directx',
     module: require('./admin/directx/directxList'),
     method: 'get'
@@ -205,6 +145,26 @@ const routes = [
   {
     endpoint: '/api/dlc-create',
     module: require('./admin/dlc/dlcCreate'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/companies',
+    module: require('./admin/companies/companiesList'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/company-create',
+    module: require('./admin/companies/companyCreate'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/company-edit',
+    module: require('./admin/companies/companyEdit'),
+    method: 'post'
+  },
+  {
+    endpoint: '/api/company-delete',
+    module: require('./admin/companies/companyDelete'),
     method: 'post'
   },
 

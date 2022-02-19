@@ -25,9 +25,7 @@ interface Step1BasicFieldsProps {
   toggleStep1Failed: Function;
   toggleOpenCreatePlatform: Function;
   toggleOpenCreateTag: Function;
-  toggleOpenCreateProducer: Function;
-  toggleOpenCreateDistributor: Function;
-  toggleOpenCreateDistributorPl: Function;
+  toggleOpenCreateCompany: Function;
 }
 
 const Step1BasicFields = ({
@@ -40,9 +38,7 @@ const Step1BasicFields = ({
   toggleStep1Failed,
   toggleOpenCreatePlatform,
   toggleOpenCreateTag,
-  toggleOpenCreateProducer,
-  toggleOpenCreateDistributor,
-  toggleOpenCreateDistributorPl,
+  toggleOpenCreateCompany,
 }: Step1BasicFieldsProps) => {
   const validateForm = () => {
     formik.validateForm().then((val: any) => {
@@ -243,16 +239,6 @@ const Step1BasicFields = ({
               error={formik.touched.producer && Boolean(formik.errors.producer)}
               helperText={formik.touched.producer && formik.errors.producer}
             />
-            <Box ml={2}>
-              <LoadingButton
-                type="button"
-                color="primary"
-                variant="contained"
-                onClick={() => toggleOpenCreateProducer(true)}
-              >
-                <Add />
-              </LoadingButton>
-            </Box>
           </Box>
         </Grid>
         <Grid item xs={12} md={6} pr={{ md: 1 }} mb={2}>
@@ -268,16 +254,6 @@ const Step1BasicFields = ({
               error={formik.touched.distributor && Boolean(formik.errors.distributor)}
               helperText={formik.touched.distributor && formik.errors.distributor}
             />
-            <Box ml={2}>
-              <LoadingButton
-                type="button"
-                color="primary"
-                variant="contained"
-                onClick={() => toggleOpenCreateDistributor(true)}
-              >
-                <Add />
-              </LoadingButton>
-            </Box>
           </Box>
         </Grid>
       </Grid>
@@ -295,19 +271,18 @@ const Step1BasicFields = ({
               error={formik.touched.distributorPl && Boolean(formik.errors.distributorPl)}
               helperText={formik.touched.distributorPl && formik.errors.distributorPl}
             />
-            <Box ml={2}>
-              <LoadingButton
-                type="button"
-                color="primary"
-                variant="contained"
-                onClick={() => toggleOpenCreateDistributorPl(true)}
-              >
-                <Add />
-              </LoadingButton>
-            </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} md={6} pr={{ md: 1 }} mb={2}></Grid>
+        <Grid item xs={12} md={6} pr={{ md: 1 }} mb={2}>
+          <LoadingButton
+            type="button"
+            color="primary"
+            variant="contained"
+            onClick={() => toggleOpenCreateCompany(true)}
+          >
+            <Add /> Dodaj firmę
+          </LoadingButton>
+        </Grid>
       </Grid>
     </Box>
   );

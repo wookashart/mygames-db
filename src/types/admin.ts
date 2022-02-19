@@ -78,3 +78,13 @@ export interface LastAddedDLCData {
   name: string;
   cover: string;
 }
+
+export interface CompanyData {
+  id: number;
+  name: string;
+  type: string[];
+  description: string;
+  www: string;
+  address: string;
+  logo: string;
+}

@@ -14,28 +14,37 @@ import {
   Typography,
 } from '@mui/material';
 import CellLink from '../../cells/CellLink';
-import CellDescription from '../../cells/CellDescription';
 import CellMenu from '../../cells/CellMenu';
+import CellCover from '../../cells/CellCover';
+import CellDefault from '../../cells/CellDefault';
+import CellListDefault from '../../cells/CellListDefault';
 
 // === Styles === //
 import { animation, customColors } from '../../../styles/variables';
 
 // === Types === //
-import { DistributorPlData } from '../../../types/admin';
+import { CompanyData } from '../../../types/admin';
 import { Box } from '@mui/system';
 import { Delete, Edit } from '@mui/icons-material';
+import { DropdownOptionsData } from '../../../types/forms';
 
-interface DistributorsPlTableProps {
-  items: DistributorPlData[];
+interface CompaniesTableProps {
+  items: CompanyData[];
   handleOpenEditModal: Function;
   handleOpenDeleteModal: Function;
 }
 
-const DistributorsPlTable = ({
+const CompaniesTable = ({
   items,
   handleOpenEditModal,
   handleOpenDeleteModal,
-}: DistributorsPlTableProps) => {
+}: CompaniesTableProps) => {
+  const companyTypes: DropdownOptionsData[] = [
+    { title: 'Producent', value: 'producer' },
+    { title: 'Wydawca', value: 'distributor' },
+    { title: 'Wydawca PL', value: 'distributor_pl' },
+  ];
+
   return (
     <TableContainer>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="dense-table">
@@ -43,12 +52,27 @@ const DistributorsPlTable = ({
           <TableRow>
             <TableCell>
               <Typography color="white" fontWeight="bold" textAlign="center">
+                Logo
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography color="white" fontWeight="bold" textAlign="center">
                 Nazwa
               </Typography>
             </TableCell>
             <TableCell>
               <Typography color="white" fontWeight="bold" textAlign="center">
-                Opis
+                Typ
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography color="white" fontWeight="bold" textAlign="center">
+                Strona WWW
+              </Typography>
+            </TableCell>
+            <TableCell width={200}>
+              <Typography color="white" fontWeight="bold" textAlign="center">
+                Adres
               </Typography>
             </TableCell>
             <TableCell width={80}>
@@ -59,7 +83,7 @@ const DistributorsPlTable = ({
           </TableRow>
         </TableHead>
         <TableBody>
-          {items.map((row: DistributorPlData, index: number) => (
+          {items.map((row: CompanyData, index: number) => (
             <TableRow
               key={index}
               sx={{
@@ -69,11 +93,24 @@ const DistributorsPlTable = ({
                 },
               }}
             >
-              <CellLink
-                label={row.distributor_pl_name}
-                href={`/games?distributor-pl=${row.distributor_pl_id}`}
+              {row.logo && row.logo !== '' ? (
+                <CellCover cover={row.logo} alt={row.name} type="company" />
+              ) : (
+                <CellDefault value="" />
+              )}
+              <CellLink label={row.name} href={`/company/${row.id}`} />
+              <CellListDefault
+                value={row.type.map((t) => {
+                  const companyType: DropdownOptionsData | undefined = companyTypes.find(
+                    (item) => item.value === t
+                  );
+
+                  return companyType ? companyType.title : '';
+                })}
               />
-              <CellDescription value={row.distributor_pl_description} />
+              <CellLink label={row.www} href={row.www} type="external" />
+              <CellDefault value={row.address} />
+
               <CellMenu>
                 <Box>
                   <MenuItem
@@ -114,4 +151,4 @@ const DistributorsPlTable = ({
   );
 };
 
-export default DistributorsPlTable;
+export default CompaniesTable;

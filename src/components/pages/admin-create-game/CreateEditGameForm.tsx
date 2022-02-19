@@ -14,9 +14,7 @@ import Step5Cover from './steps/Step5Cover';
 import Step6Summary from './steps/Step6Summary';
 import PlatformCreateEdit from '../admin-platforms/PlatformCreateEdit';
 import TagCreateEdit from '../admin-tags/TagCreateEdit';
-import ProducerCreateEdit from '../admin-producers/ProducerCreateEdit';
-import DistributorCreateEdit from '../admin-distributors/DistributorCreateEdit';
-import DistributorPlCreateEdit from '../admin-distributors-pl/DistributorPlCreateEdit';
+import CompanyCreateEdit from '../admin-companies/CompanyCreateEdit';
 import Notification from '../../common/Notification';
 
 // === Helper === //
@@ -35,13 +33,7 @@ import {
   DropdownOptionsData,
   NotificationType,
 } from '../../../types/forms';
-import {
-  DistributorData,
-  DistributorPlData,
-  PlatformsData,
-  ProducerData,
-  TagData,
-} from '../../../types/admin';
+import { CompanyData, PlatformsData, TagData } from '../../../types/admin';
 import { CroppedAreaData } from '../../../types/images';
 import { UserData } from '../../../types/users';
 
@@ -95,9 +87,9 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
   // modals
   const [openCreatePlatform, toggleOpenCreatePlatform] = useState(false);
   const [openCreateTag, toggleOpenCreateTag] = useState(false);
-  const [openCreateProducer, toggleOpenCreateProducer] = useState(false);
-  const [openCreateDistributor, toggleOpenCreateDistributor] = useState(false);
-  const [openCreateDistributorPl, toggleOpenCreateDistributorPl] = useState(false);
+  // const [openCreateProducer, toggleOpenCreateProducer] = useState(false);
+  // const [openCreateDistributor, toggleOpenCreateDistributor] = useState(false);
+  const [openCreateCompany, toggleOpenCreateCompany] = useState(false);
 
   const useStyles = makeStyles(() => ({
     root: {
@@ -185,8 +177,8 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
         console.error(error);
       });
   };
-  const getAllProducers = () => {
-    fetch(`/api/producers`, {
+  const getAllCompanies = () => {
+    fetch(`/api/companies`, {
       headers: {
         'Content-type': 'application/json',
       },
@@ -195,59 +187,30 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        if (json) {
-          setProducers(
-            json.items.map((item: ProducerData) => ({
-              title: item.producer_name,
-              value: item.producer_id,
-            }))
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-  const getAllDistributors = () => {
-    fetch(`/api/distributors`, {
-      headers: {
-        'Content-type': 'application/json',
-      },
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json) {
-          setDistributors(
-            json.items.map((item: DistributorData) => ({
-              title: item.distributor_name,
-              value: item.distributor_id,
-            }))
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
-  const getAllDistributorsPl = () => {
-    fetch(`/api/distributors-pl`, {
-      headers: {
-        'Content-type': 'application/json',
-      },
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json) {
-          setDistributorsPl(
-            json.items.map((item: DistributorPlData) => ({
-              title: item.distributor_pl_name,
-              value: item.distributor_pl_id,
-            }))
-          );
+        if (json && !json.error) {
+          console.log(json);
+          const producers = json.items
+            .filter((item: CompanyData) => item.type.find((type) => type === 'producer'))
+            .map((item: CompanyData) => ({
+              title: item.name,
+              value: item.id,
+            }));
+          const distributors = json.items
+            .filter((item: CompanyData) => item.type.find((type) => type === 'distributor'))
+            .map((item: CompanyData) => ({
+              title: item.name,
+              value: item.id,
+            }));
+          const distributorsPl = json.items
+            .filter((item: CompanyData) => item.type.find((type) => type === 'distributor_pl'))
+            .map((item: CompanyData) => ({
+              title: item.name,
+              value: item.id,
+            }));
+
+          setProducers(producers);
+          setDistributors(distributors);
+          setDistributorsPl(distributorsPl);
         }
       })
       .catch((error) => {
@@ -258,9 +221,7 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
   useEffect(() => {
     getAllPlatforms();
     getAllTags();
-    getAllProducers();
-    getAllDistributors();
-    getAllDistributorsPl();
+    getAllCompanies();
   }, []);
 
   const onSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -503,9 +464,7 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
             distributorsPl={distributorsPl}
             toggleOpenCreatePlatform={toggleOpenCreatePlatform}
             toggleOpenCreateTag={toggleOpenCreateTag}
-            toggleOpenCreateProducer={toggleOpenCreateProducer}
-            toggleOpenCreateDistributor={toggleOpenCreateDistributor}
-            toggleOpenCreateDistributorPl={toggleOpenCreateDistributorPl}
+            toggleOpenCreateCompany={toggleOpenCreateCompany}
           />
         )}
         {activeStep === 1 && <Step2DatesFields formik={formik as any} />}
@@ -580,23 +539,12 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
         handleClose={() => toggleOpenCreateTag(false)}
         handleReloadData={() => getAllTags()}
       />
-      <ProducerCreateEdit
+      <CompanyCreateEdit
         editItem={null}
-        open={openCreateProducer}
-        handleClose={() => toggleOpenCreateProducer(false)}
-        handleReloadData={() => getAllProducers()}
-      />
-      <DistributorCreateEdit
-        editItem={null}
-        open={openCreateDistributor}
-        handleClose={() => toggleOpenCreateDistributor(false)}
-        handleReloadData={() => getAllDistributors()}
-      />
-      <DistributorPlCreateEdit
-        editItem={null}
-        open={openCreateDistributorPl}
-        handleClose={() => toggleOpenCreateDistributorPl(false)}
-        handleReloadData={() => getAllDistributorsPl()}
+        open={openCreateCompany}
+        user={user}
+        handleClose={() => toggleOpenCreateCompany(false)}
+        handleReloadData={() => getAllCompanies()}
       />
       <Notification
         open={notification.open}

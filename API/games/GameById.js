@@ -122,11 +122,11 @@ module.exports = (req, res) => {
 
     return queryPromise(`
       SELECT
-        producer_id,
-        producer_name,
-        producer_description
-      FROM producers
-      WHERE producer_id = "${response.game.producer ? response.game.producer.id : 0}"
+        company_id,
+        company_name,
+        company_description
+      FROM companies
+      WHERE company_id = "${response.game.producer ? response.game.producer.id : 0}"
     `)
   })
   .then(({err, rows}) => {
@@ -139,11 +139,11 @@ module.exports = (req, res) => {
 
     return queryPromise(`
       SELECT
-        distributor_id,
-        distributor_name,
-        distributor_description
-      FROM distributors
-      WHERE distributor_id = "${response.game.distributor ? response.game.distributor.id : 0}"
+        company_id,
+        company_name,
+        company_description
+      FROM companies
+      WHERE company_id = "${response.game.distributor ? response.game.distributor.id : 0}"
     `)
   })
   .then(({err, rows}) => {
@@ -156,11 +156,11 @@ module.exports = (req, res) => {
 
     return queryPromise(`
       SELECT
-        distributor_pl_id,
-        distributor_pl_name,
-        distributor_pl_description
-      FROM distributors_pl
-      WHERE distributor_pl_id = "${response.game.distributorPl ? response.game.distributorPl.id : 0}"
+        company_id,
+        company_name,
+        company_description
+      FROM companies
+      WHERE company_id = "${response.game.distributorPl ? response.game.distributorPl.id : 0}"
     `)
   })
   .then(({err, rows}) => {

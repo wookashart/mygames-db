@@ -18,29 +18,19 @@ export const adminNavigation = [
     icon: 'ShoppingCart',
   },
   {
+    label: 'Firmy',
+    url: '/admin/companies',
+    icon: 'HomeWork',
+  },
+  {
     label: 'Platformy',
     url: '/admin/platforms',
     icon: 'Devices',
   },
   {
-    label: 'Producenci',
-    url: '/admin/producers',
-    icon: 'HomeWork',
-  },
-  {
     label: 'Tagi',
     url: '/admin/tags',
     icon: 'LocalOffer',
-  },
-  {
-    label: 'Wydawcy',
-    url: '/admin/distributors',
-    icon: 'Album',
-  },
-  {
-    label: 'Wydawcy w Polsce',
-    url: '/admin/distributors-pl',
-    icon: 'DiscFull',
   },
   {
     label: 'Wymagania sprzętowe',

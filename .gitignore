@@ -55,5 +55,6 @@ Thumbs.db
 public/img/users/*
 public/img/games/*
 public/img/dlc/*
+public/img/companies/*
 
 API/database/envData.js

@@ -22,10 +22,10 @@ module.exports = (req, res) => {
       g.game_tags AS tags,
       g.game_producer AS producerId,
       g.game_cover AS cover,
-      pr.producer_name AS producerName
+      cp.company_name AS producerName
     FROM games AS g
-    LEFT JOIN producers as pr
-    ON g.game_producer = pr.producer_id
+    LEFT JOIN companies as cp
+    ON g.game_producer = cp.company_id
     ${where}
     ORDER BY g.game_name_sort ASC
     LIMIT ${limit}

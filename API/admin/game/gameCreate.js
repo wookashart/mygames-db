@@ -1,7 +1,6 @@
 const slugify = require('slugify');
 const dateFormat = require('dateformat');
 const fs = require('fs');
-// const resizebase64 = require('resize-base64');
 
 const { queryPromise } = require('../../utils');
 const connection = require('../../database/connection');
