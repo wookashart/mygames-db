@@ -27,17 +27,14 @@ module.exports = (req, res) => {
     OR dlc_name_sort = "${nameSort}"
   `)
   .then(({err, rows}) => {
-    const nameDuplicated = rows && rows.find(item => item.dlc_name === name) ? true : false;
     const nameSortDuplicated = rows && rows.find(item => item.dlc_name_sort === nameSort) ? true : false;
 
-    if (nameDuplicated || nameSortDuplicated) {
-      const errorMessage = nameDuplicated
-        ? 'DLC o takiej nazwie już istnieje! Zmień nazwę i spróbuj ponownie.'
-        : 'DLC o takiej nazwie do sortowania już istnieje! Zmień nazwę do sortowania i spróbuj ponownie.';
+    if (nameSortDuplicated) {
+      const errorMessage = 'DLC o takiej nazwie do sortowania już istnieje! Zmień nazwę do sortowania i spróbuj ponownie.';
 
       response.dlc = null;
       response.created = false;
-      response.nameDuplicated = nameDuplicated;
+      response.nameDuplicated = false;
       response.nameSortDuplicated = nameSortDuplicated;
       response.errorMessage = errorMessage;
       response.error = err;
