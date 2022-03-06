@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // === Components === //
 import { Box } from '@mui/system';
 import { Button, Skeleton } from '@mui/material';
-import { Add, AddTask, Star } from '@mui/icons-material';
+import { Add, AddTask, Check, Star } from '@mui/icons-material';
 import HtmlTooltip from '../../../common/HtmlTooltip';
 import RateGame from '../user-functionalities/RateGame';
 import AddToLibrary from '../user-functionalities/AddToLibrary';
@@ -13,9 +13,10 @@ import StatusManage from '../user-functionalities/StatusManage';
 import * as utils from '../../../../utils';
 
 // === Types === //
-import { UserFunctionData } from '../../../../types/games';
+import { UserFunctionData, UserFunctionStatusData } from '../../../../types/games';
 import { UserData } from '../../../../types/users';
 import { ObjKeyStringValString } from '../../../../types/other';
+import { MuiColor } from '../../../../types/basic';
 
 interface UserFunctionalitiesProps {
   funcLoading: boolean;
@@ -50,6 +51,22 @@ const UserFunctionalities = ({
     plan: 'Planuję',
   };
 
+  const statusColor = (status: UserFunctionStatusData | null) => {
+    let statusColor = 'primary';
+
+    if (status) {
+      if (status.status === 'played') {
+        statusColor = 'success';
+      } else if (status.status === 'skip') {
+        statusColor = 'error';
+      } else {
+        statusColor = 'warning';
+      }
+    }
+
+    return statusColor;
+  };
+
   return (
     <>
       {userLoading || funcLoading ? (
@@ -61,12 +78,12 @@ const UserFunctionalities = ({
               <Box display="flex" flexWrap="wrap">
                 <Button
                   onClick={() => handleRateGameModalOpen(true)}
-                  color="primary"
+                  color={`${funcData && funcData.ratio ? 'success' : 'primary'}`}
                   size="small"
                   variant="contained"
                   sx={{ marginBottom: '10px' }}
                 >
-                  <Star />
+                  {funcData && funcData.ratio ? <Check /> : <Star />}
                   <Box ml={1}>
                     {funcData && funcData.ratio
                       ? `Twoja ocena: ${funcData.ratio.ratio}`
@@ -75,12 +92,20 @@ const UserFunctionalities = ({
                 </Button>
                 <Button
                   onClick={() => handleAddToLibraryModalOpen(true)}
-                  color="primary"
+                  color={`${
+                    funcData && funcData.library && funcData.library.length > 0
+                      ? 'success'
+                      : 'primary'
+                  }`}
                   size="small"
                   variant="contained"
                   sx={{ marginLeft: '20px', marginBottom: '10px' }}
                 >
-                  <Add />
+                  {funcData && funcData.library && funcData.library.length > 0 ? (
+                    <Check />
+                  ) : (
+                    <Add />
+                  )}
                   <Box ml={1}>
                     {funcData && funcData.library && funcData.library.length > 0
                       ? 'Gra w bibliotece'
@@ -89,12 +114,14 @@ const UserFunctionalities = ({
                 </Button>
                 <Button
                   onClick={() => handleStatusManageModalOpen(true)}
-                  color="primary"
+                  color={
+                    statusColor(funcData && funcData.status ? funcData.status : null) as MuiColor
+                  }
                   size="small"
                   variant="contained"
                   sx={{ marginLeft: '20px', marginBottom: '10px' }}
                 >
-                  <AddTask />
+                  {funcData && funcData.status ? <Check /> : <AddTask />}
                   <Box ml={1}>
                     {funcData && funcData.status
                       ? `Status: ${status[funcData.status.status]} ${
