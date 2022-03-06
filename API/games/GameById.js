@@ -133,8 +133,8 @@ module.exports = (req, res) => {
     const producer = rows && rows.length ? rows[0] : null;
 
     if (producer && !err) {
-      response.game.producer.name = producer.producer_name;
-      response.game.producer.description = producer.producer_description;
+      response.game.producer.name = producer.company_name;
+      response.game.producer.description = producer.company_description;
     }
 
     return queryPromise(`
@@ -150,8 +150,8 @@ module.exports = (req, res) => {
     const distributor = rows && rows.length ? rows[0] : null;
 
     if (distributor && !err) {
-      response.game.distributor.name = distributor.distributor_name;
-      response.game.distributor.description = distributor.distributor_description;
+      response.game.distributor.name = distributor.company_name;
+      response.game.distributor.description = distributor.company_description;
     }
 
     return queryPromise(`
@@ -167,8 +167,8 @@ module.exports = (req, res) => {
     const distributorPl = rows && rows.length ? rows[0] : null;
 
     if (distributorPl && !err) {
-      response.game.distributorPl.name = distributorPl.distributor_pl_name;
-      response.game.distributorPl.description = distributorPl.distributor_pl_description;
+      response.game.distributorPl.name = distributorPl.company_name;
+      response.game.distributorPl.description = distributorPl.company_description;
     }
 
     return queryPromise(`
