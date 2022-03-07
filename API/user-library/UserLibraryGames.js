@@ -50,12 +50,27 @@ module.exports = (req, res) => {
   .then(({ err, rows }) => {
     const items = rows.map(item => {
       const fDate = item.firstDate;
+      const sDate = item.statusDate;
+      const rDate = item.userRatioDate;
+      const aDate = item.addDate;
 
       return Object.assign(item, {
         firstDate: fDate !== null
           && fDate !== '0000-00-00'
           && item.earlyAccess !== 1
             ? fDate
+            : null,
+        statusDate: sDate !== null
+          && sDate !== '0000-00-00'
+            ? sDate
+            : null,
+        userRatioDate: rDate !== null
+          && rDate !== '0000-00-00'
+            ? rDate
+            : null,
+        addDate: aDate !== null
+          && aDate !== '0000-00-00'
+            ? aDate
             : null,
         earlyAccess: !item.earlyAccess || item.earlyAccess === 0 ? false : true,
         favourite: !item.favourite || item.favourite === 0 ? false : true,
