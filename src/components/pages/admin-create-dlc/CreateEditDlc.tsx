@@ -198,8 +198,6 @@ const CreateEditDlc = ({ editItem, user }: CreateEditDlcFormProps) => {
         game: values.game ? values.game.value : null,
       };
 
-      console.log(input);
-
       if (imageSrc && imageSrc !== '') {
         try {
           getCroppedImg(imageSrc, croppedAreaPixels, rotation).then((image) => {

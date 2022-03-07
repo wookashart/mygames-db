@@ -213,7 +213,6 @@ const CompanyCreateEdit = ({
   };
 
   useEffect(() => {
-    console.log(editItem);
     if (editItem && editItem.logo && editItem.logo !== '') {
       setImageSrc(`/img/companies/${editItem.logo}`);
     }

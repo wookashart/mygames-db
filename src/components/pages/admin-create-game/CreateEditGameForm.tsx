@@ -188,7 +188,6 @@ const CreateEditGameForm = ({ editItem, user }: CreateEditGameFormProps) => {
       .then((response) => response.json())
       .then((json) => {
         if (json && !json.error) {
-          console.log(json);
           const producers = json.items
             .filter((item: CompanyData) => item.type.find((type) => type === 'producer'))
             .map((item: CompanyData) => ({

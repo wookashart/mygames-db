@@ -218,6 +218,18 @@ const routes = [
 
   // === DLC === //
 
+  // === user === //
+  {
+    endpoint: '/api/user/:id',
+    module: require('./user/userById'),
+    method: 'get'
+  },
+  {
+    endpoint: '/api/user/:id/library',
+    module: require('./user-library/UserLibraryGames'),
+    method: 'get'
+  },
+
 ];
 
 module.exports = routes;

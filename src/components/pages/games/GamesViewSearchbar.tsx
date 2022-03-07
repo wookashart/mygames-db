@@ -16,6 +16,7 @@ import * as utils from '../../../utils';
 import { customColors } from '../../../styles/variables';
 
 interface GamesViewSearchbarProps {
+  redirectPath: string;
   totalCount: number;
   searchInput: string;
   activeView: number;
@@ -26,6 +27,7 @@ interface GamesViewSearchbarProps {
 }
 
 const GamesViewSearchbar = ({
+  redirectPath,
   totalCount,
   searchInput,
   activeView,
@@ -41,7 +43,7 @@ const GamesViewSearchbar = ({
 
     router.push(
       {
-        pathname: '/games/1',
+        pathname: redirectPath,
         query: utils.addParametersToUrl({ name: searchInput }),
       },
       undefined,

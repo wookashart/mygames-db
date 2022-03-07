@@ -7,3 +7,7 @@ export type MuiColor =
   | 'info'
   | 'warning'
   | undefined;
+
+export type GameStatusType = 'played' | 'skip' | 'planned' | null;
+
+export type GameStatusDetailType = '100p' | 'endless' | 'dropped' | 'story' | 'null' | null;

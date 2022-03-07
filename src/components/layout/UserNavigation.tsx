@@ -94,7 +94,7 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
               },
             }}
           >
-            <Link href="/">
+            <Link href={`/user/${user.id}`}>
               <a className="userNavigation-link">
                 <ListItemIcon>
                   <AccountCircle fontSize="small" sx={{ color: customColors.textLight }} />
@@ -119,7 +119,7 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
               },
             }}
           >
-            <Link href="/">
+            <Link href={`/user/${user.id}/library`}>
               <a className="userNavigation-link">Moja kolekcja</a>
             </Link>
           </MenuItem>
@@ -132,7 +132,9 @@ const UserNavigation = ({ user, handleLogout }: UserNavigationProps) => {
             }}
           >
             <Link href="/">
-              <a className="userNavigation-link">Ukończone</a>
+              <a className="userNavigation-link">
+                {user && user.gender === 2 ? 'Grałam' : 'Grałem'}
+              </a>
             </Link>
           </MenuItem>
           <MenuItem

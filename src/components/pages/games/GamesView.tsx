@@ -11,6 +11,7 @@ import GamesTablePagination from './GamesTablePagination';
 import GamesViewSearchbar from './GamesViewSearchbar';
 import GamesTableLoading from './GamesTableLoading';
 import GamesTiles from './GamesTiles';
+import GamesTilesLoading from './GamesTilesLoading';
 
 // === Helpers === //
 import debounce from 'lodash.debounce';
@@ -123,6 +124,7 @@ class GamesView extends Component<GamesViewProps> {
           <Paper elevation={6} sx={{ backgroundColor: colors.grey[800], marginBottom: 4 }}>
             <Box px={3} py={3}>
               <GamesViewSearchbar
+                redirectPath="/games/1"
                 totalCount={this.state.totalCount}
                 searchInput={this.state.searchInput}
                 activeView={this.state.activeView}
@@ -145,12 +147,16 @@ class GamesView extends Component<GamesViewProps> {
               </>
             ) : (
               <>
-                <GamesTiles items={this.state.games} />
+                {this.state.loading ? (
+                  <GamesTilesLoading />
+                ) : (
+                  <GamesTiles items={this.state.games} />
+                )}
               </>
             )}
             <GamesTablePagination
               count={Math.ceil(this.state.totalCount / 30)}
-              currentPage={this.props.pageId ? Number(this.props.pageId) : 1}
+              currentPage={pageId ? Number(pageId) : 1}
               filters={filters}
             />
           </Paper>
