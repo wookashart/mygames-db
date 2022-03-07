@@ -8,7 +8,7 @@ module.exports = (req, res) => {
   const name = req.query.name;
   const response = {};
 
-  let itemsData = null;
+  let itemsData = [];
 
   // NEED TO REBUILD !!!!
   // const where = name && name !== '' ? `WHERE (g.game_name LIKE "%${name}%" OR g.game_name_pl LIKE %${name}%)` : '';
@@ -59,6 +59,7 @@ module.exports = (req, res) => {
             : null,
         earlyAccess: !item.earlyAccess || item.earlyAccess === 0 ? false : true,
         favourite: !item.favourite || item.favourite === 0 ? false : true,
+        playedTime: !item.playedTime ? 0 : item.playedTime,
       });
     });
     itemsData = items;
@@ -184,6 +185,7 @@ module.exports = (req, res) => {
   })
   .catch(error => {
     response.error = error;
+    response.eee = 'aaaaa'
     res.json(response);
   });
 }
