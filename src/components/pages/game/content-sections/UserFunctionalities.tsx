@@ -13,7 +13,7 @@ import StatusManage from '../user-functionalities/StatusManage';
 import * as utils from '../../../../utils';
 
 // === Types === //
-import { UserFunctionData, UserFunctionStatusData } from '../../../../types/games';
+import { PlatformsData, UserFunctionData, UserFunctionStatusData } from '../../../../types/games';
 import { UserData } from '../../../../types/users';
 import { ObjKeyStringValString } from '../../../../types/other';
 import { MuiColor } from '../../../../types/basic';
@@ -24,6 +24,7 @@ interface UserFunctionalitiesProps {
   funcData: UserFunctionData | null;
   user: UserData | null;
   userRatio: number | null;
+  availablePlatforms: PlatformsData[];
   handleSetRatio: Function;
   handleRequestRatio: Function;
   handleRequestLibrary: Function;
@@ -36,6 +37,7 @@ const UserFunctionalities = ({
   user,
   userLoading,
   userRatio,
+  availablePlatforms,
   handleSetRatio,
   handleRequestRatio,
   handleRequestLibrary,
@@ -206,6 +208,7 @@ const UserFunctionalities = ({
           <AddToLibrary
             funcData={funcData}
             modalOpen={addToLibraryModalOpen}
+            availablePlatforms={availablePlatforms}
             handleClose={() => handleAddToLibraryModalOpen(false)}
             handleSubmit={handleRequestLibrary}
           />

@@ -53,6 +53,7 @@ const GameDetailContent = ({
             user={user}
             userLoading={userLoading}
             userRatio={userRatio}
+            availablePlatforms={game.platforms}
             handleSetRatio={handleSetRatio}
             handleRequestRatio={handleRequestRatio}
             handleRequestLibrary={handleRequestLibrary}

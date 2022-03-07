@@ -12,13 +12,14 @@ import Dropdown from '../../../common/form/Dropdown';
 import { customColors } from '../../../../styles/variables';
 
 // === Types === //
-import { UserFunctionData } from '../../../../types/games';
-import { GameDistributionData, PlatformsData } from '../../../../types/admin';
+import { PlatformsData, UserFunctionData } from '../../../../types/games';
+import { GameDistributionData } from '../../../../types/admin';
 import { AddToLibrarySelectedItemsData, DropdownOptionsData } from '../../../../types/forms';
 
 interface AddToLibraryProps {
   funcData: UserFunctionData;
   modalOpen: boolean;
+  availablePlatforms: PlatformsData[];
   handleClose: Function;
   handleSubmit: Function;
 }
@@ -42,27 +43,12 @@ class AddToLibrary extends Component<AddToLibraryProps> {
   }
 
   getAllPlatforms = () => {
-    fetch(`/api/platforms`, {
-      headers: {
-        'Content-type': 'application/json',
-      },
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        if (json && !json.error) {
-          this.setState({
-            platforms: json.items.map((item: PlatformsData) => ({
-              title: `${item.platform_name} (${item.platform_code})`,
-              value: item.platform_id,
-            })),
-          });
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    this.setState({
+      platforms: this.props.availablePlatforms.map((item: PlatformsData) => ({
+        title: `${item.name} (${item.code})`,
+        value: item.id,
+      })),
+    });
   };
 
   getAllDistributions = () => {
