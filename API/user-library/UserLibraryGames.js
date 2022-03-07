@@ -175,15 +175,12 @@ module.exports = (req, res) => {
 
       itemsData.forEach(iData => {
         if (iData.gameId === item.gameId) {
+          const pPlatform = iData.platforms.find(p => p.id === iData.userPlatformId);
+
           userLibrary.push({
-            platformId: iData.userPlatformId,
-            platformName: iData.platforms.find(p => p.id === iData.userPlatformId).name,
-            platformCode: iData.platforms.find(p => p.id === iData.userPlatformId).code,
-            platformDescription: iData.platforms.find(p => p.id === iData.userPlatformId).description,
-            platformProducerId: iData.platforms.find(p => p.id === iData.userPlatformId).producerId,
-            platformProducerName: iData.platforms.find(p => p.id === iData.userPlatformId).producerName,
             distributionId: iData.userDistributionId,
             distributionName: rows.find(d => d.id === iData.userDistributionId).name,
+            platform: pPlatform,
           });
         }
       });
@@ -200,7 +197,6 @@ module.exports = (req, res) => {
   })
   .catch(error => {
     response.error = error;
-    response.eee = 'aaaaa'
     res.json(response);
   });
 }

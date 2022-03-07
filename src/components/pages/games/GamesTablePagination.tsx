@@ -15,12 +15,13 @@ import { customColors } from '../../../styles/variables';
 import { GamesFiltersData } from '../../../types/games';
 
 interface GamesTablePaginationProps {
+  url: string;
   count: number;
   currentPage: number;
   filters: GamesFiltersData;
 }
 
-const GamesTablePagination = ({ count, currentPage, filters }: GamesTablePaginationProps) => {
+const GamesTablePagination = ({ count, currentPage, filters, url }: GamesTablePaginationProps) => {
   const useStyles = makeStyles(() => ({
     root: {
       '& .MuiPaginationItem-root': {
@@ -47,7 +48,7 @@ const GamesTablePagination = ({ count, currentPage, filters }: GamesTablePaginat
         renderItem={(item) => (
           <PaginationItem
             component="a"
-            href={`/games/${item.page}${
+            href={`${url}/${item.page}${
               parametersString && parametersString !== '' ? `?${parametersString}` : ''
             }`}
             {...item}

@@ -101,7 +101,6 @@ class UserLibraryView extends Component<UserLibraryViewProps> {
       })
         .then((response) => response.json())
         .then((json) => {
-          console.log(json);
           if (json && !json.error) {
             this.setState({
               games: json.items,
@@ -200,6 +199,7 @@ class UserLibraryView extends Component<UserLibraryViewProps> {
               )}
 
               <GamesTablePagination
+                url={`/user/${user?.id || 0}/library`}
                 count={Math.ceil(this.state.totalCount / 30)}
                 currentPage={pageId ? Number(pageId) : 1}
                 filters={filters}

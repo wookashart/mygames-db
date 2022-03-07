@@ -41,10 +41,5 @@ export interface UserLibraryGamesData {
 export interface UserLibraryData {
   distributionId: number;
   distributionName: string;
-  platformCode: string;
-  platformDescription: string;
-  platformId: number;
-  platformName: string;
-  platformProducerId: number;
-  platformProducerName: string;
+  platform: PlatformsData;
 }

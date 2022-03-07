@@ -155,6 +155,7 @@ class GamesView extends Component<GamesViewProps> {
               </>
             )}
             <GamesTablePagination
+              url="/games"
               count={Math.ceil(this.state.totalCount / 30)}
               currentPage={pageId ? Number(pageId) : 1}
               filters={filters}

@@ -48,10 +48,10 @@ const CellUserLibraryGameData = ({ data }: CellUserLibraryGameDataProps) => {
           {data.userLibrary.map((ul, index) => (
             <Box key={index} display="inline-block" mr="5px">
               <Chip
-                label={`${ul.platformCode} - ${ul.distributionName}`}
+                label={`${ul.platform?.code || ''} - ${ul.distributionName}`}
                 variant="outlined"
                 component="a"
-                href={`/games?platform=${ul.platformId}`}
+                href={`/games?platform=${ul.platform?.id || 0}`}
                 clickable
                 size="small"
                 color="primary"
