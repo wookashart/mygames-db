@@ -101,6 +101,7 @@ class UserLibraryView extends Component<UserLibraryViewProps> {
       })
         .then((response) => response.json())
         .then((json) => {
+          console.log(json);
           if (json && !json.error) {
             this.setState({
               games: json.items,
